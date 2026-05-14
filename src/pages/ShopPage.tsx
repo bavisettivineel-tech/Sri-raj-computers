@@ -151,18 +151,18 @@ const CategoryRow = ({ categoryId, categoryName, allProducts = [], sortBy, navig
       {/* Section Header */}
       <div className="flex items-center justify-between px-4 md:px-6 py-4">
         <div className="flex items-center gap-3">
-          <div className="w-1 h-6 bg-[#007bff] rounded-full shadow-[0_0_12px_#007bff]" />
-          <h2 className="text-base md:text-lg font-black text-white uppercase tracking-tight">
+          <div className="w-1 h-6 bg-primary rounded-full shadow-[0_0_12px_rgba(124,58,237,0.3)]" />
+          <h2 className="text-base md:text-lg font-black text-slate-900 uppercase tracking-tight font-heading">
             {categoryName}
           </h2>
-          <span className="text-xs text-[#64748b] font-semibold">
+          <span className="text-xs text-slate-400 font-semibold">
             ({categoryProducts.length} products)
           </span>
         </div>
         {categoryProducts.length > 6 && (
           <button
             onClick={() => navigate(`/shop?category=${categoryId}`)}
-            className="flex items-center gap-1.5 text-[#007bff] text-xs font-bold uppercase tracking-wider hover:text-white transition-colors"
+            className="flex items-center gap-1.5 text-primary text-xs font-bold uppercase tracking-wider hover:text-slate-900 transition-colors"
           >
             View All <ArrowRight className="w-3.5 h-3.5" />
           </button>
@@ -175,7 +175,7 @@ const CategoryRow = ({ categoryId, categoryName, allProducts = [], sortBy, navig
       </div>
 
       {/* Divider */}
-      <div className="mx-4 md:mx-6 mt-6 h-px bg-gradient-to-r from-transparent via-[#007bff]/20 to-transparent" />
+      <div className="mx-4 md:mx-6 mt-6 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
     </section>
   );
 };
@@ -312,47 +312,47 @@ const ShopPage = () => {
   const activeSortLabel = sortOptions.find(o => o.key === sortBy)?.label || 'Relevance';
 
   return (
-    <div className="app-shell bg-[#0b121e] min-h-screen">
+    <div className="app-shell bg-slate-50 min-h-screen">
       <Header />
       <main className="pb-20 lg:pb-6">
         {/* Page Hero Banner */}
         <div
           className="px-5 py-12 md:py-16 text-center relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #0b121e 0%, #0d1e3c 100%)' }}
+          style={{ background: 'linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%)' }}
         >
-          <div className="absolute right-[-20px] top-[-20px] w-64 h-64 rounded-full opacity-10 bg-[#007bff] blur-[100px]" />
-          <div className="absolute left-[-30px] bottom-[-30px] w-48 h-48 rounded-full opacity-10 bg-[#f5b50a] blur-[80px]" />
-          <p className="text-[10px] font-black text-[#007bff] uppercase tracking-[0.3em] mb-3">Explore Collection</p>
-          <h1 className="font-black text-white uppercase tracking-tighter" style={{ fontSize: 'clamp(28px, 6vw, 48px)' }}>
+          <div className="absolute right-[-20px] top-[-20px] w-64 h-64 rounded-full opacity-10 bg-primary blur-[100px]" />
+          <div className="absolute left-[-30px] bottom-[-30px] w-48 h-48 rounded-full opacity-10 bg-secondary blur-[80px]" />
+          <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-3">Explore Collection</p>
+          <h1 className="font-black text-slate-900 uppercase tracking-tighter font-heading" style={{ fontSize: 'clamp(28px, 6vw, 48px)' }}>
             {activeCategory?.name || (categoryNameParam ? (resolvedCategory?.name || categoryNameParam) : 'All Products')}
           </h1>
-          <div className="w-16 h-1 bg-[#007bff] mx-auto mt-4 rounded-full shadow-[0_0_15px_#007bff]" />
+          <div className="w-16 h-1 bg-primary mx-auto mt-4 rounded-full shadow-lg shadow-primary/20" />
         </div>
 
         {/* Layout: sidebar (hidden mobile) + content */}
         <div className="flex">
-          <aside className="hidden md:block w-72 shrink-0 p-6 self-start sticky top-[80px] h-[calc(100vh-80px)] overflow-y-auto border-r border-white/5">
+          <aside className="hidden md:block w-72 shrink-0 p-6 self-start sticky top-[80px] h-[calc(100vh-80px)] overflow-y-auto border-r border-slate-200 bg-white">
             <div className="space-y-4">
-              <h2 className="text-xl font-black text-white uppercase tracking-tighter mb-6">Filters</h2>
+              <h2 className="text-xl font-black text-slate-900 uppercase tracking-tighter mb-6 font-heading">Filters</h2>
 
               {/* Categories Accordion */}
-              <details open className="group border-b border-white/5 pb-4">
+              <details open className="group border-b border-slate-100 pb-4">
                 <summary className="flex items-center justify-between cursor-pointer list-none py-2">
-                  <h3 className="text-[11px] font-black text-white uppercase tracking-[0.2em] flex items-center gap-2">
-                    <span className="w-1 h-3 bg-[#007bff] rounded-full" />
+                  <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                    <span className="w-1.5 h-3.5 bg-primary rounded-full shadow-[0_0_8px_rgba(124,58,237,0.4)]" />
                     Categories
                   </h3>
-                  <ChevronDown className="w-4 h-4 text-[#a0a0a0] group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="flex flex-col gap-1 mt-3">
                   <label onClick={(e) => {
                     e.preventDefault();
                     setSelectedCategory(''); navigate('/shop');
                   }} className="flex items-center gap-3 group cursor-pointer py-1.5">
-                    <div className={`w-4 h-4 rounded-[3px] border transition-all flex items-center justify-center ${!selectedCategory ? 'bg-[#007bff] border-[#007bff]' : 'border-white/20 bg-transparent group-hover:border-[#007bff]'}`}>
+                    <div className={`w-4 h-4 rounded-[3px] border transition-all flex items-center justify-center ${!selectedCategory ? 'bg-primary border-primary' : 'border-slate-200 bg-transparent group-hover:border-primary'}`}>
                       {!selectedCategory && <Check className="w-3 h-3 text-white stroke-[3]" />}
                     </div>
-                    <span className={`text-[13px] font-medium transition-colors ${!selectedCategory ? 'text-white' : 'text-[#cbd5e1] group-hover:text-white'}`}>
+                    <span className={`text-[13px] font-medium transition-colors ${!selectedCategory ? 'text-slate-900 font-bold' : 'text-slate-500 group-hover:text-slate-900'}`}>
                       All Categories
                     </span>
                   </label>
@@ -366,11 +366,11 @@ const ShopPage = () => {
                         } else {
                           setSelectedCategory(cat.id); navigate(`/shop?category=${cat.id}`);
                         }
-                      }} className="flex items-center gap-3 group cursor-pointer py-1.5">
-                        <div className={`w-4 h-4 rounded-[3px] border transition-all flex items-center justify-center ${isActive ? 'bg-[#007bff] border-[#007bff]' : 'border-white/20 bg-transparent group-hover:border-[#007bff]'}`}>
-                          {isActive && <Check className="w-3 h-3 text-white stroke-[3]" />}
+                      }} className="flex items-center gap-3 group cursor-pointer py-1.5 px-2 hover:bg-slate-50 rounded-lg transition-all">
+                        <div className={`w-4 h-4 rounded-[4px] border transition-all flex items-center justify-center ${isActive ? 'bg-primary border-primary shadow-lg shadow-primary/20' : 'border-slate-200 bg-white group-hover:border-primary'}`}>
+                          {isActive && <Check className="w-2.5 h-2.5 text-white stroke-[4]" />}
                         </div>
-                        <span className={`text-[13px] font-medium transition-colors ${isActive ? 'text-white' : 'text-[#cbd5e1] group-hover:text-white'}`}>
+                        <span className={`text-[13px] font-medium transition-colors ${isActive ? 'text-primary font-bold' : 'text-slate-500 group-hover:text-primary'}`}>
                           {cat.name}
                         </span>
                       </label>
@@ -385,27 +385,27 @@ const ShopPage = () => {
                 if (variants.length === 0) return null;
                 const active = specFilters[group.label] || '';
                 return (
-                  <details key={group.label} open className="group border-b border-white/5 pb-4">
+                  <details key={group.label} open className="group border-b border-slate-100 pb-4">
                     <summary className="flex items-center justify-between cursor-pointer list-none py-2">
-                      <h3 className="text-[11px] font-black text-white uppercase tracking-[0.2em] flex items-center gap-2">
-                        <span className="w-1 h-3 bg-[#f5b50a] rounded-full" />
+                      <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                        <span className="w-1 h-3 bg-secondary rounded-full" />
                         {group.label}
                       </h3>
-                      <ChevronDown className="w-4 h-4 text-[#a0a0a0] group-open:rotate-180 transition-transform" />
+                      <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
                     </summary>
                     <div className="flex flex-col gap-1 mt-3">
-                      <label onClick={e => { e.preventDefault(); setSpecFilters(p => ({ ...p, [group.label]: '' })); }} className="flex items-center gap-3 group cursor-pointer py-1.5">
-                        <div className={`w-4 h-4 rounded-[3px] border transition-all flex items-center justify-center ${!active ? 'bg-[#f5b50a] border-[#f5b50a]' : 'border-white/20 bg-transparent group-hover:border-[#f5b50a]'}`}>
-                          {!active && <Check className="w-3 h-3 text-black stroke-[3]" />}
+                      <label onClick={e => { e.preventDefault(); setSpecFilters(p => ({ ...p, [group.label]: '' })); }} className="flex items-center gap-3 group cursor-pointer py-1.5 px-2 hover:bg-slate-50 rounded-lg transition-all">
+                        <div className={`w-4 h-4 rounded-[4px] border transition-all flex items-center justify-center ${!active ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-200 bg-white group-hover:border-secondary'}`}>
+                          {!active && <Check className="w-2.5 h-2.5 text-white stroke-[4]" />}
                         </div>
-                        <span className={`text-[13px] font-medium ${!active ? 'text-white' : 'text-[#cbd5e1] group-hover:text-white'}`}>All</span>
+                        <span className={`text-[13px] font-medium ${!active ? 'text-secondary font-bold' : 'text-slate-500 group-hover:text-secondary'}`}>All</span>
                       </label>
                       {variants.map(v => (
-                        <label key={v} onClick={e => { e.preventDefault(); setSpecFilter(group.label, v); }} className="flex items-center gap-3 group cursor-pointer py-1.5">
-                          <div className={`w-4 h-4 rounded-[3px] border transition-all flex items-center justify-center ${active === v ? 'bg-[#f5b50a] border-[#f5b50a]' : 'border-white/20 bg-transparent group-hover:border-[#f5b50a]'}`}>
-                            {active === v && <Check className="w-3 h-3 text-black stroke-[3]" />}
+                        <label key={v} onClick={e => { e.preventDefault(); setSpecFilter(group.label, v); }} className="flex items-center gap-3 group cursor-pointer py-1.5 px-2 hover:bg-slate-50 rounded-lg transition-all">
+                          <div className={`w-4 h-4 rounded-[4px] border transition-all flex items-center justify-center ${active === v ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-200 bg-white group-hover:border-secondary'}`}>
+                            {active === v && <Check className="w-2.5 h-2.5 text-white stroke-[4]" />}
                           </div>
-                          <span className={`text-[13px] font-medium ${active === v ? 'text-white font-bold' : 'text-[#cbd5e1] group-hover:text-white'}`}>{v}</span>
+                          <span className={`text-[13px] font-medium ${active === v ? 'text-secondary font-bold' : 'text-slate-500 group-hover:text-secondary'}`}>{v}</span>
                         </label>
                       ))}
                     </div>
@@ -415,23 +415,23 @@ const ShopPage = () => {
 
 
               {/* Price Range Accordion */}
-              <details open className="group border-b border-white/5 pb-4">
+              <details open className="group border-b border-slate-100 pb-4">
                 <summary className="flex items-center justify-between cursor-pointer list-none py-2">
-                  <h3 className="text-[11px] font-black text-white uppercase tracking-[0.2em] flex items-center gap-2">
-                    <span className="w-1 h-3 bg-[#f5b50a] rounded-full" />
+                  <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                    <span className="w-1 h-3 bg-secondary rounded-full" />
                     Price Range
                   </h3>
-                  <ChevronDown className="w-4 h-4 text-[#a0a0a0] group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="px-1 mt-4">
                   <div className="text-center mb-3">
-                    <span className="text-sm font-bold text-white bg-black/40 px-3 py-1.5 rounded-full border border-white/10">
+                    <span className="text-sm font-bold text-slate-900 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200">
                       Up to ₹{maxPrice.toLocaleString('en-IN')}
                     </span>
                   </div>
                   <input 
                     type="range" 
-                    className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#f5b50a]" 
+                    className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-secondary" 
                     min="1000" 
                     max="300000" 
                     step="1000"
@@ -446,23 +446,23 @@ const ShopPage = () => {
               </details>
 
               {/* Brands Accordion */}
-              <details open className="group border-b border-white/5 pb-4">
+              <details open className="group border-b border-slate-100 pb-4">
                 <summary className="flex items-center justify-between cursor-pointer list-none py-2">
-                  <h3 className="text-[11px] font-black text-white uppercase tracking-[0.2em] flex items-center gap-2">
-                    <span className="w-1 h-3 bg-[#007bff] rounded-full" />
+                  <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                    <span className="w-1 h-3 bg-primary rounded-full" />
                     Brands
                   </h3>
-                  <ChevronDown className="w-4 h-4 text-[#a0a0a0] group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="flex flex-col gap-1 mt-3">
                   <label onClick={(e) => {
                     e.preventDefault();
                     setSelectedBrand(''); navigate(selectedCategory ? `/shop?category=${selectedCategory}` : '/shop');
                   }} className="flex items-center gap-3 group cursor-pointer py-1.5">
-                    <div className={`w-4 h-4 rounded-[3px] border transition-all flex items-center justify-center ${!selectedBrand ? 'bg-[#007bff] border-[#007bff]' : 'border-white/20 bg-transparent group-hover:border-[#007bff]'}`}>
+                    <div className={`w-4 h-4 rounded-[3px] border transition-all flex items-center justify-center ${!selectedBrand ? 'bg-primary border-primary' : 'border-slate-200 bg-transparent group-hover:border-primary'}`}>
                       {!selectedBrand && <Check className="w-3 h-3 text-white stroke-[3]" />}
                     </div>
-                    <span className={`text-[13px] font-medium transition-colors ${!selectedBrand ? 'text-white' : 'text-[#cbd5e1] group-hover:text-white'}`}>
+                    <span className={`text-[13px] font-medium transition-colors ${!selectedBrand ? 'text-slate-900 font-bold' : 'text-slate-500 group-hover:text-slate-900'}`}>
                       All Brands
                     </span>
                   </label>
@@ -478,11 +478,11 @@ const ShopPage = () => {
                           setSelectedBrand(brand.id);
                           navigate(selectedCategory ? `/shop?category=${selectedCategory}&brandq=${encodeURIComponent(brand.name)}` : `/shop?brandq=${encodeURIComponent(brand.name)}`);
                         }
-                      }} className="flex items-center gap-3 group cursor-pointer py-1.5">
-                        <div className={`w-4 h-4 rounded-[3px] border transition-all flex items-center justify-center ${isActive ? 'bg-[#007bff] border-[#007bff]' : 'border-white/20 bg-transparent group-hover:border-[#007bff]'}`}>
-                          {isActive && <Check className="w-3 h-3 text-white stroke-[3]" />}
+                      }} className="flex items-center gap-3 group cursor-pointer py-1.5 px-2 hover:bg-slate-50 rounded-lg transition-all">
+                        <div className={`w-4 h-4 rounded-[4px] border transition-all flex items-center justify-center ${isActive ? 'bg-primary border-primary shadow-lg shadow-primary/20' : 'border-slate-200 bg-white group-hover:border-primary'}`}>
+                          {isActive && <Check className="w-2.5 h-2.5 text-white stroke-[4]" />}
                         </div>
-                        <span className={`text-[13px] font-medium transition-colors ${isActive ? 'text-white' : 'text-[#cbd5e1] group-hover:text-white'}`}>
+                        <span className={`text-[13px] font-medium transition-colors ${isActive ? 'text-primary font-bold' : 'text-slate-500 group-hover:text-primary'}`}>
                           {brand.name}
                         </span>
                       </label>
@@ -496,11 +496,11 @@ const ShopPage = () => {
           {/* ── CONTENT AREA ── */}
           <div className="flex-1 min-w-0">
             {/* Category Chips Strip — mobile only */}
-            <div className="md:hidden glass-panel py-3 px-4 flex gap-2 overflow-x-auto scrollbar-hide border-b border-white/10">
+            <div className="md:hidden bg-white py-3 px-4 flex gap-2 overflow-x-auto scrollbar-hide border-b border-slate-200">
               <button
                 id="chip-all-products"
                 onClick={() => { setSelectedCategory(''); clearSpecFilters(); navigate('/shop'); }}
-                className={!selectedCategory ? 'chip-active' : 'chip-inactive'}
+                className={!selectedCategory ? 'bg-primary text-white px-4 py-1.5 rounded-full text-xs font-black' : 'bg-slate-50 text-slate-500 border border-slate-200 px-4 py-1.5 rounded-full text-xs font-bold'}
               >
                 All
               </button>
@@ -509,7 +509,7 @@ const ShopPage = () => {
                   key={cat.id}
                   id={`chip-cat-${cat.id}`}
                   onClick={() => { setSelectedCategory(cat.id); clearSpecFilters(); navigate(`/shop?category=${cat.id}`); }}
-                  className={selectedCategory === cat.id ? 'chip-active' : 'chip-inactive'}
+                  className={selectedCategory === cat.id ? 'bg-primary text-white px-4 py-1.5 rounded-full text-xs font-black' : 'bg-slate-50 text-slate-500 border border-slate-200 px-4 py-1.5 rounded-full text-xs font-bold'}
                 >
                   {cat.name}
                 </button>
@@ -522,50 +522,50 @@ const ShopPage = () => {
               if (variants.length === 0) return null;
               const active = specFilters[group.label] || '';
               return (
-                <div key={group.label} className="md:hidden py-2 px-4 flex items-center gap-2 overflow-x-auto scrollbar-hide border-b border-white/5" style={{ background: 'rgba(245,181,10,0.03)' }}>
-                  <span className="text-[10px] font-black text-[#f5b50a] uppercase tracking-wider shrink-0">{group.label}:</span>
-                  <button onClick={() => setSpecFilters(p => ({ ...p, [group.label]: '' }))} className={`shrink-0 px-3 py-1 rounded-full text-[11px] font-bold border transition-all ${!active ? 'bg-[#f5b50a] border-[#f5b50a] text-black' : 'bg-transparent border-white/15 text-slate-300'}`}>All</button>
+                <div key={group.label} className="md:hidden py-2 px-4 flex items-center gap-2 overflow-x-auto scrollbar-hide border-b border-slate-100" style={{ background: '#FDFCF2' }}>
+                  <span className="text-[10px] font-black text-secondary uppercase tracking-wider shrink-0 font-heading">{group.label}:</span>
+                  <button onClick={() => setSpecFilters(p => ({ ...p, [group.label]: '' }))} className={`shrink-0 px-3 py-1 rounded-full text-[11px] font-bold border transition-all ${!active ? 'bg-secondary border-secondary text-white' : 'bg-white border-slate-200 text-slate-500'}`}>All</button>
                   {variants.map(v => (
-                    <button key={v} onClick={() => setSpecFilter(group.label, v)} className={`shrink-0 px-3 py-1 rounded-full text-[11px] font-bold border transition-all ${active === v ? 'bg-[#f5b50a] border-[#f5b50a] text-black' : 'bg-transparent border-white/15 text-slate-300 hover:border-[#f5b50a]'}`}>{v}</button>
+                    <button key={v} onClick={() => setSpecFilter(group.label, v)} className={`shrink-0 px-3 py-1 rounded-full text-[11px] font-bold border transition-all ${active === v ? 'bg-secondary border-secondary text-white' : 'bg-white border-slate-200 text-slate-500 hover:border-secondary'}`}>{v}</button>
                   ))}
                 </div>
               );
             })}
 
             {/* Filter & Sort Sticky Bar */}
-            <div className="glass-panel px-4 py-2.5 flex items-center justify-between border-b border-white/10 sticky top-[60px] md:top-[70px] z-20">
-              <span className="text-sm text-slate-300 font-medium">{filteredProducts.length} products</span>
+            <div className="bg-white px-4 py-2.5 flex items-center justify-between border-b border-slate-200 sticky top-[60px] md:top-[70px] z-20 shadow-sm">
+              <span className="text-sm text-slate-500 font-medium">{filteredProducts.length} products</span>
 
               <div className="flex items-center gap-2">
                 {selectedCategory && (
-                  <div className="flex items-center gap-1.5 bg-gradient-to-r from-[#3B82F6]/20 to-[#10B981]/20 border border-[#3B82F6]/30 rounded-full px-3 py-1">
-                    <span className="text-xs text-[#3B82F6] font-600">{activeCategory?.name}</span>
+                  <div className="flex items-center gap-1.5 bg-primary/10 border border-primary/20 rounded-full px-3 py-1">
+                    <span className="text-xs text-primary font-bold">{activeCategory?.name}</span>
                     <button onClick={() => { setSelectedCategory(''); clearSpecFilters(); navigate(selectedBrand ? `/shop?brandq=${encodeURIComponent(brands.find(b => b.id === selectedBrand)?.name || '')}` : '/shop'); }} className="bg-transparent border-none cursor-pointer flex items-center p-0">
-                      <X className="w-3 h-3 text-[#3B82F6]" />
+                      <X className="w-3 h-3 text-primary" />
                     </button>
                   </div>
                 )}
                 {/* Active spec filter pills */}
                 {activeSpecEntries.map(([label, value]) => (
-                  <div key={label} className="flex items-center gap-1.5 bg-[#f5b50a]/20 border border-[#f5b50a]/40 rounded-full px-3 py-1">
-                    <Tag className="w-3 h-3 text-[#f5b50a]" />
-                    <span className="text-xs text-[#f5b50a] font-bold">{label}: {value}</span>
+                  <div key={label} className="flex items-center gap-1.5 bg-secondary/10 border border-secondary/20 rounded-full px-3 py-1">
+                    <Tag className="w-3 h-3 text-secondary" />
+                    <span className="text-xs text-secondary font-bold">{label}: {value}</span>
                     <button onClick={() => setSpecFilters(p => ({ ...p, [label]: '' }))} className="bg-transparent border-none cursor-pointer flex items-center p-0">
-                      <X className="w-3 h-3 text-[#f5b50a]" />
+                      <X className="w-3 h-3 text-secondary" />
                     </button>
                   </div>
                 ))}
                 
                 {selectedBrand && (
-                  <div className="flex items-center gap-1.5 bg-gradient-to-r from-[#f5b50a]/20 to-[#f97316]/20 border border-[#f5b50a]/30 rounded-full px-3 py-1">
-                    <span className="text-xs text-[#f5b50a] font-600">
+                  <div className="flex items-center gap-1.5 bg-secondary/10 border border-secondary/20 rounded-full px-3 py-1">
+                    <span className="text-xs text-secondary font-bold">
                       {brands.find(b => b.id === selectedBrand)?.name}
                     </span>
                     <button
                       onClick={() => { setSelectedBrand(''); navigate(selectedCategory ? `/shop?category=${selectedCategory}` : '/shop'); }}
                       className="bg-transparent border-none cursor-pointer flex items-center p-0"
                     >
-                      <X className="w-3 h-3 text-[#f5b50a]" />
+                      <X className="w-3 h-3 text-secondary" />
                     </button>
                   </div>
                 )}
@@ -574,9 +574,9 @@ const ShopPage = () => {
                 <button
                   id="sort-btn"
                   onClick={() => setShowSort(!showSort)}
-                  className="md:hidden flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-sm font-600 text-white cursor-pointer hover:bg-white/10"
+                  className="md:hidden flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-sm font-bold text-slate-900 cursor-pointer hover:bg-slate-100"
                 >
-                  <SlidersHorizontal className="w-3.5 h-3.5" />
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-primary" />
                   {activeSortLabel.split(':')[0] || 'Sort'}
                   <ChevronDown className="w-3 h-3" />
                 </button>
@@ -585,16 +585,16 @@ const ShopPage = () => {
 
             {/* Mobile Sort Dropdown */}
             {showSort && (
-              <div className="md:hidden glass-panel px-4 py-3 border-b border-white/10 flex flex-wrap gap-2">
+              <div className="md:hidden bg-white px-4 py-3 border-b border-slate-200 flex flex-wrap gap-2 shadow-inner">
                 {sortOptions.map(opt => (
                   <button
                     key={opt.key}
                     id={`sort-${opt.key}`}
                     onClick={() => { setSortBy(opt.key); setShowSort(false); }}
-                    className={`px-3.5 py-1.5 rounded-full text-sm font-600 cursor-pointer transition-all ${
+                    className={`px-3.5 py-1.5 rounded-full text-sm font-bold cursor-pointer transition-all ${
                       sortBy === opt.key
-                        ? 'bg-gradient-to-r from-[#3B82F6] to-[#10B981] text-white border-0'
-                        : 'border border-white/20 text-slate-300 bg-transparent'
+                        ? 'bg-primary text-white border-0'
+                        : 'border border-slate-200 text-slate-500 bg-slate-50'
                     }`}
                   >
                     {opt.label}
@@ -621,11 +621,11 @@ const ShopPage = () => {
               sortedProducts.length === 0 ? (
                 <div className="text-center py-16 px-5">
                   <div className="text-6xl mb-3">📦</div>
-                  <h3 className="text-base font-bold text-white mb-2">No products found</h3>
+                  <h3 className="text-base font-bold text-slate-900 mb-2 font-heading">No products found</h3>
                   <p className="text-sm text-slate-400">Try a different category or clear filters</p>
                   <button
                     onClick={() => { setSelectedCategory(''); setSelectedBrand(''); navigate('/shop'); }}
-                    className="mt-4 bg-gradient-to-r from-[#3B82F6] to-[#10B981] text-white border-none rounded-xl px-6 py-2.5 text-sm font-600 cursor-pointer shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+                    className="mt-4 bg-primary text-white border-none rounded-xl px-6 py-2.5 text-sm font-black cursor-pointer shadow-lg shadow-primary/20"
                   >
                     Clear Filters
                   </button>
@@ -657,8 +657,8 @@ const ShopPage = () => {
                   return (
                     <section className="mb-8">
                       <div className="flex items-center gap-3 px-4 md:px-6 py-4">
-                        <div className="w-1 h-6 bg-[#f5b50a] rounded-full shadow-[0_0_12px_#f5b50a]" />
-                        <h2 className="text-base md:text-lg font-black text-white uppercase tracking-tight">Other Products</h2>
+                        <div className="w-1 h-6 bg-secondary rounded-full shadow-lg shadow-secondary/20" />
+                        <h2 className="text-base md:text-lg font-black text-slate-900 uppercase tracking-tight font-heading">Other Products</h2>
                       </div>
                       <div className="products-grid px-4 md:px-6">
                         {uncategorised.slice(0, 6).map(p => <ProductCard key={p.id} product={p} />)}
