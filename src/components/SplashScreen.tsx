@@ -3,10 +3,18 @@ import { useEffect, useState } from 'react';
 
 const SplashScreen = () => {
   const [isVisible, setIsVisible] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(false), 2800);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => setIsVisible(false), 3500);
+    const interval = setInterval(() => {
+      setProgress(prev => Math.min(prev + 1, 100));
+    }, 25);
+    
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -16,192 +24,179 @@ const SplashScreen = () => {
           initial={{ opacity: 1 }}
           exit={{ 
             opacity: 0,
-            scale: 1.1,
-            filter: 'blur(10px)',
-            transition: { duration: 0.8, ease: "easeInOut" }
+            y: -20,
+            filter: 'blur(20px)',
+            transition: { duration: 1, ease: [0.22, 1, 0.36, 1] }
           }}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 9999,
-            background: '#0f172a', // Slate-900
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-          }}
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-white"
         >
-          {/* Background 3D Floating Elements */}
-          <motion.div
-            animate={{ 
-              rotateZ: 360,
-              scale: [1, 1.2, 1],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            style={{
-              position: 'absolute',
-              width: '400px',
-              height: '400px',
-              background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)',
-              filter: 'blur(40px)',
-              top: '-100px',
-              right: '-100px',
-            }}
-          />
-          <motion.div
-            animate={{ 
-              rotateZ: -360,
-              scale: [1.2, 1, 1.2],
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            style={{
-              position: 'absolute',
-              width: '500px',
-              height: '500px',
-              background: 'radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%)',
-              filter: 'blur(50px)',
-              bottom: '-150px',
-              left: '-150px',
-            }}
-          />
-
-          {/* Main 3D Logo Container */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotateX: 45, rotateY: -30 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
-              rotateX: 0, 
-              rotateY: 0,
-              transition: { duration: 1.2, ease: "easeOut" }
-            }}
-            style={{
-              perspective: '1000px',
-              textAlign: 'center',
-              zIndex: 10,
-            }}
-          >
-            {/* Glossy Icon Box */}
+          {/* Animated Background Elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <motion.div
-              animate={{
-                y: [0, -10, 0],
-                rotateY: [0, 5, -5, 0],
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, 90, 180, 270, 360],
+                x: [0, 50, 0, -50, 0],
+                y: [0, -30, 0, 30, 0],
               }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="absolute -top-[10%] -right-[10%] w-[500px] h-[500px] rounded-full bg-primary/5 blur-[100px]"
+            />
+            <motion.div
+              animate={{ 
+                scale: [1.2, 1, 1.2],
+                rotate: [360, 270, 180, 90, 0],
+                x: [0, -40, 0, 40, 0],
+                y: [0, 40, 0, -40, 0],
               }}
-              style={{
-                width: '80px',
-                height: '80px',
-                background: 'linear-gradient(135deg, #3B82F6 0%, #10B981 100%)',
-                borderRadius: '24px',
-                margin: '0 auto 24px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 20px 50px rgba(59,130,246,0.3), 0 0 40px rgba(16,185,129,0.2), inset 0 2px 10px rgba(255,255,255,0.2)',
-                position: 'relative',
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute -bottom-[10%] -left-[10%] w-[600px] h-[600px] rounded-full bg-secondary/5 blur-[120px]"
+            />
+            
+            {/* Floating Geometric Shapes */}
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ 
+                  opacity: [0, 0.2, 0],
+                  scale: [0.5, 1, 0.8],
+                  y: [-20, -120],
+                  x: i % 2 === 0 ? [0, 30] : [0, -30],
+                  rotate: [0, 180]
+                }}
+                transition={{ 
+                  duration: 4 + i, 
+                  repeat: Infinity, 
+                  delay: i * 0.5,
+                  ease: "easeInOut"
+                }}
+                className="absolute"
+                style={{
+                  left: `${15 + i * 15}%`,
+                  bottom: '10%',
+                  width: i % 2 === 0 ? '12px' : '20px',
+                  height: i % 2 === 0 ? '12px' : '20px',
+                  borderRadius: i % 3 === 0 ? '50%' : '4px',
+                  border: `2px solid ${i % 2 === 0 ? '#7C3AED' : '#F59E0B'}`,
+                  opacity: 0.1
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Main Logo & Text Container */}
+          <div className="relative z-10 flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5, rotateY: -90 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1, 
+                rotateY: 0,
+                transition: { duration: 1, ease: [0.34, 1.56, 0.64, 1] }
               }}
+              className="relative mb-8"
             >
-              <div style={{ fontSize: '30px', fontWeight: 900, color: '#0F172A', letterSpacing: '-2px' }}>SRC</div>
-              
-              {/* Spinning Ring */}
+              {/* Glossy Icon Box */}
+              <motion.div
+                animate={{
+                  y: [0, -12, 0],
+                  rotateY: [0, 10, -10, 0],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="w-24 h-24 bg-gradient-to-br from-primary via-primary to-primary-foreground rounded-[32px] flex items-center justify-center shadow-2xl shadow-primary/30 relative overflow-hidden group"
+              >
+                <span className="text-white text-3xl font-black tracking-tighter font-heading z-10">SRC</span>
+                
+                {/* Shine Effect */}
+                <motion.div
+                  animate={{ left: ['-150%', '150%'] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+                  className="absolute top-0 bottom-0 w-1/2 bg-white/20 skew-x-[25deg] blur-md"
+                />
+              </motion.div>
+
+              {/* Orbital Rings */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                style={{
-                  position: 'absolute',
-                  inset: '-10px',
-                  border: '2px dashed rgba(255,255,255,0.1)',
-                  borderRadius: '32px',
-                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-4 border border-primary/10 rounded-full"
               />
-            </motion.div>
-
-            {/* Brand Text with 3D Pop Effect */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-            >
-              <h1 style={{
-                fontSize: '24px',
-                fontWeight: 900,
-                color: 'white',
-                letterSpacing: '-0.5px',
-                margin: 0,
-                textTransform: 'uppercase',
-                background: 'linear-gradient(to bottom, #ffffff, #94a3b8)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                display: 'block'
-              }}>
-                Sri Raj Computers
-              </h1>
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 0.5 }}
-                style={{
-                  fontSize: '10px',
-                  fontWeight: 800,
-                  color: '#3B82F6',
-                  letterSpacing: '4px',
-                  textTransform: 'uppercase',
-                  display: 'block',
-                  marginTop: '8px',
-                  textShadow: '0 0 10px rgba(59,130,246,0.6)',
-                }}
-              >
-                & IT Solutions
-              </motion.span>
-            </motion.div>
-
-            {/* Loading Bar */}
-            <div style={{
-              width: '140px',
-              height: '3px',
-              background: 'rgba(255,255,255,0.05)',
-              borderRadius: '2px',
-              margin: '32px auto 0',
-              overflow: 'hidden',
-              position: 'relative',
-            }}>
               <motion.div
-                initial={{ left: '-100%' }}
-                animate={{ left: '100%' }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  bottom: 0,
-                  width: '50%',
-                  background: 'linear-gradient(90deg, transparent, #3B82F6, #10B981, transparent)',
-                }}
+                animate={{ rotate: -360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-8 border border-secondary/10 rounded-full border-dashed"
               />
+            </motion.div>
+
+            {/* Brand Text Reveal */}
+            <div className="text-center overflow-hidden">
+              <motion.h1 
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight font-heading"
+              >
+                Sri Raj Computers
+              </motion.h1>
+              
+              <motion.div
+                initial={{ opacity: 0, letterSpacing: '0px' }}
+                animate={{ opacity: 1, letterSpacing: '8px' }}
+                transition={{ delay: 0.8, duration: 1 }}
+                className="mt-3 text-[10px] font-black uppercase text-secondary tracking-[8px] flex items-center justify-center gap-2"
+              >
+                <div className="h-[1px] w-8 bg-secondary/30" />
+                <span>& IT Solutions</span>
+                <div className="h-[1px] w-8 bg-secondary/30" />
+              </motion.div>
             </div>
-          </motion.div>
+
+            {/* Sophisticated Loading Indicator */}
+            <div className="mt-16 w-64">
+              <div className="flex justify-between items-end mb-2">
+                <motion.span 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-[10px] font-black uppercase tracking-widest text-slate-400"
+                >
+                  Initializing Systems
+                </motion.span>
+                <span className="text-[10px] font-black text-primary">{progress}%</span>
+              </div>
+              <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200/50 p-[1px]">
+                <motion.div 
+                  className="h-full bg-gradient-to-r from-primary to-secondary rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ ease: "easeOut" }}
+                />
+              </div>
+            </div>
+          </div>
           
-          {/* Footer Text */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            style={{
-              position: 'absolute',
-              bottom: '40px',
-              fontSize: '10px',
-              color: 'rgba(255,255,255,0.2)',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '2px'
-            }}
+          {/* Version / Copyright Footer */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="absolute bottom-12 flex flex-col items-center gap-2"
           >
-            Powering Digital Excellence
-          </motion.p>
+            <div className="flex items-center gap-3">
+              <div className="h-[1px] w-4 bg-slate-200" />
+              <p className="text-[9px] font-black text-slate-400 uppercase tracking-[3px]">
+                Powering Digital Excellence
+              </p>
+              <div className="h-[1px] w-4 bg-slate-200" />
+            </div>
+            <p className="text-[8px] font-bold text-slate-300 uppercase tracking-widest">
+              v2.5.0 © 2024
+            </p>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
