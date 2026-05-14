@@ -73,7 +73,7 @@ const Header = () => {
             className="lg:hidden"
           >
             {[0, 1, 2].map(i => (
-              <span key={i} style={{ display: 'block', width: '22px', height: '2.5px', background: 'white', borderRadius: '2px' }} />
+              <span key={i} style={{ display: 'block', width: '22px', height: '2.5px', background: '#7C3AED', borderRadius: '2px' }} />
             ))}
           </button>
 
