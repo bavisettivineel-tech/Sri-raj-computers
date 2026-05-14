@@ -20,17 +20,17 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="app-shell" style={{ background: '#000b1d', minHeight: '100vh' }}>
+    <div className="app-shell bg-slate-50 min-h-screen">
       <Header />
       <main className="pb-20 lg:pb-0">
         {/* Hero */}
         <HeroSlider />
 
         {/* Marquee Strip */}
-        <div className="bg-[#007bff] py-2.5 overflow-hidden whitespace-nowrap shadow-[0_0_20px_rgba(0,123,255,0.4)] relative z-10">
+        <div className="bg-white py-3 overflow-hidden whitespace-nowrap border-b border-slate-200 relative z-10">
           <div className="inline-block animate-[scrollLeft_30s_linear_infinite] hover:[animation-play-state:paused] cursor-default">
             {[...Array(10)].map((_, i) => (
-              <span key={i} className="text-[11px] font-black text-white uppercase tracking-[0.2em] mx-10">
+              <span key={i} className="text-[11px] font-black text-primary uppercase tracking-[0.2em] mx-10">
                 🚀 Special Discount on Gaming Laptops • Free Delivery over ₹999 • Genuine Spares & Service • CCTV Installation Support • 100% Quality Assurance
               </span>
             ))}

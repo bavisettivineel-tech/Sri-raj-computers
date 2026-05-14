@@ -78,34 +78,34 @@ const Footer = () => {
       </div>
 
       {/* ── NEWSLETTER BANNER ── */}
-      <div style={{ background: 'linear-gradient(135deg, #7C3AED 0%, #1E1B4B 50%, #7C3AED 100%)', borderTop: '1px solid rgba(124, 58, 237, 0.25)', borderBottom: '1px solid rgba(124, 58, 237, 0.25)', padding: '32px 24px' }}>
+      <div style={{ background: '#FFFFFF', borderTop: '1px solid #DDD6FE', borderBottom: '1px solid #DDD6FE', padding: '48px 24px' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '40px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '6px' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.15)', border: '1px solid rgba(124, 58, 237, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Send style={{ width: '18px', height: '18px', color: '#7C3AED' }} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '8px' }}>
+              <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(124, 58, 237, 0.08)', border: '1.5px solid rgba(124, 58, 237, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Send style={{ width: '20px', height: '20px', color: '#7C3AED' }} />
               </div>
-              <h3 style={{ fontSize: 'clamp(18px,3vw,26px)', fontWeight: 900, color: 'white', fontFamily: 'Space Grotesk, sans-serif' }}>
-                Subscribe for Exclusive Deals!
+              <h3 style={{ fontSize: 'clamp(20px,3vw,28px)', fontWeight: 900, color: '#1E1B4B', fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.5px' }}>
+                Join the SRC Insider!
               </h3>
             </div>
-            <p style={{ color: '#94a3b8', fontSize: '14px' }}>Get offers, new arrivals & tech tips straight to your inbox</p>
+            <p style={{ color: '#64748b', fontSize: '15px', fontWeight: 500 }}>Get exclusive tech deals, new arrivals & tips directly in your inbox.</p>
           </div>
           <div style={{ flex: 1, minWidth: '280px', maxWidth: '440px' }}>
             {subscribed ? (
-              <div style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: '8px', padding: '14px', color: '#22c55e', fontWeight: 700, textAlign: 'center' }}>
-                Subscribed! Thank you.
+              <div style={{ background: 'rgba(34,197,94,0.05)', border: '1.5px solid rgba(34,197,94,0.2)', borderRadius: '12px', padding: '16px', color: '#16a34a', fontWeight: 700, textAlign: 'center', animation: 'fadeIn 0.3s ease' }}>
+                ✨ Success! You're on the list.
               </div>
             ) : (
-              <div style={{ display: 'flex', gap: '0', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(124, 58, 237, 0.3)' }}>
+              <div style={{ display: 'flex', gap: '8px', padding: '6px', background: '#F8FAFC', borderRadius: '16px', border: '1px solid #E2E8F0', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  style={{ flex: 1, padding: '13px 16px', background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '14px', outline: 'none', fontFamily: 'Space Grotesk, sans-serif' }} />
+                  placeholder="name@example.com"
+                  style={{ flex: 1, padding: '10px 16px', background: 'transparent', border: 'none', color: '#1E1B4B', fontSize: '14px', outline: 'none', fontWeight: 500, fontFamily: 'Space Grotesk, sans-serif' }} />
                 <button id="newsletter-subscribe-btn" onClick={() => { if (email) setSubscribed(true); }}
-                  style={{ background: '#7C3AED', color: 'white', border: 'none', padding: '0 20px', fontWeight: 800, fontSize: '13px', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'Space Grotesk, sans-serif', transition: 'background 0.2s' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#5B21B6')}
-                  onMouseLeave={e => (e.currentTarget.style.background = '#7C3AED')}>
-                  SUBSCRIBE
+                  style={{ background: '#7C3AED', color: 'white', border: 'none', padding: '0 24px', borderRadius: '10px', fontWeight: 800, fontSize: '13px', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'Space Grotesk, sans-serif', transition: 'all 0.3s', boxShadow: '0 4px 12px rgba(124, 58, 237, 0.3)' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#5B21B6'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = '#7C3AED'; e.currentTarget.style.transform = 'translateY(0)'; }}>
+                  JOIN NOW
                 </button>
               </div>
             )}
@@ -114,72 +114,72 @@ const Footer = () => {
       </div>
 
       {/* ── MAIN FOOTER ── */}
-      <div style={{ background: '#1E1B4B', borderTop: '1px solid rgba(124, 58, 237, 0.1)' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '48px 24px 32px' }}>
-          <div id="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '32px' }}>
-            <style>{`@media (min-width:1024px) { #footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1fr !important; } }`}</style>
-
+      <div style={{ background: '#0F172A', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '64px 24px 48px' }}>
+          <div id="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '48px' }}>
+            <style>{`@media (min-width:1024px) { #footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr !important; } }`}</style>
+ 
             {/* Col 1: Brand */}
-            <div>
-              <div style={{ marginBottom: '16px' }}>
-                <span style={{ fontSize: '28px', fontWeight: 900, color: '#F59E0B', textShadow: '0 0 20px rgba(245,158,11,0.3)', fontFamily: 'Space Grotesk, sans-serif' }}>SRI RAJ</span>
-                <span style={{ fontSize: '11px', fontWeight: 800, color: 'white', letterSpacing: '3px', marginLeft: '6px' }}>COMPUTERS</span>
+            <div className="space-y-6">
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                  <span style={{ fontSize: '32px', fontWeight: 900, color: '#F59E0B', fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-1.5px' }}>SRI RAJ</span>
+                  <span style={{ fontSize: '11px', fontWeight: 800, color: '#FFFFFF', letterSpacing: '4px', textTransform: 'uppercase', opacity: 0.9 }}>COMPUTERS</span>
+                </div>
+                <p style={{ fontSize: '14px', color: '#94A3B8', lineHeight: 1.8, maxWidth: '400px' }}>
+                  Your premier destination for high-performance computing, enterprise IT solutions, and genuine tech spares. Empowering your digital journey since 2012.
+                </p>
               </div>
-              <p style={{ fontSize: '13px', color: '#E5E7EB', lineHeight: 1.7, marginBottom: '20px' }}>
-                Your trusted technology partner since 2012. Authorized dealer for top brands like HP, Dell, Lenovo, Asus, Acer, and more. Specializing in gaming setups, enterprise solutions, and genuine spare parts.
-              </p>
-
+ 
               {/* Social Icons */}
-              <div style={{ display: 'flex', gap: '10px', marginBottom: '24px' }}>
+              <div style={{ display: 'flex', gap: '12px' }}>
                 {socialLinks.map(s => (
                   <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
-                    style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', transition: 'all 0.3s', textDecoration: 'none' }}
-                    onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = s.color; el.style.borderColor = s.color; el.style.color = 'white'; el.style.boxShadow = `0 0 12px ${s.color}60`; }}
-                    onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = 'rgba(255,255,255,0.06)'; el.style.borderColor = 'rgba(255,255,255,0.1)'; el.style.color = '#94a3b8'; el.style.boxShadow = 'none'; }}>
+                    style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748B', transition: 'all 0.3s', textDecoration: 'none' }}
+                    onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = s.color; el.style.borderColor = s.color; el.style.color = 'white'; el.style.boxShadow = `0 8px 16px ${s.color}40`; el.style.transform = 'translateY(-3px)'; }}
+                    onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = 'rgba(255,255,255,0.03)'; el.style.borderColor = 'rgba(255,255,255,0.08)'; el.style.color = '#64748B'; el.style.boxShadow = 'none'; el.style.transform = 'translateY(0)'; }}>
                     {s.icon}
                   </a>
                 ))}
               </div>
-
+ 
               {/* Contact Info */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                  <MapPin style={{ width: '14px', height: '14px', color: '#F59E0B', flexShrink: 0, marginTop: '2px' }} />
-                  <p style={{ fontSize: '12px', color: '#E5E7EB', lineHeight: 1.5 }}>Main Road, Peddapuram, East Godavari, Andhra Pradesh — 533437</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(245, 158, 11, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <MapPin style={{ width: '14px', height: '14px', color: '#F59E0B' }} />
+                  </div>
+                  <p style={{ fontSize: '13px', color: '#CBD5E1', lineHeight: 1.6 }}>Main Road, Peddapuram, East Godavari, AP — 533437</p>
                 </div>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <Phone style={{ width: '14px', height: '14px', color: '#F59E0B', flexShrink: 0 }} />
-                  <a href="tel:+919949915177" style={{ fontSize: '12px', color: '#E5E7EB', textDecoration: 'none', transition: 'color 0.2s' }}
-                    onMouseEnter={e => (e.currentTarget.style.color = '#7C3AED')} onMouseLeave={e => (e.currentTarget.style.color = '#E5E7EB')}>
-                    +91 99499 15177 / +91 97041 37266
-                  </a>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Phone style={{ width: '14px', height: '14px', color: '#7C3AED' }} />
+                  </div>
+                  <a href="tel:+919949915177" style={{ fontSize: '13px', color: '#CBD5E1', textDecoration: 'none', fontWeight: 500 }}>+91 99499 15177</a>
                 </div>
-                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <Mail style={{ width: '14px', height: '14px', color: '#F59E0B', flexShrink: 0 }} />
-                  <a href="mailto:srirajcomputers@gmail.com" style={{ fontSize: '12px', color: '#E5E7EB', textDecoration: 'none', transition: 'color 0.2s' }}
-                    onMouseEnter={e => (e.currentTarget.style.color = '#7C3AED')} onMouseLeave={e => (e.currentTarget.style.color = '#E5E7EB')}>
-                    srirajcomputers@gmail.com
-                  </a>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Mail style={{ width: '14px', height: '14px', color: '#7C3AED' }} />
+                  </div>
+                  <a href="mailto:srirajcomputers@gmail.com" style={{ fontSize: '13px', color: '#CBD5E1', textDecoration: 'none', fontWeight: 500 }}>srirajcomputers@gmail.com</a>
                 </div>
               </div>
             </div>
-
+ 
             {/* Cols 2-4: Link Sections */}
             {footerSections.map(section => (
-              <div key={section.title} style={{ borderTop: '1px solid rgba(0,123,255,0.08)' }} className="lg:border-t-0">
+              <div key={section.title} className="lg:border-t-0">
                 <button
                   id={`footer-section-${section.title.toLowerCase().replace(/\s/g, '-')}`}
                   onClick={() => toggle(section.title)}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', background: 'transparent', border: 'none', cursor: 'pointer' }}
-                  className="lg:pointer-events-none lg:pb-4 lg:pt-0">
-                  <span style={{ fontSize: '12px', fontWeight: 800, color: 'white', letterSpacing: '1.5px', fontFamily: 'Space Grotesk, sans-serif' }}>{section.title}</span>
-                  <span className="lg:hidden">
-                    {openSection === section.title
-                      ? <ChevronUp style={{ width: '16px', height: '16px', color: '#7C3AED' }} />
-                      : <ChevronDown style={{ width: '16px', height: '16px', color: '#E5E7EB' }} />}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', background: 'transparent', border: 'none', cursor: 'pointer' }}
+                  className="lg:pointer-events-none lg:pb-6 lg:pt-0">
+                  <span style={{ fontSize: '13px', fontWeight: 900, color: '#FFFFFF', letterSpacing: '2px', textTransform: 'uppercase', fontFamily: 'Space Grotesk, sans-serif' }}>{section.title}</span>
+                  <span className="lg:hidden text-slate-400">
+                    {openSection === section.title ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                   </span>
                 </button>
-                <div className={`flex flex-col gap-2 pb-4 lg:pb-0 ${openSection === section.title ? 'block' : 'hidden'} lg:flex`}>
+                <div className={`flex flex-col gap-3 pb-6 lg:pb-0 ${openSection === section.title ? 'block' : 'hidden'} lg:flex`}>
                   {section.items.map(item => (
                     <button key={item.label} onClick={() => {
                       if ((item.path === '/account') && !user) {
@@ -188,10 +188,10 @@ const Footer = () => {
                         navigate(item.path);
                       }
                     }}
-                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', fontSize: '13px', color: '#A78BFA', padding: '3px 0', transition: 'all 0.2s', fontFamily: 'Space Grotesk, sans-serif', display: 'flex', alignItems: 'center', gap: '6px' }}
-                      onMouseEnter={e => { e.currentTarget.style.color = '#F59E0B'; e.currentTarget.style.paddingLeft = '6px'; }}
-                      onMouseLeave={e => { e.currentTarget.style.color = '#A78BFA'; e.currentTarget.style.paddingLeft = '0'; }}>
-                      › {item.label}
+                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', fontSize: '14px', color: '#94A3B8', padding: '2px 0', transition: 'all 0.25s', fontFamily: 'Space Grotesk, sans-serif', display: 'flex', alignItems: 'center', gap: '8px' }}
+                      onMouseEnter={e => { e.currentTarget.style.color = '#F59E0B'; e.currentTarget.style.transform = 'translateX(6px)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.color = '#94A3B8'; e.currentTarget.style.transform = 'translateX(0)'; }}>
+                      <span style={{ fontSize: '16px', color: '#7C3AED', opacity: 0.6 }}>›</span> {item.label}
                     </button>
                   ))}
                 </div>
@@ -199,16 +199,16 @@ const Footer = () => {
             ))}
           </div>
         </div>
-
+ 
         {/* Bottom Bar */}
-        <div style={{ borderTop: '1px solid rgba(124, 58, 237, 0.1)', padding: '18px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.03)', padding: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', background: 'rgba(0,0,0,0.2)' }}>
           <div>
-            <p style={{ fontSize: '12px', color: '#475569' }}>© 2026 Sri Raj Computers & IT Solutions. All rights reserved.</p>
-            <p style={{ fontSize: '11px', color: '#334155', marginTop: '2px' }}>GST: 37CQEPB1752N1ZQ</p>
+            <p style={{ fontSize: '13px', color: '#64748B', fontWeight: 500 }}>© 2026 Sri Raj Computers & IT Solutions. All rights reserved.</p>
+            <p style={{ fontSize: '11px', color: '#475569', marginTop: '4px', letterSpacing: '1px' }}>GST: 37CQEPB1752N1ZQ</p>
           </div>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
             {['VISA', 'Mastercard', 'UPI', 'GPay', 'PhonePe', 'Paytm', 'Razorpay'].map(pm => (
-              <span key={pm} style={{ fontSize: '10px', color: '#475569', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px', padding: '3px 8px', fontWeight: 600 }}>
+              <span key={pm} style={{ fontSize: '11px', color: '#94A3B8', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '6px', padding: '4px 10px', fontWeight: 600, letterSpacing: '0.5px' }}>
                 {pm}
               </span>
             ))}
