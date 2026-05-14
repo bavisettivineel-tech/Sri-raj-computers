@@ -250,7 +250,7 @@ const MyAccountPage = () => {
       <main className="pb-24 lg:pb-10 max-w-3xl mx-auto pt-0 lg:pt-8">
         {/* Blue gradient profile header */}
         <div style={{
-          background: 'linear-gradient(135deg, #0b121e 0%, #0d1e3c 100%)',
+          background: 'linear-gradient(135deg, #7C3AED 0%, #EC4899 100%)',
           padding: '60px 20px 28px',
           position: 'relative', overflow: 'hidden',
         }}>
@@ -261,16 +261,17 @@ const MyAccountPage = () => {
             {/* Avatar */}
             <div style={{
               width: '72px', height: '72px', borderRadius: '50%',
-              background: 'rgba(255,255,255,0.1)',
+              background: 'rgba(255,255,255,0.2)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '24px', fontWeight: 800, color: 'white',
-              border: '3px solid #007bff', flexShrink: 0,
+              border: '3px solid #F59E0B', flexShrink: 0,
+              fontFamily: 'Space Grotesk, sans-serif'
             }}>
               {initials}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <p style={{ fontSize: '20px', fontWeight: 800, color: 'white' }}>{displayName}</p>
-              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', marginTop: '2px' }}>{user?.email}</p>
+              <p style={{ fontSize: '20px', fontWeight: 800, color: 'white', fontFamily: 'Space Grotesk, sans-serif' }}>{displayName}</p>
+              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.9)', marginTop: '2px' }}>{user?.email}</p>
               {profile?.phone && (
                 <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.65)', marginTop: '2px' }}>{profile.phone}</p>
               )}
@@ -301,8 +302,8 @@ const MyAccountPage = () => {
                 flex: 1, background: 'rgba(255,255,255,0.12)',
                 borderRadius: '12px', padding: '12px 8px', textAlign: 'center',
               }}>
-                <p style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>{stat.value}</p>
-                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.65)', marginTop: '2px' }}>{stat.label}</p>
+                <p style={{ fontSize: '22px', fontWeight: 800, color: 'white', fontFamily: 'Space Grotesk, sans-serif' }}>{stat.value}</p>
+                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.9)', marginTop: '2px', fontWeight: 600 }}>{stat.label}</p>
               </div>
             ))}
           </div>
@@ -322,12 +323,12 @@ const MyAccountPage = () => {
               style={{
                 flex: 1, padding: '14px 8px',
                 background: 'transparent', border: 'none', cursor: 'pointer',
-                borderBottom: tab === t.key ? '3px solid #007bff' : '3px solid transparent',
+                borderBottom: tab === t.key ? '3px solid #7C3AED' : '3px solid transparent',
                 display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
               }}
             >
-              <t.icon style={{ width: '18px', height: '18px', color: tab === t.key ? '#1a3fcb' : '#94a3b8' }} />
-              <span style={{ fontSize: '12px', fontWeight: 600, color: tab === t.key ? '#1a3fcb' : '#94a3b8' }}>
+              <t.icon style={{ width: '18px', height: '18px', color: tab === t.key ? '#7C3AED' : '#94A3B8' }} />
+              <span style={{ fontSize: '12px', fontWeight: 600, color: tab === t.key ? '#7C3AED' : '#94A3B8', fontFamily: 'Space Grotesk, sans-serif' }}>
                 {t.label}
               </span>
             </button>
@@ -343,10 +344,10 @@ const MyAccountPage = () => {
                   width: '80px', height: '80px', borderRadius: '50%', background: '#f1f5f9',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px',
                 }}>
-                  <ShoppingBag style={{ width: '36px', height: '36px', color: '#94a3b8' }} />
+                  <ShoppingBag style={{ width: '36px', height: '36px', color: '#6B7280' }} />
                 </div>
-                <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#0f172a', marginBottom: '8px' }}>No orders yet</h3>
-                <p style={{ fontSize: '13px', color: '#94a3b8', marginBottom: '20px' }}>Start shopping to see your orders here</p>
+                <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#1E1B4B', marginBottom: '8px' }}>No orders yet</h3>
+                <p style={{ fontSize: '13px', color: '#6B7280', marginBottom: '20px' }}>Start shopping to see your orders here</p>
                 <button
                   id="start-shopping-orders-btn"
                   onClick={() => navigate('/shop')}
@@ -371,10 +372,10 @@ const MyAccountPage = () => {
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <p style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a' }}>
+                      <p style={{ fontSize: '14px', fontWeight: 700, color: '#1E1B4B', fontFamily: 'Space Grotesk, sans-serif' }}>
                         #{order.id.slice(0, 8).toUpperCase()}
                       </p>
-                      <ChevronRight style={{ width: '16px', height: '16px', color: '#94a3b8' }} />
+                      <ChevronRight style={{ width: '16px', height: '16px', color: '#94A3B8' }} />
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <span style={{
@@ -384,25 +385,25 @@ const MyAccountPage = () => {
                       }}>
                         {order.order_status.toUpperCase()}
                       </span>
-                      <span style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a' }}>
+                      <span style={{ fontSize: '15px', fontWeight: 800, color: '#1E1B4B' }}>
                         ₹{Number(order.total).toLocaleString('en-IN')}
                       </span>
                     </div>
-                    <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '8px' }}>
+                    <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '8px' }}>
                       {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                       · {(order.items as unknown[]).length} item(s)
                     </p>
                     <div style={{ marginTop: '12px', borderTop: '1px solid #f8fafc', paddingTop: '10px', display: 'flex', gap: '8px' }}>
-                       <button 
-                         onClick={(e) => { e.stopPropagation(); setSelectedOrder(order); }}
-                         style={{ 
-                           background: '#007bff10', color: '#007bff', border: 'none', 
-                           padding: '6px 12px', borderRadius: '8px', fontSize: '11px', 
-                           fontWeight: 700, cursor: 'pointer' 
-                         }}
-                       >
-                         View Digital Invoice
-                       </button>
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); setSelectedOrder(order); }}
+                          style={{ 
+                            background: 'rgba(124, 58, 237, 0.1)', color: '#7C3AED', border: 'none', 
+                            padding: '6px 12px', borderRadius: '8px', fontSize: '11px', 
+                            fontWeight: 700, cursor: 'pointer', fontFamily: 'Space Grotesk, sans-serif'
+                          }}
+                        >
+                          View Digital Invoice
+                        </button>
                        {order.order_status !== 'cancelled' && order.order_status !== 'delivered' && (Date.now() - new Date(order.created_at).getTime() <= 24 * 60 * 60 * 1000) && (
                          <button 
                            onClick={(e) => handleCancelOrder(order.id, e)}
@@ -435,8 +436,8 @@ const MyAccountPage = () => {
                   marginBottom: '14px',
                 }}
               >
-                <Plus style={{ width: '18px', height: '18px', color: '#1a3fcb' }} />
-                <span style={{ fontSize: '14px', fontWeight: 600, color: '#1a3fcb' }}>Add New Address</span>
+                <Plus style={{ width: '18px', height: '18px', color: '#7C3AED' }} />
+                <span style={{ fontSize: '14px', fontWeight: 600, color: '#7C3AED', fontFamily: 'Space Grotesk, sans-serif' }}>Add New Address</span>
               </button>
 
               {showAddressForm && (
@@ -479,8 +480,8 @@ const MyAccountPage = () => {
 
               {addresses.length === 0 && !showAddressForm ? (
                 <div style={{ textAlign: 'center', padding: '40px 0' }}>
-                  <MapPin style={{ width: '40px', height: '40px', color: '#94a3b8', margin: '0 auto 12px' }} />
-                  <p style={{ fontSize: '14px', color: '#94a3b8' }}>No addresses saved yet</p>
+                  <MapPin style={{ width: '40px', height: '40px', color: '#6B7280', margin: '0 auto 12px' }} />
+                  <p style={{ fontSize: '14px', color: '#6B7280' }}>No addresses saved yet</p>
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -488,8 +489,8 @@ const MyAccountPage = () => {
                     <div key={addr.id} style={{ background: 'white', border: '1px solid #f1f5f9', borderRadius: '14px', padding: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                         <div style={{ flex: 1 }}>
-                          <p style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a' }}>{addr.full_name}</p>
-                          <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '2px' }}>{addr.phone}</p>
+                          <p style={{ fontSize: '14px', fontWeight: 700, color: '#1E1B4B' }}>{addr.full_name}</p>
+                          <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '2px' }}>{addr.phone}</p>
                           <p style={{ fontSize: '13px', color: '#475569', marginTop: '6px', lineHeight: 1.5 }}>
                             {addr.address_line1}{addr.address_line2 ? `, ${addr.address_line2}` : ''}
                             <br />{addr.city}, {addr.state} — {addr.pincode}
@@ -497,17 +498,18 @@ const MyAccountPage = () => {
                           {addr.is_default ? (
                             <span style={{
                               display: 'inline-block', marginTop: '6px',
-                              background: '#e8edf9', color: '#1a3fcb',
+                              background: '#F5F3FF', color: '#7C3AED',
                               borderRadius: '4px', padding: '2px 8px',
                               fontSize: '11px', fontWeight: 700,
+                              fontFamily: 'Space Grotesk, sans-serif'
                             }}>DEFAULT</span>
                           ) : (
                             <button 
                               onClick={() => handleSetDefault(addr.id)}
                               style={{ 
-                                background: 'transparent', border: 'none', color: '#007bff', 
+                                background: 'transparent', border: 'none', color: '#7C3AED', 
                                 fontSize: '11px', fontWeight: 700, cursor: 'pointer', 
-                                marginTop: '6px', padding: '0' 
+                                marginTop: '6px', padding: '0', fontFamily: 'Space Grotesk, sans-serif'
                               }}
                             >
                               SET AS DEFAULT
@@ -544,8 +546,8 @@ const MyAccountPage = () => {
                     { label: 'Phone', value: profile?.phone || 'Not set' },
                   ].map(field => (
                     <div key={field.label} style={{ padding: '10px 0', borderBottom: '1px solid #f8fafc' }}>
-                      <p style={{ fontSize: '12px', color: '#94a3b8', fontWeight: 600, marginBottom: '2px' }}>{field.label}</p>
-                      <p style={{ fontSize: '14px', fontWeight: 500, color: '#0f172a' }}>{field.value}</p>
+                      <p style={{ fontSize: '12px', color: '#6B7280', fontWeight: 600, marginBottom: '2px' }}>{field.label}</p>
+                      <p style={{ fontSize: '14px', fontWeight: 500, color: '#1E1B4B' }}>{field.value}</p>
                     </div>
                   ))}
                   <button 
@@ -558,10 +560,10 @@ const MyAccountPage = () => {
                 </div>
               ) : (
                 <div style={{ background: 'white', borderRadius: '14px', padding: '20px', border: '1px solid #f1f5f9', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>Edit Profile</h3>
+                  <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#1E1B4B', marginBottom: '4px' }}>Edit Profile</h3>
                   
                   <div>
-                    <label style={{ fontSize: '12px', color: '#64748b', fontWeight: 600, marginBottom: '6px', display: 'block' }}>First Name</label>
+                    <label style={{ fontSize: '12px', color: '#6B7280', fontWeight: 600, marginBottom: '6px', display: 'block' }}>First Name</label>
                     <input 
                       type="text" 
                       value={editForm.first_name} 
@@ -572,7 +574,7 @@ const MyAccountPage = () => {
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '12px', color: '#64748b', fontWeight: 600, marginBottom: '6px', display: 'block' }}>Last Name</label>
+                    <label style={{ fontSize: '12px', color: '#6B7280', fontWeight: 600, marginBottom: '6px', display: 'block' }}>Last Name</label>
                     <input 
                       type="text" 
                       value={editForm.last_name} 
@@ -583,7 +585,7 @@ const MyAccountPage = () => {
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '12px', color: '#64748b', fontWeight: 600, marginBottom: '6px', display: 'block' }}>Phone Number</label>
+                    <label style={{ fontSize: '12px', color: '#6B7280', fontWeight: 600, marginBottom: '6px', display: 'block' }}>Phone Number</label>
                     <input 
                       type="tel" 
                       value={editForm.phone} 

@@ -64,8 +64,8 @@ const AdminLayout = ({ children, activeTab }: AdminLayoutProps) => {
   }, [isAdmin]);
 
   if (isAdmin === null) return (
-    <div className="flex items-center justify-center min-h-screen bg-dark-gradient">
-      <div className="animate-pulse text-neon-cyan text-sm font-bold">Authorizing...</div>
+    <div className="flex items-center justify-center min-h-screen bg-slate-50">
+      <div className="animate-pulse text-[#7C3AED] text-sm font-bold font-heading">Authorizing...</div>
     </div>
   );
 
@@ -82,11 +82,11 @@ const AdminLayout = ({ children, activeTab }: AdminLayoutProps) => {
               title={compact ? item.label : undefined}
               className={`flex items-center gap-3 w-full px-3 py-3 rounded-xl text-sm font-bold transition-all duration-300 group relative ${
                 isActive
-                  ? 'bg-blue-gradient text-white shadow-[0_0_15px_rgba(59,130,246,0.4)] border border-[#3B82F6]/30'
-                  : 'text-white/60 hover:text-white hover:bg-white/5 border border-transparent'
+                  ? 'bg-primary text-white shadow-lg shadow-primary/20 border border-primary/30'
+                  : 'text-slate-500 hover:text-primary hover:bg-primary/5 border border-transparent'
               }`}
             >
-              <item.icon className={`w-5 h-5 shrink-0 transition-colors ${isActive ? 'text-white' : 'text-[#3B82F6]/50 group-hover:text-[#3B82F6]'}`} />
+              <item.icon className={`w-5 h-5 shrink-0 transition-colors ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-primary'}`} />
               <span className="admin-nav-label truncate">{item.label}</span>
               {item.key === 'notifications' && unreadCount > 0 && (
                 <span className="ml-auto bg-red-500 text-white text-[10px] font-black rounded-full px-2 py-0.5 shrink-0 shadow-[0_0_10px_rgba(239,68,68,0.6)]">
@@ -95,7 +95,7 @@ const AdminLayout = ({ children, activeTab }: AdminLayoutProps) => {
               )}
               {/* Tooltip for collapsed tablet state */}
               {compact && (
-                <span className="absolute left-full ml-4 px-3 py-1.5 glass-panel text-white text-xs font-bold rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50 shadow-blue border border-[#3B82F6]/30 translate-x-[-10px] group-hover:translate-x-0">
+                <span className="absolute left-full ml-4 px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50 shadow-xl translate-x-[-10px] group-hover:translate-x-0">
                   {item.label}
                 </span>
               )}
@@ -105,38 +105,37 @@ const AdminLayout = ({ children, activeTab }: AdminLayoutProps) => {
       </nav>
 
       {/* Logout */}
-      <div className="p-4 border-t border-white/5 shrink-0 mt-auto">
+      <div className="p-4 border-t border-slate-100 shrink-0 mt-auto">
         <button
           onClick={async () => { await supabase.auth.signOut(); navigate('/'); }}
-          className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-bold text-white bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-xl transition-all shadow-[0_0_15px_rgba(239,68,68,0.1)] hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
+          className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 border border-red-100 rounded-xl transition-all"
         >
-          <LogOut className="w-4 h-4 shrink-0 text-red-400" />
+          <LogOut className="w-4 h-4 shrink-0" />
           <span className="admin-nav-label">Logout</span>
         </button>
-        <p className="text-center mt-3 text-[10px] text-[#3B82F6]/40 font-bold admin-nav-label tracking-widest uppercase">SRC Admin v2.5</p>
+        <p className="text-center mt-3 text-[10px] text-slate-300 font-bold admin-nav-label tracking-widest uppercase">SRC Admin v2.5</p>
       </div>
     </>
   );
 
   return (
-    <div className="min-h-screen bg-dark-gradient text-white flex flex-col md:flex-row w-full overflow-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col md:flex-row w-full overflow-hidden font-sans">
 
       {/* ══════════════════════════════════════════════════
           DESKTOP + TABLET SIDEBAR (md+) — fixed, always visible
           Tablet: 64px collapsed, expands to 260px on hover
           Desktop: 260px always expanded
       ══════════════════════════════════════════════════ */}
-      <aside className="admin-sidebar hidden md:flex flex-col group/sidebar w-[260px] shrink-0 border-r border-white/10 glass-panel relative z-40 transition-all duration-300">
+      <aside className="admin-sidebar hidden md:flex flex-col group/sidebar w-[260px] shrink-0 border-r border-slate-200 bg-white relative z-40 transition-all duration-300">
         {/* Logo */}
-        <div className="px-4 py-6 border-b border-white/10 shrink-0 overflow-hidden flex items-center justify-center">
+        <div className="px-4 py-6 border-b border-slate-100 shrink-0 overflow-hidden flex items-center justify-center">
           <div className="flex items-center gap-3 w-full">
-            <div className="w-12 h-12 shrink-0 bg-blue-gradient rounded-xl flex items-center justify-center text-sm font-black text-white shadow-blue border border-[#3B82F6]/50 relative overflow-hidden">
-              <span className="relative z-10">SRC</span>
-              <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+            <div className="w-12 h-12 shrink-0 bg-primary rounded-xl flex items-center justify-center text-sm font-black text-white shadow-lg shadow-primary/30 border border-white/20 relative overflow-hidden">
+              <span className="relative z-10 font-heading">SRC</span>
             </div>
             <div className="admin-sidebar-logo-text overflow-hidden">
-              <p className="text-base font-black text-white tracking-tight whitespace-nowrap text-neon-cyan">Raj Admin</p>
-              <p className="text-[10px] text-white/50 uppercase font-bold tracking-widest whitespace-nowrap">Control Panel</p>
+              <p className="text-base font-black text-slate-900 tracking-tight whitespace-nowrap font-heading">Raj Admin</p>
+              <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest whitespace-nowrap">Control Panel</p>
             </div>
           </div>
         </div>
@@ -153,21 +152,21 @@ const AdminLayout = ({ children, activeTab }: AdminLayoutProps) => {
             className="fixed inset-0 bg-[#0F172A]/80 backdrop-blur-sm z-[60]"
             onClick={() => setMobileSidebarOpen(false)}
           />
-          <aside className="fixed top-0 left-0 bottom-0 w-72 glass-panel border-r border-white/10 text-white z-[70] flex flex-col shadow-2xl animate-fade-in">
+          <aside className="fixed top-0 left-0 bottom-0 w-72 bg-white border-r border-slate-200 text-slate-900 z-[70] flex flex-col shadow-2xl animate-fade-in">
             {/* Logo + close */}
-            <div className="px-5 py-6 flex justify-between items-center border-b border-white/10 shrink-0">
+            <div className="px-5 py-6 flex justify-between items-center border-b border-slate-100 shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-blue-gradient rounded-xl flex items-center justify-center text-xs font-black text-white shadow-blue border border-[#3B82F6]/50">SRC</div>
+                <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-xs font-black text-white shadow-lg shadow-primary/30 border border-white/20 font-heading">SRC</div>
                 <div>
-                  <p className="text-sm font-black text-neon-cyan">Raj Admin</p>
-                  <p className="text-[10px] text-white/50 uppercase tracking-widest font-bold">Control Panel</p>
+                  <p className="text-sm font-black text-slate-900 font-heading">Raj Admin</p>
+                  <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Control Panel</p>
                 </div>
               </div>
               <button
                 onClick={() => setMobileSidebarOpen(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-white/10 border-none bg-transparent cursor-pointer transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-50 border-none bg-transparent cursor-pointer transition-colors"
               >
-                <X className="w-5 h-5 text-white/60 hover:text-white" />
+                <X className="w-5 h-5 text-slate-400 hover:text-slate-900" />
               </button>
             </div>
 
@@ -184,25 +183,25 @@ const AdminLayout = ({ children, activeTab }: AdminLayoutProps) => {
       ══════════════════════════════════════════════════ */}
       <div className="admin-content flex-1 flex flex-col min-w-0 overflow-y-auto h-screen hide-scrollbar">
         {/* ── TOPBAR HEADER ── */}
-        <header className="sticky top-0 z-30 glass-panel border-b border-white/10 shadow-sm">
+        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
           <div className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 lg:h-20">
             {/* Left: hamburger (mobile) + breadcrumb */}
             <div className="flex items-center gap-4">
               {/* Hamburger — mobile only */}
               <button
                 onClick={() => setMobileSidebarOpen(true)}
-                className="md:hidden p-2 hover:bg-white/5 rounded-xl transition-colors border border-white/10 bg-transparent cursor-pointer shadow-sm"
+                className="md:hidden p-2 hover:bg-slate-50 rounded-xl transition-colors border border-slate-200 bg-white cursor-pointer shadow-sm"
               >
-                <Menu className="w-5 h-5 text-white" />
+                <Menu className="w-5 h-5 text-slate-900" />
               </button>
 
               {/* Breadcrumb — desktop */}
-              <div className="hidden lg:flex items-center gap-2 text-sm text-white/50 font-medium">
-                <span className="text-white font-bold capitalize text-lg tracking-wide text-neon-cyan">{activeTab.replace(/-/g, ' ')}</span>
+              <div className="hidden lg:flex items-center gap-2 text-sm text-slate-400 font-medium">
+                <span className="text-slate-900 font-black capitalize text-lg tracking-wide font-heading">{activeTab.replace(/-/g, ' ')}</span>
               </div>
 
               {/* Page title — mobile/tablet */}
-              <h1 className="lg:hidden text-base md:text-lg font-black text-white capitalize tracking-wide text-neon-cyan">
+              <h1 className="lg:hidden text-base md:text-lg font-black text-slate-900 capitalize tracking-wide font-heading">
                 {activeTab.replace(/-/g, ' ')}
               </h1>
             </div>
@@ -211,11 +210,11 @@ const AdminLayout = ({ children, activeTab }: AdminLayoutProps) => {
             <div className="flex items-center gap-3 lg:gap-4">
               <button
                 onClick={() => navigate('/admin/notifications')}
-                className="relative p-2 lg:p-2.5 hover:bg-white/5 rounded-xl transition-all group border border-white/10 bg-transparent cursor-pointer hover:shadow-blue"
+                className="relative p-2 lg:p-2.5 hover:bg-slate-50 rounded-xl transition-all group border border-slate-200 bg-white cursor-pointer hover:shadow-lg"
               >
-                <Bell className="w-5 h-5 text-white/70 group-hover:text-[#3B82F6] transition-colors" />
+                <Bell className="w-5 h-5 text-slate-500 group-hover:text-primary transition-colors" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 lg:top-1.5 lg:right-1.5 bg-red-500 text-white text-[9px] font-black rounded-full w-4 h-4 flex items-center justify-center shadow-[0_0_10px_rgba(239,68,68,0.8)] border border-red-400">
+                  <span className="absolute top-1 right-1 lg:top-1.5 lg:right-1.5 bg-red-500 text-white text-[9px] font-black rounded-full w-4 h-4 flex items-center justify-center shadow-lg border border-white">
                     {unreadCount > 9 ? '9+' : unreadCount}
                   </span>
                 )}
@@ -224,14 +223,14 @@ const AdminLayout = ({ children, activeTab }: AdminLayoutProps) => {
               <div className="hidden sm:block h-6 w-px bg-white/10 mx-1" />
 
               <div
-                className="flex items-center gap-3 pl-1 cursor-pointer group p-1.5 pr-3 hover:bg-white/5 rounded-2xl transition-all border border-transparent hover:border-white/10"
+                className="flex items-center gap-3 pl-1 cursor-pointer group p-1.5 pr-3 hover:bg-slate-50 rounded-2xl transition-all border border-transparent hover:border-slate-200"
                 onClick={() => navigate('/admin/settings')}
               >
                 <div className="hidden sm:block text-right">
-                  <p className="text-xs font-bold text-white leading-none">Admin</p>
-                  <p className="text-[10px] text-[#3B82F6]/70 mt-1.5 leading-none truncate max-w-[120px] font-medium">{adminEmail}</p>
+                  <p className="text-xs font-bold text-slate-900 leading-none">Admin</p>
+                  <p className="text-[10px] text-primary mt-1.5 leading-none truncate max-w-[120px] font-bold">{adminEmail}</p>
                 </div>
-                <div className="w-9 h-9 lg:w-10 lg:h-10 bg-orange-gradient rounded-xl flex items-center justify-center text-sm font-black text-white shadow-orange border border-white/20 group-hover:scale-105 transition-transform duration-300">
+                <div className="w-9 h-9 lg:w-10 lg:h-10 bg-linear-to-r from-orange-400 to-orange-500 rounded-xl flex items-center justify-center text-sm font-black text-white shadow-lg shadow-orange-500/20 border border-white/20 group-hover:scale-105 transition-transform duration-300">
                   {adminEmail.charAt(0).toUpperCase() || 'A'}
                 </div>
               </div>

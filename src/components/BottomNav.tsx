@@ -40,14 +40,14 @@ const BottomNav = () => {
         left: 0,
         right: 0,
         width: '100%',
-        background: '#050d1f',
+        background: '#FFFFFF',
         backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
-        borderTop: '1px solid rgba(0,123,255,0.2)',
-        boxShadow: '0 -4px 30px rgba(0,0,0,0.8), 0 -1px 0 rgba(0,123,255,0.15)',
+        borderTop: '1px solid rgba(124, 58, 237, 0.15)',
+        boxShadow: '0 -4px 25px rgba(124, 58, 237, 0.08)',
         height: 'calc(68px + env(safe-area-inset-bottom))',
         paddingBottom: 'env(safe-area-inset-bottom)',
-        zIndex: 40,
+        zIndex: 150,
       }}
     >
       {/* Left tabs (2) */}
@@ -78,24 +78,24 @@ const BottomNav = () => {
               width: '32px',
               height: '3px',
               borderRadius: '0 0 3px 3px',
-              background: '#007bff',
-              boxShadow: '0 0 10px rgba(0,123,255,0.8)',
+              background: '#7C3AED',
+              boxShadow: '0 0 10px rgba(124, 58, 237, 0.6)',
             }} />
           )}
           <tab.icon
             style={{
               width: '22px',
               height: '22px',
-              color: tab.active ? '#007bff' : '#64748b',
-              filter: tab.active ? 'drop-shadow(0 0 4px rgba(0,123,255,0.8))' : 'none',
+              color: tab.active ? '#7C3AED' : '#6B7280',
+              filter: tab.active ? 'drop-shadow(0 0 4px rgba(124, 58, 237, 0.4))' : 'none',
               transition: 'all 0.2s',
             }}
           />
           <span style={{
             fontSize: '11px',
             fontWeight: tab.active ? 700 : 500,
-            color: tab.active ? '#007bff' : '#64748b',
-            fontFamily: 'Montserrat, sans-serif',
+            color: tab.active ? '#7C3AED' : '#6B7280',
+            fontFamily: 'Space Grotesk, sans-serif',
             transition: 'all 0.2s',
           }}>
             {tab.label}
@@ -115,9 +115,9 @@ const BottomNav = () => {
             height: '60px',
             minHeight: '60px',
             borderRadius: '50%',
-            background: '#007bff',
-            boxShadow: '0 0 25px rgba(0,123,255,0.5), 0 8px 25px rgba(0,0,0,0.7)',
-            border: '3px solid #050d1f',
+            background: '#7C3AED',
+            boxShadow: '0 0 25px rgba(124, 58, 237, 0.4), 0 8px 25px rgba(124, 58, 237, 0.15)',
+            border: '3px solid #FFFFFF',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -128,11 +128,11 @@ const BottomNav = () => {
           }}
           onMouseEnter={e => {
             e.currentTarget.style.transform = 'scale(1.1) translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 0 35px rgba(0,123,255,0.8), 0 10px 30px rgba(0,0,0,0.8)';
+            e.currentTarget.style.boxShadow = '0 0 35px rgba(124, 58, 237, 0.6), 0 10px 30px rgba(124, 58, 237, 0.2)';
           }}
           onMouseLeave={e => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 0 25px rgba(0,123,255,0.5), 0 8px 25px rgba(0,0,0,0.7)';
+            e.currentTarget.style.boxShadow = '0 0 25px rgba(124, 58, 237, 0.4), 0 8px 25px rgba(124, 58, 237, 0.15)';
           }}
         >
           <ShoppingCart style={{ width: '26px', height: '26px', color: 'white' }} />
@@ -141,8 +141,8 @@ const BottomNav = () => {
               position: 'absolute',
               top: '-4px',
               right: '-4px',
-              background: '#ffc107',
-              color: '#000',
+              background: '#F59E0B',
+              color: '#1E1B4B',
               width: '20px',
               height: '20px',
               borderRadius: '50%',
@@ -151,8 +151,8 @@ const BottomNav = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              border: '2px solid #050d1f',
-              boxShadow: '0 0 10px rgba(255,193,7,0.7)',
+              border: '2px solid #FFFFFF',
+              boxShadow: '0 0 10px rgba(245, 158, 11, 0.5)',
             }}>
               {cartCount > 9 ? '9+' : cartCount}
             </span>
@@ -191,8 +191,8 @@ const BottomNav = () => {
           <span style={{
             fontSize: '11px',
             fontWeight: 500,
-            color: (tab as { color?: string }).color || '#64748b',
-            fontFamily: 'Montserrat, sans-serif',
+            color: (tab as { color?: string }).color || '#6B7280',
+            fontFamily: 'Space Grotesk, sans-serif',
           }}>
             {tab.label}
           </span>
