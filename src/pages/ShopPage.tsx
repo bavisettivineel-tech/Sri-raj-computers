@@ -338,11 +338,11 @@ const ShopPage = () => {
               {/* Categories Accordion */}
               <details open className="group border-b border-slate-100 pb-4">
                 <summary className="flex items-center justify-between cursor-pointer list-none py-2">
-                  <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
-                    <span className="w-1.5 h-3.5 bg-primary rounded-full shadow-[0_0_8px_rgba(124,58,237,0.4)]" />
+                  <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest flex items-center gap-2 font-heading">
+                    <span className="w-1.5 h-4 bg-primary rounded-full shadow-[0_0_10px_rgba(124,58,237,0.3)]" />
                     Categories
                   </h3>
-                  <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="flex flex-col gap-1 mt-3">
                   <label onClick={(e) => {
@@ -366,11 +366,11 @@ const ShopPage = () => {
                         } else {
                           setSelectedCategory(cat.id); navigate(`/shop?category=${cat.id}`);
                         }
-                      }} className="flex items-center gap-3 group cursor-pointer py-1.5 px-2 hover:bg-slate-50 rounded-lg transition-all">
-                        <div className={`w-4 h-4 rounded-[4px] border transition-all flex items-center justify-center ${isActive ? 'bg-primary border-primary shadow-lg shadow-primary/20' : 'border-slate-200 bg-white group-hover:border-primary'}`}>
-                          {isActive && <Check className="w-2.5 h-2.5 text-white stroke-[4]" />}
+                      }} className="flex items-center gap-3 group cursor-pointer py-2 px-3 hover:bg-slate-50 rounded-xl transition-all">
+                        <div className={`w-4 h-4 rounded-[6px] border transition-all flex items-center justify-center ${isActive ? 'bg-primary border-primary shadow-lg shadow-primary/20' : 'border-slate-300 bg-white group-hover:border-primary'}`}>
+                          {isActive && <Check className="w-3 h-3 text-white stroke-[4]" />}
                         </div>
-                        <span className={`text-[13px] font-medium transition-colors ${isActive ? 'text-primary font-bold' : 'text-slate-500 group-hover:text-primary'}`}>
+                        <span className={`text-[13px] font-bold transition-colors ${isActive ? 'text-primary' : 'text-slate-600 group-hover:text-primary'}`}>
                           {cat.name}
                         </span>
                       </label>
@@ -394,18 +394,18 @@ const ShopPage = () => {
                       <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
                     </summary>
                     <div className="flex flex-col gap-1 mt-3">
-                      <label onClick={e => { e.preventDefault(); setSpecFilters(p => ({ ...p, [group.label]: '' })); }} className="flex items-center gap-3 group cursor-pointer py-1.5 px-2 hover:bg-slate-50 rounded-lg transition-all">
-                        <div className={`w-4 h-4 rounded-[4px] border transition-all flex items-center justify-center ${!active ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-200 bg-white group-hover:border-secondary'}`}>
-                          {!active && <Check className="w-2.5 h-2.5 text-white stroke-[4]" />}
+                      <label onClick={e => { e.preventDefault(); setSpecFilters(p => ({ ...p, [group.label]: '' })); }} className="flex items-center gap-3 group cursor-pointer py-2 px-3 hover:bg-slate-50 rounded-xl transition-all">
+                        <div className={`w-4 h-4 rounded-[6px] border transition-all flex items-center justify-center ${!active ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-300 bg-white group-hover:border-secondary'}`}>
+                          {!active && <Check className="w-3 h-3 text-white stroke-[4]" />}
                         </div>
-                        <span className={`text-[13px] font-medium ${!active ? 'text-secondary font-bold' : 'text-slate-500 group-hover:text-secondary'}`}>All</span>
+                        <span className={`text-[13px] font-bold ${!active ? 'text-secondary' : 'text-slate-600 group-hover:text-secondary'}`}>All</span>
                       </label>
                       {variants.map(v => (
-                        <label key={v} onClick={e => { e.preventDefault(); setSpecFilter(group.label, v); }} className="flex items-center gap-3 group cursor-pointer py-1.5 px-2 hover:bg-slate-50 rounded-lg transition-all">
-                          <div className={`w-4 h-4 rounded-[4px] border transition-all flex items-center justify-center ${active === v ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-200 bg-white group-hover:border-secondary'}`}>
-                            {active === v && <Check className="w-2.5 h-2.5 text-white stroke-[4]" />}
+                        <label key={v} onClick={e => { e.preventDefault(); setSpecFilter(group.label, v); }} className="flex items-center gap-3 group cursor-pointer py-2 px-3 hover:bg-slate-50 rounded-xl transition-all">
+                          <div className={`w-4 h-4 rounded-[6px] border transition-all flex items-center justify-center ${active === v ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-300 bg-white group-hover:border-secondary'}`}>
+                            {active === v && <Check className="w-3 h-3 text-white stroke-[4]" />}
                           </div>
-                          <span className={`text-[13px] font-medium ${active === v ? 'text-secondary font-bold' : 'text-slate-500 group-hover:text-secondary'}`}>{v}</span>
+                          <span className={`text-[13px] font-bold ${active === v ? 'text-secondary' : 'text-slate-600 group-hover:text-secondary'}`}>{v}</span>
                         </label>
                       ))}
                     </div>
@@ -446,13 +446,13 @@ const ShopPage = () => {
               </details>
 
               {/* Brands Accordion */}
-              <details open className="group border-b border-slate-100 pb-4">
+              <details open className="group border-b border-slate-100 pb-6">
                 <summary className="flex items-center justify-between cursor-pointer list-none py-2">
-                  <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
-                    <span className="w-1 h-3 bg-primary rounded-full" />
+                  <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest flex items-center gap-2 font-heading">
+                    <span className="w-1.5 h-4 bg-primary rounded-full shadow-[0_0_10px_rgba(124,58,237,0.3)]" />
                     Brands
                   </h3>
-                  <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
+                  <ChevronDown className="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="flex flex-col gap-1 mt-3">
                   <label onClick={(e) => {
@@ -478,11 +478,11 @@ const ShopPage = () => {
                           setSelectedBrand(brand.id);
                           navigate(selectedCategory ? `/shop?category=${selectedCategory}&brandq=${encodeURIComponent(brand.name)}` : `/shop?brandq=${encodeURIComponent(brand.name)}`);
                         }
-                      }} className="flex items-center gap-3 group cursor-pointer py-1.5 px-2 hover:bg-slate-50 rounded-lg transition-all">
-                        <div className={`w-4 h-4 rounded-[4px] border transition-all flex items-center justify-center ${isActive ? 'bg-primary border-primary shadow-lg shadow-primary/20' : 'border-slate-200 bg-white group-hover:border-primary'}`}>
-                          {isActive && <Check className="w-2.5 h-2.5 text-white stroke-[4]" />}
+                      }} className="flex items-center gap-3 group cursor-pointer py-2 px-3 hover:bg-slate-50 rounded-xl transition-all">
+                        <div className={`w-4 h-4 rounded-[6px] border transition-all flex items-center justify-center ${isActive ? 'bg-primary border-primary shadow-lg shadow-primary/20' : 'border-slate-300 bg-white group-hover:border-primary'}`}>
+                          {isActive && <Check className="w-3 h-3 text-white stroke-[4]" />}
                         </div>
-                        <span className={`text-[13px] font-medium transition-colors ${isActive ? 'text-primary font-bold' : 'text-slate-500 group-hover:text-primary'}`}>
+                        <span className={`text-[13px] font-bold transition-colors ${isActive ? 'text-primary' : 'text-slate-600 group-hover:text-primary'}`}>
                           {brand.name}
                         </span>
                       </label>
