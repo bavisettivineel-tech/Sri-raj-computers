@@ -13,6 +13,7 @@ const CartPanel = () => {
   const navigate = useNavigate();
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [categoryDiscounts, setCategoryDiscounts] = useState<Record<string, number>>({});
+  const [quantityDiscounts, setQuantityDiscounts] = useState<any[]>([]);
   const [couponInput, setCouponInput] = useState('');
 
   useEffect(() => {
@@ -30,6 +31,10 @@ const CartPanel = () => {
           if (d.category_name) discMap[d.category_name] = Number(d.discount_percent) || 0;
         });
         setCategoryDiscounts(discMap);
+      });
+      // Fetch B2B multi-tier quantity discounts
+      supabase.from('b2b_quantity_discounts').select('*').order('min_quantity', { ascending: true }).then(({ data }) => {
+        setQuantityDiscounts(data || []);
       });
     }
   }, [cartOpen]);
@@ -50,14 +55,21 @@ const CartPanel = () => {
         return sum;
       }, 0)
     : 0;
-  const bulkDiscountValue = (bulkQtyThreshold > 0 && bulkDiscountPercent > 0) ? cart.reduce((sum, item) => {
-    if (item.quantity >= bulkQtyThreshold) {
-      return sum + Math.round((item.product.sale_price * item.quantity * bulkDiscountPercent) / 100);
+
+  // Multi-tier quantity discount calculation
+  const quantityDiscountTotal = cart.reduce((sum, item) => {
+    // Find the highest applicable discount tier for this item's quantity
+    const applicableTier = [...quantityDiscounts]
+      .reverse() // Check from highest min_quantity downwards
+      .find(tier => item.quantity >= tier.min_quantity);
+    
+    if (applicableTier && applicableTier.discount_percent > 0) {
+      return sum + Math.round((item.product.sale_price * item.quantity * applicableTier.discount_percent) / 100);
     }
     return sum;
-  }, 0) : 0;
-  const isBulkPurchase = bulkDiscountValue > 0;
-  const totalDiscount = bulkDiscountValue + categoryDiscountTotal;
+  }, 0);
+
+  const totalDiscount = quantityDiscountTotal + categoryDiscountTotal;
   
   const handleApplyCoupon = async () => {
     if (!couponInput) return;
@@ -267,14 +279,14 @@ const CartPanel = () => {
                       <span style={{ fontSize: '13px', color: '#64748b' }}>Subtotal</span>
                       <span style={{ fontSize: '13px', fontWeight: 600, color: '#e2e8f0' }}>₹{subtotal.toLocaleString('en-IN')}</span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: isBulkPurchase ? '8px' : '0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: quantityDiscountTotal > 0 ? '8px' : '0' }}>
                       <span style={{ fontSize: '13px', color: '#64748b' }}>Shipping</span>
                       <span style={{ fontSize: '13px', fontWeight: 700, color: '#22c55e' }}>FREE</span>
                     </div>
-                    {isBulkPurchase && (
+                    {quantityDiscountTotal > 0 && (
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '13px', color: '#22c55e' }}>Bulk Discount ({bulkDiscountPercent}%)</span>
-                        <span style={{ fontSize: '13px', fontWeight: 700, color: '#22c55e' }}>-₹{bulkDiscountValue.toLocaleString('en-IN')}</span>
+                        <span style={{ fontSize: '13px', color: '#22c55e' }}>Quantity Discount</span>
+                        <span style={{ fontSize: '13px', fontWeight: 700, color: '#22c55e' }}>-₹{quantityDiscountTotal.toLocaleString('en-IN')}</span>
                       </div>
                     )}
                     {hasGstDiscount && categoryDiscountTotal > 0 && (

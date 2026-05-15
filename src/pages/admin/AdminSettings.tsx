@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Store, CreditCard, Truck, Shield, Share2, Wallet, Settings2, Save, Key, Globe, Receipt, HelpCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 const AdminSettings = () => {
+  const navigate = useNavigate();
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -156,17 +158,11 @@ const AdminSettings = () => {
 
             <div className="p-8 bg-slate-50 rounded-[32px] border border-slate-200 space-y-6">
                <h3 className="text-primary text-[10px] font-black uppercase tracking-widest font-heading">Wholesale B2B Partition</h3>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <label className="text-[10px] font-black text-primary/70 uppercase tracking-widest mb-2 block">Global Partner Discount (%)</label>
-                    <input type="number" value={settings.bulk_discount_percent || ''} onChange={e => updateSetting('bulk_discount_percent', e.target.value)}
-                      className="w-full bg-white border border-slate-200 text-slate-900 rounded-2xl px-5 py-4 font-black focus:border-primary transition-all" />
-                  </div>
-                  <div>
-                    <label className="text-[10px] font-black text-primary/70 uppercase tracking-widest mb-2 block">Activation Threshold (Items)</label>
-                    <input type="number" value={settings.bulk_qty_threshold || ''} onChange={e => updateSetting('bulk_qty_threshold', e.target.value)}
-                      className="w-full bg-white border border-slate-200 text-slate-900 rounded-2xl px-5 py-4 font-black focus:border-primary transition-all" />
-                  </div>
+               <div className="p-6 bg-white rounded-2xl border border-slate-200 text-center">
+                  <p className="text-sm font-bold text-slate-600 mb-4">Quantity-based discounts are now managed in the Dealer / B2B section with multi-tier support.</p>
+                  <button onClick={() => navigate('/admin/dealers')} className="bg-primary/10 text-primary px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
+                    Manage Quantity Discounts
+                  </button>
                </div>
             </div>
 

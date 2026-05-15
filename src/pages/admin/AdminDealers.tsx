@@ -32,6 +32,9 @@ const AdminDealers = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any[]>([]);
   const [categoryDiscounts, setCategoryDiscounts] = useState<Record<string, string>>({});
+  const [quantityDiscounts, setQuantityDiscounts] = useState<any[]>([]);
+  const [newQty, setNewQty] = useState('');
+  const [newDisc, setNewDisc] = useState('');
 
   const fetchDealers = useCallback(async () => {
     setLoading(true);
@@ -44,6 +47,9 @@ const AdminDealers = () => {
         discMap[d.category_id] = d.discount_percent.toString();
       });
       setCategoryDiscounts(discMap);
+    } else if (tab === 'quantity_discounts') {
+      const { data } = await supabase.from('b2b_quantity_discounts').select('*').order('min_quantity', { ascending: true });
+      setQuantityDiscounts(data || []);
     } else {
       const { data } = await supabase.from('dealer_applications').select('*').eq('status', tab).order('created_at', { ascending: false });
       setDealers(data || []);
@@ -104,7 +110,8 @@ const AdminDealers = () => {
             ['pending', 'Review'], 
             ['approved', 'Partners'], 
             ['rejected', 'Declined'],
-            ['category_discounts', 'Discounts']
+            ['category_discounts', 'Category Disc'],
+            ['quantity_discounts', 'Quantity Disc']
           ].map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)}
               className={`px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
@@ -144,6 +151,67 @@ const AdminDealers = () => {
               </div>
             ))}
           </div>
+        </div>
+      ) : tab === 'quantity_discounts' ? (
+        <div className="bg-white rounded-[40px] shadow-sm border border-slate-200 p-10 max-w-4xl mx-auto">
+          <h2 className="text-xl font-black text-slate-900 mb-8 font-heading text-center">B2B Quantity-Based Discounts</h2>
+          
+          <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 mb-10">
+            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Add New Rule</h3>
+            <div className="flex flex-wrap gap-4 items-end">
+              <div className="flex-1 min-w-[150px]">
+                <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-2 block">Min Quantity</label>
+                <input type="number" value={newQty} onChange={e => setNewQty(e.target.value)} placeholder="e.g. 5"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-primary font-bold" />
+              </div>
+              <div className="flex-1 min-w-[150px]">
+                <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-2 block">Discount %</label>
+                <input type="number" value={newDisc} onChange={e => setNewDisc(e.target.value)} placeholder="e.g. 10"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-primary font-bold" />
+              </div>
+              <button onClick={async () => {
+                if (!newQty || !newDisc) return toast.error('Fill all fields');
+                const { error } = await supabase.from('b2b_quantity_discounts').upsert({ 
+                  min_quantity: parseInt(newQty), 
+                  discount_percent: parseFloat(newDisc) 
+                }, { onConflict: 'min_quantity' });
+                if (error) toast.error(error.message);
+                else {
+                  toast.success('Discount rule saved!');
+                  setNewQty(''); setNewDisc('');
+                  fetchDealers();
+                }
+              }} className="bg-primary text-white h-[46px] px-8 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all shadow-lg shadow-primary/20">
+                Add Rule
+              </button>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {quantityDiscounts.length === 0 ? (
+              <p className="text-center text-slate-400 font-bold py-10">No rules defined yet.</p>
+            ) : quantityDiscounts.map(rule => (
+              <div key={rule.id} className="flex items-center justify-between p-6 bg-white rounded-2xl border border-slate-100 hover:border-primary/20 transition-all shadow-sm">
+                <div>
+                  <div className="text-sm font-black text-slate-900 font-heading">Buy {rule.min_quantity}+ Products</div>
+                  <div className="text-[10px] font-black uppercase text-primary tracking-widest mt-1">{rule.discount_percent}% Discount Applied</div>
+                </div>
+                <button onClick={async () => {
+                  const { error } = await supabase.from('b2b_quantity_discounts').delete().eq('id', rule.id);
+                  if (error) toast.error(error.message);
+                  else {
+                    toast.success('Rule deleted');
+                    fetchDealers();
+                  }
+                }} className="text-red-500 hover:bg-red-50 p-3 rounded-xl transition-colors">
+                  <XIcon className="w-5 h-5" />
+                </button>
+              </div>
+            ))}
+          </div>
+          <p className="text-[10px] text-slate-400 mt-10 text-center font-bold uppercase tracking-tighter">
+            Note: Multi-tier discounts are applied per product based on its quantity in cart.
+          </p>
         </div>
       ) : dealers.length === 0 ? (
         <div className="bg-white rounded-[40px] p-24 text-center border-2 border-dashed border-slate-200">

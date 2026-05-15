@@ -6,8 +6,34 @@ import { useProducts, useCategories, useProductsCount, useCategoryByName, useBra
 import { getDiscount } from '@/types/product';
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { SlidersHorizontal, X, ChevronDown, ArrowRight, Check, Tag } from 'lucide-react';
+import { SlidersHorizontal, X, ChevronDown, ArrowRight, Check, Tag, Laptop, Cpu, HardDrive, Monitor, MousePointer, Keyboard, Printer, Box, Zap, Speaker, Headphones, Database, CircuitBoard } from 'lucide-react';
 import type { Product } from '@/types/product';
+
+const categoryIcons: Record<string, any> = {
+  'laptops': Laptop,
+  'gaming laptops': Laptop,
+  'laptop': Laptop,
+  'cpu': Cpu,
+  'processor': Cpu,
+  'ram': Database,
+  'memory': Database,
+  'hard disk': HardDrive,
+  'hdd': HardDrive,
+  'ssd': HardDrive,
+  'monitor': Monitor,
+  'monitors': Monitor,
+  'keyboard': Keyboard,
+  'mouse': MousePointer,
+  'headphone': Headphones,
+  'headset': Headphones,
+  'speaker': Speaker,
+  'printer': Printer,
+  'cabinet': Box,
+  'psu': Zap,
+  'gpu': CircuitBoard,
+  'graphics card': CircuitBoard,
+  'accessories': Tag,
+};
 
 const sortOptions = [
   { key: 'relevance',  label: 'Relevance' },
@@ -496,24 +522,36 @@ const ShopPage = () => {
           {/* ── CONTENT AREA ── */}
           <div className="flex-1 min-w-0">
             {/* Category Chips Strip — mobile only */}
-            <div className="md:hidden bg-white py-3 px-4 flex gap-2 overflow-x-auto scrollbar-hide border-b border-slate-200">
+            <div className="md:hidden bg-white py-4 px-4 flex gap-3 overflow-x-auto scrollbar-hide border-b border-slate-100 shadow-sm sticky top-[60px] z-[30]">
               <button
                 id="chip-all-products"
                 onClick={() => { setSelectedCategory(''); clearSpecFilters(); navigate('/shop'); }}
-                className={!selectedCategory ? 'bg-primary text-white px-4 py-1.5 rounded-full text-xs font-black' : 'bg-slate-50 text-slate-500 border border-slate-200 px-4 py-1.5 rounded-full text-xs font-bold'}
+                className={`shrink-0 flex flex-col items-center gap-2 min-w-[60px] transition-all ${!selectedCategory ? 'scale-110' : 'opacity-70'}`}
               >
-                All
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${!selectedCategory ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-50 text-slate-400 border border-slate-200'}`}>
+                  <Box className="w-6 h-6" />
+                </div>
+                <span className={`text-[10px] font-black uppercase tracking-tight ${!selectedCategory ? 'text-primary' : 'text-slate-500'}`}>All</span>
               </button>
-              {categories.map(cat => (
-                <button
-                  key={cat.id}
-                  id={`chip-cat-${cat.id}`}
-                  onClick={() => { setSelectedCategory(cat.id); clearSpecFilters(); navigate(`/shop?category=${cat.id}`); }}
-                  className={selectedCategory === cat.id ? 'bg-primary text-white px-4 py-1.5 rounded-full text-xs font-black' : 'bg-slate-50 text-slate-500 border border-slate-200 px-4 py-1.5 rounded-full text-xs font-bold'}
-                >
-                  {cat.name}
-                </button>
-              ))}
+              {categories.map(cat => {
+                const Icon = categoryIcons[cat.name.toLowerCase()] || Box;
+                const isActive = selectedCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    id={`chip-cat-${cat.id}`}
+                    onClick={() => { setSelectedCategory(cat.id); clearSpecFilters(); navigate(`/shop?category=${cat.id}`); }}
+                    className={`shrink-0 flex flex-col items-center gap-2 min-w-[60px] transition-all ${isActive ? 'scale-110' : 'opacity-70'}`}
+                  >
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${isActive ? 'bg-primary text-white shadow-lg shadow-primary/30 border-primary' : 'bg-white text-slate-500 border border-slate-200'}`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span className={`text-[10px] font-black uppercase tracking-tight whitespace-nowrap ${isActive ? 'text-primary' : 'text-slate-500'}`}>
+                      {cat.name.split(' ')[0]}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Multi-Spec Filter Chip Rows — mobile only */}

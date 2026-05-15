@@ -56,6 +56,7 @@ const CheckoutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState('upi');
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [categoryDiscounts, setCategoryDiscounts] = useState<Record<string, number>>({});
+  const [quantityDiscounts, setQuantityDiscounts] = useState<any[]>([]);
   const [showInvoice, setShowInvoice] = useState(false);
   const [finalOrder, setFinalOrder] = useState<Database['public']['Tables']['orders']['Row'] | null>(null);
 
@@ -72,6 +73,9 @@ const CheckoutPage = () => {
         if (d.category_name) discMap[d.category_name] = Number(d.discount_percent) || 0;
       });
       setCategoryDiscounts(discMap);
+    });
+    supabase.from('b2b_quantity_discounts').select('*').order('min_quantity', { ascending: true }).then(({ data }) => {
+      setQuantityDiscounts(data || []);
     });
   }, []);
 
@@ -119,13 +123,16 @@ const CheckoutPage = () => {
       }, 0)
     : 0;
 
-  const bulkDiscountValue = (bulkQtyThreshold > 0 && bulkDiscountPercent > 0) ? cart.reduce((sum, item) => {
-    if (item.quantity >= bulkQtyThreshold) {
-      return sum + Math.round((item.product.sale_price * item.quantity * bulkDiscountPercent) / 100);
+  const quantityDiscountTotal = cart.reduce((sum, item) => {
+    const applicableTier = [...quantityDiscounts]
+      .reverse()
+      .find(tier => item.quantity >= tier.min_quantity);
+    
+    if (applicableTier && applicableTier.discount_percent > 0) {
+      return sum + Math.round((item.product.sale_price * item.quantity * applicableTier.discount_percent) / 100);
     }
     return sum;
-  }, 0) : 0;
-  const isBulkPurchase = bulkDiscountValue > 0;
+  }, 0);
   
   const couponDiscountValue = appliedCoupon ? (
     appliedCoupon.discount_type === 'percent' 
@@ -133,7 +140,7 @@ const CheckoutPage = () => {
       : Number(appliedCoupon.discount_value)
   ) : 0;
 
-  const totalDiscount = bulkDiscountValue + categoryDiscountTotal + couponDiscountValue;
+  const totalDiscount = quantityDiscountTotal + categoryDiscountTotal + couponDiscountValue;
   const afterDiscount = subtotal - totalDiscount;
 
   const shipping = afterDiscount > 999 ? 0 : 99;
@@ -228,7 +235,7 @@ const CheckoutPage = () => {
           gstNumber: useGst ? gstDetails.number : null,
           businessName: useGst ? gstDetails.businessName : null,
           discountAmount: totalDiscount,
-          discountLabel: appliedCoupon ? `Coupon ${appliedCoupon.code}` : (hasGstDiscount ? 'GST Partner' : 'Bulk Order')
+          discountLabel: appliedCoupon ? `Coupon ${appliedCoupon.code}` : (hasGstDiscount ? 'GST Partner' : (quantityDiscountTotal > 0 ? 'Quantity Discount' : 'No Discount'))
         },
         payment_method: paymentMethod,
         order_status: 'pending',
@@ -566,10 +573,10 @@ const CheckoutPage = () => {
                       animate={{ opacity: 1, x: 0 }}
                       className="space-y-2"
                     >
-                      {bulkDiscountValue > 0 && (
+                      {quantityDiscountTotal > 0 && (
                         <div className="flex justify-between items-center text-sm text-[#22C55E]">
-                          <span className="font-bold">Bulk Order Discount ({bulkDiscountPercent}%)</span>
-                          <span className="font-bold">-₹{bulkDiscountValue.toLocaleString('en-IN')}</span>
+                          <span className="font-bold">Quantity Discount</span>
+                          <span className="font-bold">-₹{quantityDiscountTotal.toLocaleString('en-IN')}</span>
                         </div>
                       )}
                       {categoryDiscountTotal > 0 && hasGstDiscount && (

@@ -52,6 +52,33 @@ export type Database = {
           },
         ]
       }
+      b2b_quantity_discounts: {
+        Row: {
+          id: string
+          min_quantity: number
+          discount_percent: number
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          min_quantity: number
+          discount_percent?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          min_quantity?: number
+          discount_percent?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       addresses: {
         Row: {
           address_line1: string
