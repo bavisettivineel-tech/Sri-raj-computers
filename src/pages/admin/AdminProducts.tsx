@@ -425,6 +425,7 @@ const AdminProducts = () => {
           <option value="price_asc">Price: Low to High</option>
           <option value="price_desc">Price: High to Low</option>
           <option value="stock_asc">Stock: Low to High</option>
+          <option value="stock_desc">Stock: High to Low</option>
         </select>
       </div>
 
@@ -534,7 +535,7 @@ const AdminProducts = () => {
 
       {deleteConfirm && (
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-          <div className="bg-white rounded-[40px] w-full max-w-sm p-10 shadow-2xl border border-slate-100">
+          <div className="bg-white rounded-[40px] w-full max-sm p-10 shadow-2xl border border-slate-100">
             <h2 className="text-2xl font-black text-slate-900 mb-2 font-heading">Delete Item?</h2>
             <p className="text-slate-500 text-sm mb-8">This action is permanent and cannot be reversed.</p>
             <div className="flex flex-col gap-3">

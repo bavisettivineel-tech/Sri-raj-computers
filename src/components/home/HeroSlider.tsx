@@ -129,25 +129,38 @@ const HeroSlider = () => {
 
         {/* Content - Only Shop Now Button */}
         <div style={{ position: 'absolute', bottom: '10%', right: '10%', zIndex: 10 }}>
+          <style>{`
+            .hero-cta {
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+              background: #F59E0B;
+              color: #1E1B4B;
+              padding: 12px 32px;
+              border-radius: 4px;
+              font-size: 16px;
+              font-weight: 800;
+              border: none;
+              cursor: pointer;
+              box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+              transition: all 0.3s;
+              font-family: 'Space Grotesk', sans-serif;
+              text-transform: uppercase;
+              white-space: nowrap;
+            }
+            @media (max-width: 768px) {
+              .hero-cta {
+                padding: 6px 16px;
+                font-size: 10px;
+                gap: 4px;
+                border-radius: 3px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+              }
+            }
+          `}</style>
           <button
             onClick={() => navigate(b.button_link || '/shop')}
-            style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              gap: '8px', 
-              background: '#F59E0B', 
-              color: '#1E1B4B', 
-              padding: '12px 32px', 
-              borderRadius: '4px', 
-              fontSize: '16px', 
-              fontWeight: '800', 
-              border: 'none', 
-              cursor: 'pointer', 
-              boxShadow: '0 4px 15px rgba(0,0,0,0.2)', 
-              transition: 'all 0.3s', 
-              fontFamily: 'Space Grotesk, sans-serif',
-              textTransform: 'uppercase'
-            }}
+            className="hero-cta"
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)'; }}
             onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)'; }}>
             Shop Now

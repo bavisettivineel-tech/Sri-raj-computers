@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { supabase } from '@/integrations/supabase/client';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
@@ -78,24 +78,24 @@ const AdminReports = () => {
 
   return (
     <AdminLayout activeTab="reports">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
         <div>
-          <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">Intelligence Terminal</h1>
-          <p className="text-white/50 text-sm mt-1 font-medium">Holistic visualization of platform performance metrics.</p>
+          <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight font-heading">Analytics & Reports</h1>
+          <p className="text-slate-500 text-sm mt-1 font-medium">Holistic visualization of platform performance metrics.</p>
         </div>
-        <div className="flex bg-white/10 backdrop-blur-md p-1 rounded-2xl border border-white/20">
+        <div className="flex bg-white p-1 rounded-2xl border border-slate-200 shadow-sm overflow-x-auto hide-scrollbar">
            {(
              [
-               ['sales', 'Commercials', BarChart3],
+               ['sales', 'Sales', BarChart3],
                ['products', 'Inventory', Layers],
-               ['payments', 'Settlements', PieIcon]
+               ['payments', 'Payments', PieIcon]
              ] as [string, string, React.ElementType][]
            ).map(([k, l, Icon]) => (
              <button key={k} onClick={() => setTab(k)}
-               className={`flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                 tab === k ? 'glass-panel text-white shadow-lg' : 'text-white/40 hover:text-white/60'
+               className={`flex items-center gap-2 px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
+                 tab === k ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-slate-400 hover:text-slate-600'
                }`}>
-               <Icon className={`w-3.5 h-3.5 ${tab === k ? 'text-blue-400' : 'text-white/30'}`} /> {l}
+               <Icon className={`w-3.5 h-3.5 ${tab === k ? 'text-white' : 'text-slate-300'}`} /> {l}
              </button>
            ))}
         </div>
@@ -106,28 +106,28 @@ const AdminReports = () => {
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { label: 'Cumulative Revenue', value: `₹${totalRevenue.toLocaleString('en-IN')}`, icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
-                { label: 'Transaction Volume', value: orders.length, icon: ShoppingBag, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-                { label: 'Mean Ticket Value', value: `₹${avgOrderValue.toLocaleString('en-IN')}`, icon: CreditCard, color: 'text-purple-500', bg: 'bg-purple-50' },
-                { label: 'Inventory Dispatch', value: totalItemsSold, icon: Package, color: 'text-amber-500', bg: 'bg-amber-50' },
+                { label: 'Revenue', value: `₹${totalRevenue.toLocaleString('en-IN')}`, icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-50' },
+                { label: 'Orders', value: orders.length, icon: ShoppingBag, color: 'text-blue-500', bg: 'bg-blue-50' },
+                { label: 'Avg Order', value: `₹${avgOrderValue.toLocaleString('en-IN')}`, icon: CreditCard, color: 'text-purple-500', bg: 'bg-purple-50' },
+                { label: 'Items Sold', value: totalItemsSold, icon: Package, color: 'text-amber-500', bg: 'bg-amber-50' },
               ].map(s => (
-                <div key={s.label} className="glass-panel rounded-[40px] p-8 shadow-lg border border-white/10 flex flex-col justify-between">
-                  <div className={`w-12 h-12 ${s.bg} ${s.color} rounded-2xl flex items-center justify-center mb-6`}>
+                <div key={s.label} className="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-all duration-300">
+                  <div className={`w-12 h-12 ${s.bg} ${s.color} rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-black/5`}>
                      <s.icon className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-2xl font-black text-white tracking-tight">{s.value}</p>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mt-1">{s.label}</p>
+                    <p className="text-2xl font-black text-slate-900 tracking-tight font-heading">{s.value}</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">{s.label}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="glass-panel rounded-[40px] p-10 shadow-lg border border-white/10">
+              <div className="bg-white rounded-3xl p-10 shadow-sm border border-slate-200">
                 <div className="flex items-center justify-between mb-10">
-                   <h3 className="text-sm font-black uppercase tracking-widest text-white/40 flex items-center gap-2">
-                     <LineIcon className="w-4 h-4 text-blue-500" /> Revenue Stream
+                   <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 flex items-center gap-2 font-heading">
+                     <LineIcon className="w-4 h-4 text-primary" /> Revenue Stream
                    </h3>
                 </div>
                 <div className="h-64">
@@ -135,23 +135,23 @@ const AdminReports = () => {
                     <AreaChart data={revenueChartData}>
                       <defs>
                         <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.1}/>
-                          <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                          <stop offset="5%" stopColor="#7C3AED" stopOpacity={0.1}/>
+                          <stop offset="95%" stopColor="#7C3AED" stopOpacity={0}/>
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
                       <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94A3B8', fontWeight: 700 }} />
                       <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94A3B8', fontWeight: 700 }} />
                       <Tooltip contentStyle={{ borderRadius: '24px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', fontWeight: 800 }} />
-                      <Area type="monotone" dataKey="revenue" stroke="#3B82F6" strokeWidth={4} fillOpacity={1} fill="url(#colorRev)" />
+                      <Area type="monotone" dataKey="revenue" stroke="#7C3AED" strokeWidth={4} fillOpacity={1} fill="url(#colorRev)" />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
               </div>
 
-              <div className="glass-panel rounded-[40px] p-10 shadow-lg border border-white/10">
+              <div className="bg-white rounded-3xl p-10 shadow-sm border border-slate-200">
                 <div className="flex items-center justify-between mb-10">
-                   <h3 className="text-sm font-black uppercase tracking-widest text-white/40 flex items-center gap-2">
+                   <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 flex items-center gap-2 font-heading">
                      <BarChart3 className="w-4 h-4 text-emerald-500" /> Order Velocity
                    </h3>
                 </div>
@@ -173,36 +173,36 @@ const AdminReports = () => {
 
         {tab === 'products' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="glass-panel rounded-[40px] p-10 shadow-lg border border-white/10">
-              <div className="flex items-center gap-2 mb-8 text-red-400">
+            <div className="bg-white rounded-3xl p-10 shadow-sm border border-slate-200">
+              <div className="flex items-center gap-2 mb-8 text-red-500">
                  <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                 <h3 className="text-sm font-black uppercase tracking-widest leading-none">Depleted Stock ({outOfStockProducts.length})</h3>
+                 <h3 className="text-sm font-black uppercase tracking-widest leading-none font-heading">Out of Stock ({outOfStockProducts.length})</h3>
               </div>
               <div className="space-y-4">
-                {outOfStockProducts.length === 0 ? <p className="text-white/30 font-bold text-center py-10">All items are operational</p> : outOfStockProducts.map(p => (
-                  <div key={p.id} className="flex items-center gap-4 p-4 bg-red-500/10/30 rounded-3xl border border-red-50">
-                    <img src={p.images?.[0] || '/placeholder.svg'} alt="" className="w-12 h-12 object-contain glass-panel rounded-xl shadow-lg" />
+                {outOfStockProducts.length === 0 ? <p className="text-slate-300 font-bold text-center py-10">All items are operational</p> : outOfStockProducts.map(p => (
+                  <div key={p.id} className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <img src={p.images?.[0] || '/placeholder.svg'} alt="" className="w-12 h-12 object-contain bg-white rounded-xl shadow-sm border border-slate-100" />
                     <div className="flex-1">
-                      <p className="text-sm font-black text-white line-clamp-1">{p.name}</p>
-                      <p className="text-[10px] font-black uppercase text-red-400 tracking-widest mt-0.5">Critical Depletion</p>
+                      <p className="text-sm font-black text-slate-900 line-clamp-1 font-heading">{p.name}</p>
+                      <p className="text-[10px] font-black uppercase text-red-500 tracking-widest mt-0.5">Critical Depletion</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="glass-panel rounded-[40px] p-10 shadow-lg border border-white/10">
+            <div className="bg-white rounded-3xl p-10 shadow-sm border border-slate-200">
               <div className="flex items-center gap-2 mb-8 text-amber-500">
                  <Package className="w-5 h-5 flex-shrink-0" />
-                 <h3 className="text-sm font-black uppercase tracking-widest leading-none">Low Reserve Alert ({lowStockProducts.length})</h3>
+                 <h3 className="text-sm font-black uppercase tracking-widest leading-none font-heading">Low Stock Alert ({lowStockProducts.length})</h3>
               </div>
               <div className="space-y-4">
-                {lowStockProducts.length === 0 ? <p className="text-white/30 font-bold text-center py-10">Healthy reserves detected</p> : lowStockProducts.map(p => (
-                  <div key={p.id} className="flex items-center gap-4 p-4 bg-amber-50/30 rounded-3xl border border-amber-50">
-                    <img src={p.images?.[0] || '/placeholder.svg'} alt="" className="w-12 h-12 object-contain glass-panel rounded-xl shadow-lg" />
+                {lowStockProducts.length === 0 ? <p className="text-slate-300 font-bold text-center py-10">Healthy reserves detected</p> : lowStockProducts.map(p => (
+                  <div key={p.id} className="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <img src={p.images?.[0] || '/placeholder.svg'} alt="" className="w-12 h-12 object-contain bg-white rounded-xl shadow-sm border border-slate-100" />
                     <div className="flex-1">
-                      <p className="text-sm font-black text-white line-clamp-1">{p.name}</p>
-                      <p className="text-[10px] font-black uppercase text-amber-400 tracking-widest mt-0.5">{p.stock_qty} Units remaining</p>
+                      <p className="text-sm font-black text-slate-900 line-clamp-1 font-heading">{p.name}</p>
+                      <p className="text-[10px] font-black uppercase text-amber-500 tracking-widest mt-0.5">{p.stock_qty} Units remaining</p>
                     </div>
                   </div>
                 ))}
@@ -212,13 +212,13 @@ const AdminReports = () => {
         )}
 
         {tab === 'payments' && (
-          <div className="glass-panel rounded-[40px] p-12 shadow-lg border border-white/10 max-w-2xl mx-auto text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="bg-white rounded-[40px] p-12 shadow-sm border border-slate-200 max-w-2xl mx-auto text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
              <div className="flex items-center justify-center gap-2 mb-12">
-                <PieIcon className="w-6 h-6 text-blue-500" />
-                <h3 className="text-sm font-black uppercase tracking-widest text-white/40 leading-none">Settlement Distribution</h3>
+                <PieIcon className="w-6 h-6 text-primary" />
+                <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 leading-none font-heading">Settlement Distribution</h3>
              </div>
              
-             {paymentPieData.length === 0 ? <p className="text-white/30 font-bold py-20">Awaiting transaction data...</p> : (
+             {paymentPieData.length === 0 ? <p className="text-slate-300 font-bold py-20">Awaiting transaction data...</p> : (
                <div className="flex flex-col md:flex-row items-center justify-around gap-12">
                  <div className="h-64 w-64">
                    <ResponsiveContainer width="100%" height="100%">
@@ -235,8 +235,8 @@ const AdminReports = () => {
                       <div key={i} className="flex items-center gap-4">
                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
                          <div>
-                            <p className="text-xs font-black text-white uppercase tracking-widest">{d.name}</p>
-                            <p className="text-[10px] font-bold text-white/40">{d.value} Transactions</p>
+                            <p className="text-xs font-black text-slate-900 uppercase tracking-widest font-heading">{d.name}</p>
+                            <p className="text-[10px] font-bold text-slate-400">{d.value} Transactions</p>
                          </div>
                       </div>
                     ))}

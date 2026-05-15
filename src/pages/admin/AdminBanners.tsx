@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { supabase } from '@/integrations/supabase/client';
 import { Edit, Trash2, Plus, Image, X, Upload } from 'lucide-react';
@@ -120,101 +120,106 @@ const AdminBanners = () => {
   if (showForm) {
     return (
       <AdminLayout activeTab="banners">
-        <div className="max-w-2xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-black text-white text-neon-cyan">{editing ? 'Edit Banner' : 'Add New Banner'}</h1>
-            <button onClick={() => setShowForm(false)} className="p-2 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors text-white/50 border border-transparent hover:border-white/10">
-              <X className="w-6 h-6" />
-            </button>
+        <div className="max-w-2xl mx-auto pb-20">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <button onClick={() => setShowForm(false)} className="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-400">
+                <X className="w-6 h-6" />
+              </button>
+              <div>
+                <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight font-heading">{editing ? 'Edit Banner' : 'Add New Banner'}</h1>
+                <p className="text-slate-500 text-sm font-medium">Create promotional hero sliders or ad banners.</p>
+              </div>
+            </div>
           </div>
           
-          <div className="glass-panel rounded-2xl shadow-lg shadow-blue-500/10 border border-white/10 overflow-hidden">
-            <div className="p-6 space-y-6">
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="p-8 space-y-6">
               <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-white/50">Banner Image</label>
+                <label className="text-xs font-black uppercase tracking-widest text-slate-400">Banner Image</label>
                 <div className="relative group">
                   {form.image_url ? (
-                    <div className="relative h-48 rounded-2xl overflow-hidden group border border-white/10">
-                      <img src={form.image_url} alt="" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                        <label className="cursor-pointer btn-primary px-6 py-2 rounded-xl text-xs font-bold shadow-blue transition-transform active:scale-95 border border-[#3B82F6]/50 inline-flex w-auto h-auto">
+                    <div className="relative h-48 rounded-2xl overflow-hidden group border border-slate-100 shadow-inner bg-slate-50">
+                      <img src={form.image_url} alt="" className="w-full h-full object-contain" />
+                      <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                        <label className="cursor-pointer bg-white text-slate-900 px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest shadow-xl transition-transform active:scale-95 border border-transparent inline-flex">
                           Change Image
                           <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" disabled={uploading} />
                         </label>
                       </div>
                     </div>
                   ) : (
-                    <label className="flex flex-col items-center justify-center h-48 border-2 border-dashed border-white/20 rounded-2xl bg-white/5 backdrop-blur-md hover:bg-white/10 backdrop-blur-md hover:border-[#3B82F6]/50 transition-all cursor-pointer group">
-                      <div className="w-12 h-12 glass-base rounded-xl shadow-lg flex items-center justify-center text-white/40 group-hover:text-[#3B82F6] group-hover:scale-110 transition-all border border-white/10">
+                    <label className="flex flex-col items-center justify-center h-48 border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50 hover:bg-slate-100 hover:border-primary/50 transition-all cursor-pointer group">
+                      <div className="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-slate-300 group-hover:text-primary group-hover:scale-110 transition-all border border-slate-100">
                         <Upload className="w-6 h-6" />
                       </div>
-                      <p className="mt-3 text-sm font-bold text-white/70">Click to upload image</p>
-                      <p className="text-xs text-white/40 mt-1">Recommended: 800×300px (JPG, PNG)</p>
+                      <p className="mt-3 text-sm font-bold text-slate-500">Click to upload image</p>
+                      <p className="text-[10px] text-slate-400 mt-1 font-bold uppercase tracking-widest">Recommended: 1920×600px (JPG, PNG)</p>
                       <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" disabled={uploading} />
                     </label>
                   )}
                   {uploading && (
-                    <div className="absolute inset-0 bg-[#0F172A]/80 backdrop-blur-md flex items-center justify-center rounded-2xl z-10 border border-[#3B82F6]/30">
+                    <div className="absolute inset-0 bg-white/80 backdrop-blur-md flex items-center justify-center rounded-3xl z-10">
                       <div className="flex flex-col items-center">
-                        <div className="w-8 h-8 border-4 border-[#3B82F6] border-t-transparent rounded-full animate-spin shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
-                        <p className="mt-3 text-xs font-bold text-[#3B82F6] uppercase tracking-widest animate-pulse">Uploading...</p>
+                        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin shadow-lg shadow-primary/20" />
+                        <p className="mt-3 text-xs font-black text-primary uppercase tracking-widest animate-pulse">Uploading...</p>
                       </div>
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-white/50">Title (Optional)</label>
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-400">Title (Optional)</label>
                   <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })}
                     placeholder="e.g. Summer Sale 2024"
-                    className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm bg-white/5 backdrop-blur-md text-white outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:border-[#3B82F6] transition-all font-medium placeholder:text-white/30" />
+                    className="w-full border border-slate-200 rounded-xl px-4 py-3.5 text-sm bg-white outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all font-medium" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-white/50">Subtitle (Optional)</label>
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-400">Subtitle (Optional)</label>
                   <input value={form.subtitle} onChange={e => setForm({ ...form, subtitle: e.target.value })}
-                    placeholder="e.g. Up to 50% OFF on Laptops"
-                    className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm bg-white/5 backdrop-blur-md text-white outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:border-[#3B82F6] transition-all font-medium placeholder:text-white/30" />
+                    placeholder="e.g. Up to 50% OFF"
+                    className="w-full border border-slate-200 rounded-xl px-4 py-3.5 text-sm bg-white outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all font-medium" />
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-white/50">Button Text</label>
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-400">Button Text</label>
                   <input value={form.button_text} onChange={e => setForm({ ...form, button_text: e.target.value })}
                     placeholder="e.g. Shop Now"
-                    className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm bg-white/5 backdrop-blur-md text-white outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:border-[#3B82F6] transition-all font-medium placeholder:text-white/30" />
+                    className="w-full border border-slate-200 rounded-xl px-4 py-3.5 text-sm bg-white outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all font-medium" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-white/50">Button Link</label>
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-400">Button Link</label>
                   <input value={form.button_link} onChange={e => setForm({ ...form, button_link: e.target.value })}
-                    placeholder="e.g. /shop/laptops"
-                    className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm bg-white/5 backdrop-blur-md text-white outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:border-[#3B82F6] transition-all font-medium placeholder:text-white/30" />
+                    placeholder="e.g. /shop"
+                    className="w-full border border-slate-200 rounded-xl px-4 py-3.5 text-sm bg-white outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all font-medium" />
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
+              <div className="flex items-center justify-between p-5 bg-slate-50 rounded-2xl border border-slate-100">
                 <div className="space-y-1">
-                  <label className="text-xs font-black uppercase tracking-widest text-white/50">Sort Order</label>
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-400">Sort Order</label>
                   <input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: e.target.value })}
-                    className="w-24 border border-white/10 rounded-lg px-3 py-2 text-sm bg-[#0F172A] text-white outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:border-[#3B82F6] font-bold" />
+                    className="w-24 border border-slate-200 rounded-xl px-4 py-2 text-sm bg-white outline-none focus:border-primary font-bold shadow-sm" />
                 </div>
                 <label className="flex items-center gap-3 cursor-pointer select-none">
-                  <span className="text-sm font-bold text-white/80">Active Status</span>
+                  <span className="text-xs font-black uppercase tracking-widest text-slate-500">Active</span>
                   <div className="relative inline-flex items-center">
                     <input type="checkbox" checked={form.is_active} onChange={e => setForm({ ...form, is_active: e.target.checked })} className="sr-only peer" />
-                    <div className="w-11 h-6 bg-white/20 backdrop-blur-md peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:glass-panel after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#3B82F6] peer-checked:shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                    <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                   </div>
                 </label>
               </div>
             </div>
 
-            <div className="p-6 bg-white/5 backdrop-blur-md border-t border-white/10 flex gap-4">
-              <button onClick={() => setShowForm(false)} className="flex-1 btn-ghost py-3 rounded-xl font-bold text-sm transition-colors text-center w-full h-auto">
+            <div className="p-6 bg-slate-50 border-t border-slate-100 flex gap-4">
+              <button onClick={() => setShowForm(false)} className="flex-1 bg-white text-slate-500 py-4 rounded-2xl font-black text-xs uppercase tracking-widest border border-slate-200 hover:bg-slate-100 transition-all">
                 Cancel
               </button>
-              <button onClick={handleSave} disabled={uploading} className="flex-1 btn-primary py-3 rounded-xl font-bold text-sm transition-all active:scale-95 disabled:opacity-50 disabled:active:scale-100 w-full h-auto">
+              <button onClick={handleSave} disabled={uploading} className="flex-1 bg-primary text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50">
                 Save Banner
               </button>
             </div>
@@ -226,17 +231,17 @@ const AdminBanners = () => {
 
   return (
     <AdminLayout activeTab="banners">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
         <div>
-          <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight text-neon-cyan">Banners & Promotions</h1>
-          <p className="text-white/60 text-sm mt-1 font-medium">Manage your homepage hero sliders and promotional ads.</p>
+          <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight font-heading">Banners & Promotions</h1>
+          <p className="text-slate-500 text-sm mt-1 font-medium">Manage your homepage hero sliders and promotional ads.</p>
         </div>
-        <button onClick={() => openForm()} className="btn-primary w-auto px-6 shadow-blue">
+        <button onClick={() => openForm()} className="flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-105 transition-all">
           <Plus className="w-5 h-5" /> Add New Banner
         </button>
       </div>
 
-      <div className="glass-panel p-2 rounded-2xl shadow-lg border border-white/10 inline-flex gap-1 mb-6 max-w-full overflow-x-auto hide-scrollbar">
+      <div className="flex gap-2 mb-8 overflow-x-auto pb-2 hide-scrollbar">
         {[
           ['hero', 'Hero Slider'], 
           ['promo', 'Promo Strips'], 
@@ -244,10 +249,10 @@ const AdminBanners = () => {
           ['popup', 'Popup Ads']
         ].map(([k, l]) => (
           <button key={k} onClick={() => setTab(k)}
-            className={`px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border border-transparent ${
+            className={`px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest whitespace-nowrap transition-all ${
               tab === k 
-                ? 'bg-blue-gradient text-white shadow-[0_0_15px_rgba(59,130,246,0.4)] border-[#3B82F6]/30' 
-                : 'bg-transparent text-white/50 hover:bg-white/5 backdrop-blur-md hover:text-white'
+                ? 'bg-primary text-white shadow-lg shadow-primary/20' 
+                : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50'
             }`}>
             {l}
           </button>
@@ -255,56 +260,49 @@ const AdminBanners = () => {
       </div>
 
       {banners.length === 0 ? (
-        <div className="glass-panel rounded-3xl p-16 text-center border-2 border-dashed border-white/20">
-          <div className="w-20 h-20 bg-white/5 backdrop-blur-md rounded-full flex items-center justify-center mx-auto mb-4 text-[#3B82F6]/50 border border-white/10 shadow-[0_0_20px_rgba(59,130,246,0.1)]">
+        <div className="bg-white rounded-[40px] p-20 text-center border-2 border-dashed border-slate-200">
+          <div className="w-20 h-20 bg-slate-50 rounded-[30px] flex items-center justify-center mx-auto mb-6 text-slate-200 border border-slate-100">
             <Image className="w-10 h-10" />
           </div>
-          <p className="text-white font-black text-lg">No banners found</p>
-          <p className="text-white/50 text-sm max-w-xs mx-auto mt-2">Start by adding your first promotional banner for this section.</p>
-          <button onClick={() => openForm()} className="mt-6 text-[#3B82F6] font-bold text-sm hover:underline hover:text-white transition-colors">
-            + Create your first banner
+          <p className="text-slate-900 font-black text-xl font-heading">No banners found</p>
+          <p className="text-slate-500 text-sm max-w-xs mx-auto mt-2 font-medium">Start by adding your first promotional banner for this section.</p>
+          <button onClick={() => openForm()} className="mt-8 bg-primary/5 text-primary px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-all border border-primary/10">
+            + Create Banner
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {banners.map(banner => (
-            <div key={banner.id} className="group glass-panel rounded-2xl shadow-lg border border-white/10 overflow-hidden hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:border-[#3B82F6]/30 transition-all duration-300">
-              <div className="relative h-40 bg-black/40 border-b border-white/10">
+            <div key={banner.id} className="group bg-white rounded-[32px] shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-500">
+              <div className="relative h-48 bg-slate-50 p-4">
                 {banner.image_url ? (
-                  <img src={banner.image_url} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                  <img src={banner.image_url} alt="" className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-white/20">
+                  <div className="w-full h-full flex items-center justify-center text-slate-200">
                     <Image className="w-10 h-10" />
                   </div>
                 )}
                 {!banner.is_active && (
-                  <div className="absolute top-3 left-3 bg-[#0F172A]/80 backdrop-blur-md text-white/70 px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border border-white/10">
-                    Inactive
+                  <div className="absolute top-4 left-4 bg-slate-900/10 backdrop-blur-md text-slate-600 px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border border-slate-200">
+                    Draft
                   </div>
                 )}
-                <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button onClick={() => openForm(banner)} className="w-8 h-8 glass-panel shadow-lg text-white rounded-lg flex items-center justify-center hover:bg-white/20 backdrop-blur-md active:scale-95 transition-all border border-white/20">
-                    <Edit className="w-4 h-4" />
+                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
+                  <button onClick={() => openForm(banner)} className="w-10 h-10 bg-white shadow-lg text-slate-400 rounded-xl flex items-center justify-center hover:bg-primary hover:text-white transition-all border border-slate-100">
+                    <Edit className="w-5 h-5" />
                   </button>
-                  <button onClick={() => setDeleteConfirm(banner.id)} className="w-8 h-8 glass-panel shadow-[0_0_10px_rgba(239,68,68,0.3)] text-red-400 border border-red-500/30 rounded-lg flex items-center justify-center hover:bg-red-500/20 active:scale-95 transition-all">
-                    <Trash2 className="w-4 h-4" />
+                  <button onClick={() => setDeleteConfirm(banner.id)} className="w-10 h-10 bg-white shadow-lg text-red-400 rounded-xl flex items-center justify-center hover:bg-red-600 hover:text-white transition-all border border-slate-100">
+                    <Trash2 className="w-5 h-5" />
                   </button>
                 </div>
               </div>
-              <div className="p-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-bold text-white text-sm line-clamp-1">{banner.title || 'No Title'}</h3>
-                    <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-1">Order: {banner.sort_order}</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer scale-75 origin-right">
-                    <input type="checkbox" checked={banner.is_active} onChange={async () => {
-                      await supabase.from('banners').update({ is_active: !banner.is_active }).eq('id', banner.id);
-                      fetchBanners();
-                    }} className="sr-only peer" />
-                    <div className="w-11 h-6 bg-white/20 backdrop-blur-md peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:glass-panel after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#3B82F6] peer-checked:shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-                  </label>
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Order: {banner.sort_order}</span>
+                  <span className={`w-2 h-2 rounded-full ${banner.is_active ? 'bg-emerald-500' : 'bg-slate-300'}`} />
                 </div>
+                <h3 className="font-bold text-slate-900 text-base line-clamp-1 font-heading">{banner.title || 'Untitled Banner'}</h3>
+                {banner.subtitle && <p className="text-xs text-slate-500 mt-1 font-medium line-clamp-1">{banner.subtitle}</p>}
               </div>
             </div>
           ))}
@@ -312,20 +310,16 @@ const AdminBanners = () => {
       )}
 
       {deleteConfirm && (
-        <div className="fixed inset-0 bg-[#0F172A]/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-fade-in">
-          <div className="glass-panel border border-white/10 rounded-3xl w-full max-w-sm p-8 shadow-[0_0_40px_rgba(0,0,0,0.8)] animate-slide-in-up">
-            <div className="w-16 h-16 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center justify-center text-red-500 mb-6 mx-auto shadow-[0_0_15px_rgba(239,68,68,0.2)]">
-              <Trash2 className="w-8 h-8" />
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white border border-slate-100 rounded-[40px] w-full max-w-sm p-10 shadow-2xl animate-slide-in-up">
+            <div className="w-20 h-20 bg-red-50 border border-red-100 rounded-[30px] flex items-center justify-center text-red-500 mb-8 mx-auto shadow-sm">
+              <Trash2 className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-black text-white text-center mb-2">Delete Banner?</h3>
-            <p className="text-white/60 text-center text-sm mb-8">This will permanently remove the banner. This action cannot be undone.</p>
-            <div className="flex gap-4">
-              <button onClick={() => setDeleteConfirm(null)} className="flex-1 btn-ghost py-3 rounded-2xl font-bold text-sm h-auto text-center w-full">
-                Keep it
-              </button>
-              <button onClick={() => handleDelete(deleteConfirm)} className="flex-1 bg-red-600 text-white py-3 rounded-2xl font-bold text-sm shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:bg-red-500 border border-red-400 hover:shadow-[0_0_25px_rgba(239,68,68,0.6)] transition-all active:scale-95 text-center w-full h-auto">
-                Yes, Delete
-              </button>
+            <h3 className="text-2xl font-black text-slate-900 text-center mb-2 font-heading">Delete Banner?</h3>
+            <p className="text-slate-500 text-center text-sm mb-10 font-medium">This will permanently remove the banner from your website slider.</p>
+            <div className="flex flex-col gap-3">
+              <button onClick={() => handleDelete(deleteConfirm)} className="w-full bg-red-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-red-600/20 hover:bg-red-700 transition-all active:scale-95">Confirm Delete</button>
+              <button onClick={() => setDeleteConfirm(null)} className="w-full bg-slate-100 text-slate-500 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">Keep Banner</button>
             </div>
           </div>
         </div>
