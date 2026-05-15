@@ -6,8 +6,40 @@ import { useProducts, useCategories, useProductsCount, useCategoryByName, useBra
 import { getDiscount } from '@/types/product';
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { SlidersHorizontal, X, ChevronDown, ArrowRight, Check, Tag, Laptop, Cpu, HardDrive, Monitor, MousePointer, Keyboard, Printer, Box, Zap, Speaker, Headphones, Database, CircuitBoard } from 'lucide-react';
+import { SlidersHorizontal, X, ChevronDown, ArrowRight, Check, Tag, Laptop, Cpu, HardDrive, Monitor, MousePointer, Keyboard, Printer, Box, Zap, Speaker, Headphones, Database, CircuitBoard, Filter } from 'lucide-react';
 import type { Product } from '@/types/product';
+import { CATEGORY_FILTERS } from '@/config/categoryFilters';
+
+// ── Mapping of filter labels to product specification keys ──────────────────
+const FILTER_KEY_MAP: Record<string, string[]> = {
+  'Brand': ['Brand', 'Manufacturer'],
+  'Processor': ['Processor', 'CPU', 'Processor Model', 'Processor Series'],
+  'RAM Size': ['RAM', 'RAM Size', 'Memory', 'Installed RAM'],
+  'RAM': ['RAM', 'RAM Size', 'Memory', 'Installed RAM'],
+  'Storage': ['Storage', 'SSD', 'HDD', 'Storage Capacity', 'Hard Disk'],
+  'Display Size': ['Display Size', 'Screen Size', 'Screen'],
+  'Screen Size': ['Screen Size', 'Display Size', 'Size', 'Panel Size'],
+  'Resolution': ['Resolution', 'Display Resolution'],
+  'Refresh Rate': ['Refresh Rate', 'Hz'],
+  'Capacity': ['Capacity', 'RAM Size', 'Size', 'Memory', 'Storage Capacity'],
+  'DDR Type': ['Type', 'RAM Type', 'Memory Type'],
+  'Type': ['Type'],
+  'Interface': ['Interface', 'Form Factor', 'Type'],
+  'RPM Speed': ['RPM', 'Rotation Speed'],
+  'GPU Series': ['GPU', 'Graphics', 'Graphics Card', 'Video Card', 'Chipset'],
+  'VRAM': ['VRAM', 'Memory', 'Video Memory'],
+  'Form Factor': ['Form Factor', 'Type', 'Size'],
+  'Socket Type': ['Socket', 'CPU Socket'],
+  'Socket Support': ['Socket', 'CPU Socket'],
+  'Core Count': ['Cores', 'Core Count'],
+  'Wattage': ['Wattage', 'Power Output'],
+  'Efficiency Rating': ['Rating', 'Efficiency'],
+  'Modular Type': ['Modular', 'Type'],
+  'Screen Type': ['Panel Type', 'Type'],
+  'Generation': ['Generation', 'Gen'],
+  'Series': ['Series', 'Model Series'],
+};
+
 
 const categoryIcons: Record<string, any> = {
   'laptops': Laptop,
@@ -42,43 +74,14 @@ const sortOptions = [
   { key: 'discount',   label: 'Best Discount' },
 ];
 
-// ── Multi-spec filter groups per category ──────────────────────────────────────
-type SpecGroup = { label: string; keys: string[] };
-const CATEGORY_SPEC_GROUPS: Record<string, SpecGroup[]> = {
-  laptop:          [ { label: 'Processor', keys: ['Processor', 'CPU', 'Processor Model', 'Processor Series'] }, { label: 'RAM', keys: ['RAM', 'RAM Size', 'Memory', 'Installed RAM'] }, { label: 'Storage', keys: ['Storage', 'SSD', 'HDD', 'Storage Capacity', 'Hard Disk'] }, { label: 'Display', keys: ['Display Size', 'Screen Size', 'Screen'] } ],
-  laptops:         [ { label: 'Processor', keys: ['Processor', 'CPU', 'Processor Model', 'Processor Series'] }, { label: 'RAM', keys: ['RAM', 'RAM Size', 'Memory', 'Installed RAM'] }, { label: 'Storage', keys: ['Storage', 'SSD', 'HDD', 'Storage Capacity', 'Hard Disk'] }, { label: 'Display', keys: ['Display Size', 'Screen Size', 'Screen'] } ],
-  'gaming laptop': [ { label: 'Processor', keys: ['Processor', 'CPU', 'Processor Model', 'Processor Series'] }, { label: 'RAM', keys: ['RAM', 'RAM Size', 'Memory', 'Installed RAM'] }, { label: 'Storage', keys: ['Storage', 'SSD', 'HDD', 'Storage Capacity'] }, { label: 'GPU', keys: ['GPU', 'Graphics', 'Graphics Card', 'Video Card'] } ],
-  ram:             [ { label: 'Capacity', keys: ['Capacity', 'RAM Size', 'Size', 'Memory'] }, { label: 'Type', keys: ['Type', 'RAM Type', 'Memory Type'] }, { label: 'Speed', keys: ['Speed', 'Frequency', 'Clock Speed'] } ],
-  memory:          [ { label: 'Capacity', keys: ['Capacity', 'RAM Size', 'Size', 'Memory'] }, { label: 'Type', keys: ['Type', 'RAM Type', 'Memory Type'] } ],
-  'hard disk':     [ { label: 'Storage', keys: ['Storage Capacity', 'Capacity', 'Storage', 'HDD Size'] }, { label: 'Type', keys: ['Type', 'HDD Type'] }, { label: 'RPM', keys: ['RPM', 'Rotation Speed'] } ],
-  hdd:             [ { label: 'Storage', keys: ['Storage Capacity', 'Capacity', 'Storage', 'HDD Size'] }, { label: 'RPM', keys: ['RPM', 'Rotation Speed'] } ],
-  ssd:             [ { label: 'Storage', keys: ['Storage Capacity', 'Capacity', 'Storage', 'SSD Size'] }, { label: 'Interface', keys: ['Interface', 'Form Factor', 'Type'] } ],
-  storage:         [ { label: 'Storage', keys: ['Storage Capacity', 'Capacity', 'Storage'] }, { label: 'Type', keys: ['Type', 'Interface'] } ],
-  processor:       [ { label: 'Series', keys: ['Processor Series', 'Series', 'Processor Model'] }, { label: 'Generation', keys: ['Generation', 'Gen'] }, { label: 'Cores', keys: ['Cores', 'Core Count', 'Number of Cores'] } ],
-  cpu:             [ { label: 'Series', keys: ['Processor Series', 'Series', 'Processor Model'] }, { label: 'Generation', keys: ['Generation', 'Gen'] }, { label: 'Cores', keys: ['Cores', 'Core Count'] } ],
-  monitor:         [ { label: 'Size', keys: ['Screen Size', 'Display Size', 'Size', 'Panel Size'] }, { label: 'Resolution', keys: ['Resolution', 'Display Resolution'] }, { label: 'Refresh Rate', keys: ['Refresh Rate', 'Hz'] } ],
-  monitors:        [ { label: 'Size', keys: ['Screen Size', 'Display Size', 'Size', 'Panel Size'] }, { label: 'Resolution', keys: ['Resolution', 'Display Resolution'] }, { label: 'Refresh Rate', keys: ['Refresh Rate', 'Hz'] } ],
-  keyboard:        [ { label: 'Type', keys: ['Type', 'Switch Type'] }, { label: 'Connectivity', keys: ['Connectivity', 'Interface'] } ],
-  mouse:           [ { label: 'Connectivity', keys: ['Connectivity', 'Interface'] }, { label: 'DPI', keys: ['DPI', 'Max DPI'] } ],
-  headphone:       [ { label: 'Type', keys: ['Type'] }, { label: 'Connectivity', keys: ['Connectivity', 'Interface'] } ],
-  headset:         [ { label: 'Type', keys: ['Type'] }, { label: 'Connectivity', keys: ['Connectivity', 'Interface'] } ],
-  printer:         [ { label: 'Type', keys: ['Type', 'Print Technology'] }, { label: 'Connectivity', keys: ['Connectivity', 'Interface'] } ],
-  cabinet:         [ { label: 'Form Factor', keys: ['Form Factor', 'Type', 'Size'] } ],
-  'power supply':  [ { label: 'Wattage', keys: ['Wattage', 'Power Output', 'Rating'] } ],
-  psu:             [ { label: 'Wattage', keys: ['Wattage', 'Power Output', 'Rating'] } ],
-  gpu:             [ { label: 'VRAM', keys: ['VRAM', 'Memory', 'Video Memory'] }, { label: 'Chipset', keys: ['Chipset', 'GPU Model', 'Model'] } ],
-  'graphics card': [ { label: 'VRAM', keys: ['VRAM', 'Memory', 'Video Memory'] }, { label: 'Chipset', keys: ['Chipset', 'GPU Model', 'Model'] } ],
-  motherboard:     [ { label: 'Socket', keys: ['Socket', 'CPU Socket'] }, { label: 'Chipset', keys: ['Chipset'] }, { label: 'Form Factor', keys: ['Form Factor'] } ],
-  accessories:     [ { label: 'Type', keys: ['Type', 'Connectivity', 'Interface'] } ],
+const getActiveFilters = (catName: string) => {
+  if (!catName) return null;
+  const lower = catName.toLowerCase();
+  if (CATEGORY_FILTERS[lower as keyof typeof CATEGORY_FILTERS]) return CATEGORY_FILTERS[lower as keyof typeof CATEGORY_FILTERS];
+  const key = Object.keys(CATEGORY_FILTERS).find(k => lower.includes(k.toLowerCase()) || k.toLowerCase().includes(lower));
+  return key ? CATEGORY_FILTERS[key as keyof typeof CATEGORY_FILTERS] : null;
 };
 
-const getCategorySpecGroups = (catName: string): SpecGroup[] => {
-  if (!catName) return [];
-  const lower = catName.toLowerCase();
-  if (CATEGORY_SPEC_GROUPS[lower]) return CATEGORY_SPEC_GROUPS[lower];
-  const key = Object.keys(CATEGORY_SPEC_GROUPS).find(k => lower.includes(k) || k.includes(lower));
-  return key ? CATEGORY_SPEC_GROUPS[key] : [];
-};
 
 const extractSizeFromName = (name: string, keys: string[]): string | null => {
   const upperName = name.toUpperCase();
@@ -254,6 +257,8 @@ const ShopPage = () => {
 
   const [sortBy, setSortBy] = useState('relevance');
   const [showSort, setShowSort] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
+
 
   // Fetch products — when filtering, fetch all in category; when "All", fetch 200
   const { data: products = [], isLoading: productsLoading } = useProducts(200, selectedCategory || undefined, selectedBrand || undefined);
@@ -263,11 +268,12 @@ const ShopPage = () => {
 
   const isLoading = productsLoading || (!!categoryNameParam && resolvingName) || (!!brandNameParam && resolvingBrand);
 
-  // ── Resolve active category + spec groups FIRST (needed by filter logic) ──
+  // ── Resolve active category + dynamic filters FIRST ──
   const activeCategory = categories.find(c => c.id === selectedCategory);
   const activeCategoryName = activeCategory?.name
     || (categoryNameParam ? (resolvedCategory?.name || categoryNameParam) : '');
-  const specGroups = getCategorySpecGroups(activeCategoryName);
+  const activeCategoryFilters = getActiveFilters(activeCategoryName);
+
 
   // ── Filter by Price ──
   const priceFiltered = products.filter(p => p.sale_price <= maxPrice);
@@ -278,25 +284,21 @@ const ShopPage = () => {
     ? priceFiltered
     : priceFiltered.filter(p => {
         return activeSpecEntries.every(([label, value]) => {
-          const group = specGroups.find(g => g.label === label);
-          if (!group) return true;
+          // Normalize matching: check product name or specifications
+          const nameMatch = p.name.toLowerCase().includes(value.toLowerCase());
           
-          // 1. Check if the value exists in structured specifications
-          if (p.specifications) {
-            const matchInSpecs = group.keys.some(k => {
-              const specVal = p.specifications![k];
-              return specVal && typeof specVal === 'string' && specVal.trim() === value;
-            });
-            if (matchInSpecs) return true;
-          }
-          
-          // 2. Fallback: check if the value was extracted from the product name
-          const extractedVal = extractSizeFromName(p.name, group.keys);
-          if (extractedVal && extractedVal === value) {
-            return true;
-          }
-          
-          return false;
+          const keys = FILTER_KEY_MAP[label] || [label];
+          const specMatch = p.specifications && keys.some(k => {
+            const specVal = p.specifications![k];
+            if (!specVal || typeof specVal !== 'string') return false;
+            
+            // Exact match or partial match for robustness
+            const lowerSpec = specVal.toLowerCase();
+            const lowerVal = value.toLowerCase();
+            return lowerSpec === lowerVal || lowerSpec.includes(lowerVal) || lowerVal.includes(lowerSpec);
+          });
+
+          return nameMatch || specMatch;
         });
       });
 
@@ -405,71 +407,104 @@ const ShopPage = () => {
                 </div>
               </details>
 
-              {/* ── Multi-Spec Filters (desktop sidebar) ── */}
-              {specGroups.length > 0 && selectedCategory && specGroups.map(group => {
-                const variants = extractVariants(products, group.keys);
-                if (variants.length === 0) return null;
-                const active = specFilters[group.label] || '';
-                return (
-                  <details key={group.label} open className="group border-b border-slate-100 pb-4">
-                    <summary className="flex items-center justify-between cursor-pointer list-none py-2">
-                      <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
-                        <span className="w-1 h-3 bg-secondary rounded-full" />
-                        {group.label}
-                      </h3>
-                      <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
-                    </summary>
-                    <div className="flex flex-col gap-1 mt-3">
-                      <label onClick={e => { e.preventDefault(); setSpecFilters(p => ({ ...p, [group.label]: '' })); }} className="flex items-center gap-3 group cursor-pointer py-2 px-3 hover:bg-slate-50 rounded-xl transition-all">
-                        <div className={`w-4 h-4 rounded-[6px] border transition-all flex items-center justify-center ${!active ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-300 bg-white group-hover:border-secondary'}`}>
-                          {!active && <Check className="w-3 h-3 text-white stroke-[4]" />}
+              {/* ── Dynamic Category Filters (desktop sidebar) ── */}
+              {activeCategoryFilters ? (
+                activeCategoryFilters.map(filter => {
+                  if (filter.type === 'checkbox') {
+                    const active = specFilters[filter.label] || '';
+                    return (
+                      <details key={filter.id} open className="group border-b border-slate-100 pb-4">
+                        <summary className="flex items-center justify-between cursor-pointer list-none py-2">
+                          <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                            <span className="w-1 h-3 bg-secondary rounded-full" />
+                            {filter.label}
+                          </h3>
+                          <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
+                        </summary>
+                        <div className="flex flex-col gap-1 mt-3">
+                          <label onClick={e => { e.preventDefault(); setSpecFilters(p => ({ ...p, [filter.label]: '' })); }} className="flex items-center gap-3 group cursor-pointer py-2 px-3 hover:bg-slate-50 rounded-xl transition-all">
+                            <div className={`w-4 h-4 rounded-[6px] border transition-all flex items-center justify-center ${!active ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-300 bg-white group-hover:border-secondary'}`}>
+                              {!active && <Check className="w-3 h-3 text-white stroke-[4]" />}
+                            </div>
+                            <span className={`text-[13px] font-bold ${!active ? 'text-secondary' : 'text-slate-600 group-hover:text-secondary'}`}>All</span>
+                          </label>
+                          {filter.options?.map(v => (
+                            <label key={v} onClick={e => { e.preventDefault(); setSpecFilter(filter.label, v); }} className="flex items-center gap-3 group cursor-pointer py-2 px-3 hover:bg-slate-50 rounded-xl transition-all">
+                              <div className={`w-4 h-4 rounded-[6px] border transition-all flex items-center justify-center ${active === v ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-300 bg-white group-hover:border-secondary'}`}>
+                                {active === v && <Check className="w-3 h-3 text-white stroke-[4]" />}
+                              </div>
+                              <span className={`text-[13px] font-bold ${active === v ? 'text-secondary' : 'text-slate-600 group-hover:text-secondary'}`}>{v}</span>
+                            </label>
+                          ))}
                         </div>
-                        <span className={`text-[13px] font-bold ${!active ? 'text-secondary' : 'text-slate-600 group-hover:text-secondary'}`}>All</span>
-                      </label>
-                      {variants.map(v => (
-                        <label key={v} onClick={e => { e.preventDefault(); setSpecFilter(group.label, v); }} className="flex items-center gap-3 group cursor-pointer py-2 px-3 hover:bg-slate-50 rounded-xl transition-all">
-                          <div className={`w-4 h-4 rounded-[6px] border transition-all flex items-center justify-center ${active === v ? 'bg-secondary border-secondary shadow-lg shadow-secondary/20' : 'border-slate-300 bg-white group-hover:border-secondary'}`}>
-                            {active === v && <Check className="w-3 h-3 text-white stroke-[4]" />}
+                      </details>
+                    );
+                  }
+                  if (filter.type === 'range') {
+                    return (
+                      <details key={filter.id} open className="group border-b border-slate-100 pb-4">
+                        <summary className="flex items-center justify-between cursor-pointer list-none py-2">
+                          <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                            <span className="w-1 h-3 bg-secondary rounded-full" />
+                            {filter.label}
+                          </h3>
+                          <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
+                        </summary>
+                        <div className="px-3 pt-6 pb-2">
+                          <div className="flex justify-between items-center mb-4">
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Max Price</span>
+                            <span className="text-sm font-black text-primary font-heading">₹{maxPrice.toLocaleString()}</span>
                           </div>
-                          <span className={`text-[13px] font-bold ${active === v ? 'text-secondary' : 'text-slate-600 group-hover:text-secondary'}`}>{v}</span>
-                        </label>
-                      ))}
+                          <input
+                            type="range"
+                            min="0"
+                            max="500000"
+                            step="5000"
+                            value={maxPrice}
+                            onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                            className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
+                          />
+                          <div className="flex justify-between mt-3">
+                            <span className="text-[10px] font-bold text-slate-400">₹0</span>
+                            <span className="text-[10px] font-bold text-slate-400">₹5L+</span>
+                          </div>
+                        </div>
+                      </details>
+                    );
+                  }
+                  return null;
+                })
+              ) : (
+                /* Fallback: Only Price Range */
+                <details open className="group border-b border-slate-100 pb-4">
+                  <summary className="flex items-center justify-between cursor-pointer list-none py-2">
+                    <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                      <span className="w-1 h-3 bg-secondary rounded-full" />
+                      Price Range
+                    </h3>
+                    <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
+                  </summary>
+                  <div className="px-3 pt-6 pb-2">
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Max Price</span>
+                      <span className="text-sm font-black text-primary font-heading">₹{maxPrice.toLocaleString()}</span>
                     </div>
-                  </details>
-                );
-              })}
-
-
-              {/* Price Range Accordion */}
-              <details open className="group border-b border-slate-100 pb-4">
-                <summary className="flex items-center justify-between cursor-pointer list-none py-2">
-                  <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
-                    <span className="w-1 h-3 bg-secondary rounded-full" />
-                    Price Range
-                  </h3>
-                  <ChevronDown className="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" />
-                </summary>
-                <div className="px-1 mt-4">
-                  <div className="text-center mb-3">
-                    <span className="text-sm font-bold text-slate-900 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200">
-                      Up to ₹{maxPrice.toLocaleString('en-IN')}
-                    </span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="500000"
+                      step="5000"
+                      value={maxPrice}
+                      onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                      className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
+                    />
+                    <div className="flex justify-between mt-3">
+                      <span className="text-[10px] font-bold text-slate-400">₹0</span>
+                      <span className="text-[10px] font-bold text-slate-400">₹5L+</span>
+                    </div>
                   </div>
-                  <input 
-                    type="range" 
-                    className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-secondary" 
-                    min="1000" 
-                    max="300000" 
-                    step="1000"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  />
-                  <div className="flex justify-between mt-3">
-                    <span className="text-[10px] text-slate-400 font-bold">₹1K</span>
-                    <span className="text-[10px] text-slate-400 font-bold">₹300K+</span>
-                  </div>
-                </div>
-              </details>
+                </details>
+              )}
 
               {/* Brands Accordion */}
               <details open className="group border-b border-slate-100 pb-6">
@@ -554,21 +589,117 @@ const ShopPage = () => {
               })}
             </div>
 
-            {/* Multi-Spec Filter Chip Rows — mobile only */}
-            {specGroups.length > 0 && selectedCategory && specGroups.map(group => {
-              const variants = extractVariants(products, group.keys);
-              if (variants.length === 0) return null;
-              const active = specFilters[group.label] || '';
-              return (
-                <div key={group.label} className="md:hidden py-2 px-4 flex items-center gap-2 overflow-x-auto scrollbar-hide border-b border-slate-100" style={{ background: '#FDFCF2' }}>
-                  <span className="text-[10px] font-black text-secondary uppercase tracking-wider shrink-0 font-heading">{group.label}:</span>
-                  <button onClick={() => setSpecFilters(p => ({ ...p, [group.label]: '' }))} className={`shrink-0 px-3 py-1 rounded-full text-[11px] font-bold border transition-all ${!active ? 'bg-secondary border-secondary text-white' : 'bg-white border-slate-200 text-slate-500'}`}>All</button>
-                  {variants.map(v => (
-                    <button key={v} onClick={() => setSpecFilter(group.label, v)} className={`shrink-0 px-3 py-1 rounded-full text-[11px] font-bold border transition-all ${active === v ? 'bg-secondary border-secondary text-white' : 'bg-white border-slate-200 text-slate-500 hover:border-secondary'}`}>{v}</button>
-                  ))}
+            {/* Mobile Filter Drawer Overlay */}
+
+            {filterOpen && (
+              <div className="fixed inset-0 z-[200] md:hidden">
+                <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setFilterOpen(false)} />
+                <div className="absolute left-0 top-0 bottom-0 w-[85%] max-w-xs bg-white shadow-2xl flex flex-col animate-slide-in-left">
+                  <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+                    <h2 className="text-xl font-black text-slate-900 uppercase tracking-tighter font-heading">Filters</h2>
+                    <button onClick={() => setFilterOpen(false)} className="p-2 bg-slate-50 rounded-full border-none">
+                      <X className="w-5 h-5 text-slate-400" />
+                    </button>
+                  </div>
+                  
+                  <div className="flex-1 overflow-y-auto p-5 space-y-6">
+                    {activeCategoryFilters ? (
+                      activeCategoryFilters.map(filter => {
+                        if (filter.type === 'checkbox') {
+                          const active = specFilters[filter.label] || '';
+                          return (
+                            <div key={filter.id} className="space-y-4">
+                              <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                                <span className="w-1 h-3 bg-secondary rounded-full" />
+                                {filter.label}
+                              </h3>
+                              <div className="flex flex-wrap gap-2">
+                                <button 
+                                  onClick={() => setSpecFilters(p => ({ ...p, [filter.label]: '' }))}
+                                  className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${!active ? 'bg-secondary border-secondary text-white shadow-md' : 'bg-white border-slate-200 text-slate-500'}`}
+                                >
+                                  All
+                                </button>
+                                {filter.options?.map(v => (
+                                  <button 
+                                    key={v}
+                                    onClick={() => setSpecFilter(filter.label, v)}
+                                    className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${active === v ? 'bg-secondary border-secondary text-white shadow-md' : 'bg-white border-slate-200 text-slate-500'}`}
+                                  >
+                                    {v}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        }
+                        if (filter.type === 'range') {
+                          return (
+                            <div key={filter.id} className="space-y-4">
+                              <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                                <span className="w-1 h-3 bg-secondary rounded-full" />
+                                {filter.label}
+                              </h3>
+                              <div className="px-1 pt-2">
+                                <div className="flex justify-between items-center mb-4">
+                                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Max Price</span>
+                                  <span className="text-sm font-black text-primary font-heading">₹{maxPrice.toLocaleString()}</span>
+                                </div>
+                                <input
+                                  type="range"
+                                  min="0"
+                                  max="500000"
+                                  step="5000"
+                                  value={maxPrice}
+                                  onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
+                                />
+                                <div className="flex justify-between mt-3">
+                                  <span className="text-[10px] font-bold text-slate-400">₹0</span>
+                                  <span className="text-[10px] font-bold text-slate-400">₹5L+</span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      })
+                    ) : (
+                      <div className="space-y-4">
+                        <h3 className="text-[11px] font-black text-slate-900 uppercase tracking-[0.2em] flex items-center gap-2 font-heading">
+                          <span className="w-1 h-3 bg-secondary rounded-full" />
+                          Price Range
+                        </h3>
+                        <div className="px-1 pt-2">
+                          <div className="flex justify-between items-center mb-4">
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Max Price</span>
+                            <span className="text-sm font-black text-primary font-heading">₹{maxPrice.toLocaleString()}</span>
+                          </div>
+                          <input
+                            type="range"
+                            min="0"
+                            max="500000"
+                            step="5000"
+                            value={maxPrice}
+                            onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                            className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="p-5 border-t border-slate-100 bg-slate-50">
+                    <button 
+                      onClick={() => setFilterOpen(false)}
+                      className="w-full bg-primary text-white rounded-xl py-3 text-sm font-black shadow-lg shadow-primary/20"
+                    >
+                      Apply Filters
+                    </button>
+                  </div>
                 </div>
-              );
-            })}
+              </div>
+            )}
 
             {/* Filter & Sort Sticky Bar */}
             <div className="bg-white px-4 py-2.5 flex items-center justify-between border-b border-slate-200 sticky top-[60px] md:top-[70px] z-20 shadow-sm">
@@ -608,16 +739,28 @@ const ShopPage = () => {
                   </div>
                 )}
 
-                {/* Sort button — mobile/tablet */}
+                {/* Mobile Filter Trigger */}
+                <button 
+                  onClick={() => setFilterOpen(true)}
+                  className="md:hidden flex items-center gap-2 bg-primary text-white rounded-xl px-4 py-1.5 text-xs font-black shadow-lg shadow-primary/20"
+                >
+                  <Filter className="w-3.5 h-3.5" />
+                  Filters
+                </button>
+
+                {/* Sort button — desktop/tablet */}
                 <button
-                  id="sort-btn"
+                  id="sort-btn-desktop"
                   onClick={() => setShowSort(!showSort)}
-                  className="md:hidden flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-sm font-bold text-slate-900 cursor-pointer hover:bg-slate-100"
+                  className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-sm font-bold text-slate-900 cursor-pointer hover:bg-slate-100"
                 >
                   <SlidersHorizontal className="w-3.5 h-3.5 text-primary" />
-                  {activeSortLabel.split(':')[0] || 'Sort'}
+                  <span className="hidden md:inline">{activeSortLabel.split(':')[0] || 'Sort'}</span>
+                  <span className="md:hidden">Sort</span>
                   <ChevronDown className="w-3 h-3" />
                 </button>
+
+
               </div>
             </div>
 
