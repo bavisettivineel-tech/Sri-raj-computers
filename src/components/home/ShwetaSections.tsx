@@ -116,11 +116,11 @@ export const GamingAccessories = () => {
 
 export const StaticBanner = ({ img }: { img: string }) => (
   <div className="w-full px-4 mb-8">
-    <div className="relative w-full overflow-hidden rounded-xl lg:h-[350px]">
+    <div className="relative w-full overflow-hidden rounded-xl" style={{ aspectRatio: '1920 / 600' }}>
       <img
         src={img}
         alt="Promo"
-        className="w-full h-auto lg:h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+        className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
       />
     </div>
   </div>
