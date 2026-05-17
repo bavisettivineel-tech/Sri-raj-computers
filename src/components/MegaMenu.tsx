@@ -109,7 +109,7 @@ const MegaMenu = ({ isOpen, onClose }: MegaMenuProps) => {
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -20, opacity: 0 }}
-            className="fixed top-[80px] left-0 right-0 bg-white border-b border-[#7C3AED]/30 shadow-[0_20px_50px_rgba(124, 58, 237, 0.1)] z-[120] max-h-[85vh] overflow-y-auto"
+            className="fixed top-[80px] left-0 right-0 bg-white border-b border-[#7C3AED]/30 shadow-[0_20px_50px_rgba(124, 58, 237, 0.1)] z-[120] max-h-[85vh] overflow-y-auto overscroll-contain"
           >
             <div className="container mx-auto px-6 py-10">
               <div className="flex justify-between items-center mb-8">

@@ -59,13 +59,10 @@ export const PCComponents = () => {
   ];
 
   return (
-    <section className="py-8 bg-[#F5F3FF]">
-      <h2 className="text-2xl font-bold text-[#1E1B4B] mb-6 px-6 font-heading">PC Components</h2>
-      <div className="grid grid-flow-col auto-cols-[45%] sm:auto-cols-[30%] md:auto-cols-[22%] lg:auto-cols-[15%] gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-6 pb-4">
+    <section className="px-4 py-8 bg-[#F5F3FF]">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
         {categories.map(cat => (
-          <div key={cat.name} className="snap-start">
-            <CategoryCard {...cat} link={shopLink(cat.name)} />
-          </div>
+          <CategoryCard key={cat.name} {...cat} link={shopLink(cat.name)} />
         ))}
       </div>
     </section>
@@ -83,14 +80,12 @@ export const GamingLaptops = () => {
   ];
 
   return (
-    <section className="py-8 bg-[#FFFFFF]">
-      <h2 className="text-2xl font-bold text-[#1E1B4B] mb-6 px-6 font-heading">Gaming Laptops</h2>
-      <div className="grid grid-flow-col auto-cols-[45%] sm:auto-cols-[30%] md:auto-cols-[22%] lg:auto-cols-[15%] gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-6 pb-4">
+    <section className="px-4 py-8 bg-[#FFFFFF]">
+      <h2 className="text-2xl font-bold text-[#1E1B4B] mb-6 px-2 font-heading">Gaming Laptops</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
         {categories.map(cat => (
           // Clicking a brand card → /shop?q=Laptop&brandq=BrandName
-          <div key={cat.name} className="snap-start">
-            <CategoryCard {...cat} link={`${shopLink('Laptop')}&brandq=${encodeURIComponent(cat.name)}`} />
-          </div>
+          <CategoryCard key={cat.name} {...cat} link={`${shopLink('Laptop')}&brandq=${encodeURIComponent(cat.name)}`} />
         ))}
       </div>
     </section>
@@ -108,13 +103,11 @@ export const GamingAccessories = () => {
   ];
 
   return (
-    <section className="py-8 bg-[#F5F3FF]">
-      <h2 className="text-2xl font-bold text-[#1E1B4B] mb-6 px-6 font-heading">Gaming Accessories</h2>
-      <div className="grid grid-flow-col auto-cols-[45%] sm:auto-cols-[30%] md:auto-cols-[22%] lg:auto-cols-[15%] gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-6 pb-4">
+    <section className="px-4 py-8 bg-[#F5F3FF]">
+      <h2 className="text-2xl font-bold text-[#1E1B4B] mb-6 px-2 font-heading">Gaming Accessories</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
         {categories.map(cat => (
-          <div key={cat.name} className="snap-start">
-            <CategoryCard {...cat} link={shopLink(cat.name)} />
-          </div>
+          <CategoryCard key={cat.name} {...cat} link={shopLink(cat.name)} />
         ))}
       </div>
     </section>

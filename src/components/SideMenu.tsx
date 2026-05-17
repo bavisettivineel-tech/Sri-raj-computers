@@ -133,6 +133,7 @@ const SideMenu = () => {
               background: '#FFFFFF',
               borderRight: '1px solid rgba(124, 58, 237, 0.25)',
               zIndex: 999, overflowY: 'auto', scrollbarWidth: 'thin',
+              overscrollBehavior: 'contain',
               boxShadow: '10px 0 40px rgba(124, 58, 237, 0.1)',
               display: 'flex', flexDirection: 'column', color: '#1E1B4B',
             }}

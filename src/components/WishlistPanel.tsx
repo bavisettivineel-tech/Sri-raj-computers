@@ -20,6 +20,7 @@ const WishlistPanel = () => {
     zIndex: 210,
     overflowY: 'auto' as const,
     scrollbarWidth: 'thin' as const,
+    overscrollBehavior: 'contain' as const,
     boxShadow: '-10px 0 40px rgba(124,58,237,0.1)',
     color: '#1E1B4B',
     display: 'flex',
