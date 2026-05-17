@@ -206,40 +206,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* ── MOBILE CATEGORY CHIPS ── */}
-      {location.pathname !== '/shop' && (
-        <div className="header-chips-row py-4 px-4 bg-white border-b border-slate-100 flex gap-4 overflow-x-auto scrollbar-hide">
-          <button 
-            id="chip-all" 
-            onClick={() => handleChipClick('All')}
-            className={`shrink-0 flex flex-col items-center gap-2 min-w-[60px] transition-all ${activeChip === 'All' ? 'scale-110' : 'opacity-70'}`}
-          >
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${activeChip === 'All' ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-50 text-slate-400 border border-slate-200'}`}>
-              <Box className="w-6 h-6" />
-            </div>
-            <span className={`text-[10px] font-black uppercase tracking-tight ${activeChip === 'All' ? 'text-primary' : 'text-slate-500'}`}>All</span>
-          </button>
-          {categories.map(cat => {
-            const Icon = categoryIcons[cat.name.toLowerCase()] || Box;
-            const isActive = activeChip === cat.name;
-            return (
-              <button 
-                key={cat.id} 
-                id={`chip-${cat.id}`} 
-                onClick={() => handleChipClick(cat.name, cat.id)}
-                className={`shrink-0 flex flex-col items-center gap-2 min-w-[60px] transition-all ${isActive ? 'scale-110' : 'opacity-70'}`}
-              >
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${isActive ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-white text-slate-500 border border-slate-200'}`}>
-                  <Icon className="w-5 h-5" />
-                </div>
-                <span className={`text-[10px] font-black uppercase tracking-tight whitespace-nowrap ${isActive ? 'text-primary' : 'text-slate-500'}`}>
-                  {cat.name.split(' ')[0]}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      )}
 
       {/* ── DESKTOP NAV ── */}
       <nav className="header-desktop-nav" ref={dropdownRef}>
