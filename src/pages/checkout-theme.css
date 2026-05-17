@@ -1,0 +1,361 @@
+/* CHECKOUT COMPLETE THEME FIX */
+
+/* =========================================
+   PAGE BACKGROUND
+   ========================================= */
+.checkout-page {
+  background-color: #F0F7FF !important;
+}
+
+/* =========================================
+   CHECKOUT SECTION CARDS (All glass-panels)
+   ========================================= */
+.checkout-page .glass-panel {
+  background: #FFFFFF !important;
+  border: 1.5px solid #E2E8F0 !important;
+  box-shadow: 0 2px 16px rgba(26, 86, 219, 0.08) !important;
+  /* border-radius is preserved by not setting it here */
+}
+
+/* =========================================
+   INPUT FIELDS COMPLETE FIX
+   ========================================= */
+.checkout-page input,
+.checkout-page textarea,
+.checkout-page select {
+  background-color: #EBF5FF !important;
+  border: 2px solid #1A56DB !important;
+  color: #0F1B2D !important;
+}
+
+.checkout-page input::placeholder,
+.checkout-page textarea::placeholder {
+  color: #7A9CC4 !important;
+}
+
+.checkout-page input:focus,
+.checkout-page textarea:focus,
+.checkout-page select:focus {
+  background-color: #FFFFFF !important;
+  border: 2px solid #1345B7 !important;
+  box-shadow: 0 0 0 4px rgba(26, 86, 219, 0.18) !important;
+  outline: none !important;
+}
+
+.checkout-page input:disabled,
+.checkout-page textarea:disabled,
+.checkout-page select:disabled {
+  background-color: #F2F5FA !important;
+  border: 2px solid #E2E8F0 !important;
+  color: #94A3B8 !important;
+}
+
+/* =========================================
+   FIELD LABELS FIX
+   ========================================= */
+.checkout-page label {
+  color: #0F3460 !important;
+  font-weight: 600 !important;
+}
+
+/* =========================================
+   PRIMARY ACTION BUTTONS FIX
+   ========================================= */
+.checkout-page .btn-shipping {
+  background: linear-gradient(135deg, #1A56DB 0%, #1345B7 100%) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(26, 86, 219, 0.40) !important;
+}
+
+.checkout-page .btn-shipping:hover {
+  background: linear-gradient(135deg, #1345B7 0%, #0D2F8A 100%) !important;
+  box-shadow: 0 6px 24px rgba(26, 86, 219, 0.55) !important;
+}
+
+.checkout-page .btn-secure-pay {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(255, 107, 0, 0.50) !important;
+}
+
+.checkout-page .btn-secure-pay:hover {
+  background: linear-gradient(135deg, #E55A00 0%, #FF6B00 100%) !important;
+  box-shadow: 0 6px 28px rgba(255, 107, 0, 0.65) !important;
+}
+
+.checkout-page .btn-continue-shopping {
+  background: linear-gradient(135deg, #1A56DB 0%, #1345B7 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(26, 86, 219, 0.35) !important;
+}
+
+.checkout-page .btn-continue-shopping:hover {
+  background: linear-gradient(135deg, #1345B7 0%, #0D2F8A 100%) !important;
+  box-shadow: 0 6px 24px rgba(26, 86, 219, 0.55) !important;
+}
+
+/* Ensure icons inside primary buttons are white */
+.checkout-page .btn-primary svg {
+  color: #FFFFFF !important;
+}
+
+/* =========================================
+   PRICE DETAILS CARD FIX
+   ========================================= */
+.checkout-page .price-details-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid #E2E8F0 !important;
+  border-left: 4px solid #1A56DB !important;
+  box-shadow: 0 4px 16px rgba(26, 86, 219, 0.10) !important;
+}
+
+.checkout-page .price-details-card .price-details-heading {
+  color: #1A56DB !important;
+  font-weight: 700 !important;
+  text-shadow: none !important; /* override the inline drop-shadow */
+}
+
+.checkout-page .price-details-card .bag-total-label,
+.checkout-page .price-details-card .shipping-fee-label {
+  color: #0F1B2D !important;
+}
+
+.checkout-page .price-details-card .bag-total-value {
+  color: #0F1B2D !important;
+  font-weight: 600 !important;
+}
+
+.checkout-page .price-details-card .shipping-fee-value-free {
+  color: #0D9F5F !important;
+  font-weight: 700 !important;
+}
+
+.checkout-page .price-details-card .total-amount-divider {
+  border-top: 2px solid #EBF2FF !important;
+  background-color: transparent !important;
+}
+
+.checkout-page .price-details-card .total-amount-value {
+  color: #1A56DB !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+}
+
+/* =========================================
+   SECURE CHECKOUT BADGE FIX
+   ========================================= */
+.checkout-page .secure-checkout-badge {
+  background: linear-gradient(135deg, #1A56DB 0%, #0D2F8A 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(26, 86, 219, 0.30) !important;
+}
+
+.checkout-page .secure-checkout-badge .shield-icon-wrapper {
+  background: rgba(255, 255, 255, 0.20) !important;
+}
+
+.checkout-page .secure-checkout-badge .shield-icon-wrapper svg {
+  color: #FFFFFF !important;
+}
+
+.checkout-page .secure-checkout-badge p:first-of-type {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+}
+
+.checkout-page .secure-checkout-badge p:last-of-type {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+/* =========================================
+   PAYMENT OPTIONS CARDS FIX
+   ========================================= */
+.checkout-page .payment-option-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  box-shadow: 0 2px 8px rgba(15, 27, 45, 0.06) !important;
+}
+
+.checkout-page .payment-option-card:hover {
+  background: #F5F9FF !important;
+  border: 1.5px solid #1A56DB !important;
+}
+
+.checkout-page .payment-option-card.selected {
+  background: #EBF5FF !important;
+  border: 2px solid #1A56DB !important;
+  box-shadow: 0 4px 16px rgba(26, 86, 219, 0.15) !important;
+}
+
+.checkout-page .payment-option-card .payment-label {
+  color: #0F1B2D !important;
+}
+
+.checkout-page .payment-option-card .payment-sublabel {
+  color: #3D5068 !important;
+}
+
+.checkout-page .payment-option-card.selected .payment-sublabel {
+  color: #1A56DB !important;
+}
+
+.checkout-page .payment-option-card .radio-btn {
+  border: 2px solid #CBD5E1 !important;
+  background: #FFFFFF !important;
+}
+
+.checkout-page .payment-option-card.selected .radio-btn {
+  border: 2px solid #1A56DB !important;
+  background: #1A56DB !important;
+}
+
+.checkout-page .payment-option-card .payment-icon-wrapper {
+  background: #EBF5FF !important;
+}
+
+.checkout-page .payment-option-card .payment-icon-wrapper svg {
+  color: #1A56DB !important;
+}
+
+/* =========================================
+   GST DISCOUNT BANNER FIX
+   ========================================= */
+.checkout-page .gst-banner {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(255, 107, 0, 0.35) !important;
+}
+
+.checkout-page .gst-banner .gst-icon-wrapper {
+  background: transparent !important;
+}
+
+.checkout-page .gst-banner .gst-icon-wrapper svg {
+  color: #FFFFFF !important;
+}
+
+.checkout-page .gst-banner .gst-heading,
+.checkout-page .gst-banner .gst-subtext,
+.checkout-page .gst-banner label {
+  color: #FFFFFF !important;
+}
+
+.checkout-page .gst-banner .gst-subtext {
+  font-weight: 700 !important;
+}
+
+/* =========================================
+   CART ITEMS CARD FIX
+   ========================================= */
+.checkout-page .cart-item-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid #E2E8F0 !important;
+  box-shadow: 0 2px 12px rgba(15, 27, 45, 0.07) !important;
+}
+
+.checkout-page .cart-item-card .product-image-area {
+  background: #F8FAFF !important;
+  border-right: 1px solid #EBF2FF !important;
+}
+
+.checkout-page .cart-item-card .product-name {
+  color: #0F1B2D !important;
+}
+
+.checkout-page .cart-item-card .quantity-label {
+  color: #3D5068 !important;
+}
+
+.checkout-page .cart-item-card .current-price {
+  color: #1A56DB !important;
+  font-weight: 700 !important;
+}
+
+.checkout-page .cart-item-card .original-price {
+  color: #94A3B8 !important;
+  text-decoration: line-through !important;
+}
+
+/* =========================================
+   CHECKOUT STEPS INDICATOR FIX
+   ========================================= */
+.checkout-page .step-completed {
+  background: #0D9F5F !important;
+  color: #FFFFFF !important;
+  border: 2px solid #0D9F5F !important;
+}
+
+.checkout-page .step-active {
+  background: #1A56DB !important;
+  color: #FFFFFF !important;
+  border: 2px solid #1A56DB !important;
+  box-shadow: 0 0 0 4px rgba(26, 86, 219, 0.20) !important;
+}
+
+.checkout-page .step-pending {
+  background: #FFFFFF !important;
+  color: #94A3B8 !important;
+  border: 2px solid #CBD5E1 !important;
+}
+
+.checkout-page .step-connector-completed {
+  background-color: #0D9F5F !important;
+}
+
+.checkout-page .step-connector-pending {
+  background-color: #E2E8F0 !important;
+}
+
+.checkout-page .step-connector-track {
+  background-color: #E2E8F0 !important;
+}
+
+.checkout-page .step-label-active {
+  color: #1A56DB !important;
+  font-weight: 600 !important;
+}
+
+.checkout-page .step-label-completed {
+  color: #0D9F5F !important;
+  font-weight: 600 !important;
+}
+
+.checkout-page .step-label-pending {
+  color: #94A3B8 !important;
+}
+
+/* =========================================
+   ORDER CONFIRMATION PAGE FIX
+   ========================================= */
+.checkout-page .order-confirmation-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid #E2E8F0 !important;
+  border-top: 4px solid #1A56DB !important;
+  box-shadow: 0 4px 16px rgba(26, 86, 219, 0.08) !important;
+}
+
+.checkout-page .order-success-icon-wrapper {
+  background: linear-gradient(135deg, #0D9F5F 0%, #059669 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 8px 24px rgba(13, 159, 95, 0.35) !important;
+}
+
+.checkout-page .order-success-heading {
+  color: #0F1B2D !important;
+}
+
+.checkout-page .order-number-text {
+  color: #1A56DB !important;
+  font-weight: 700 !important;
+}
+
+/* Specific text overrides in header to ensure it's legible */
+.checkout-page h2 {
+  color: #0F1B2D !important;
+}
+.checkout-page h2 svg {
+  color: #1A56DB !important;
+}
