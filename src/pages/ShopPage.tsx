@@ -702,49 +702,52 @@ const ShopPage = () => {
             )}
 
             {/* Filter & Sort Sticky Bar */}
-            <div className="bg-white px-4 py-2.5 flex items-center justify-between border-b border-slate-200 sticky top-[60px] md:top-[70px] z-20 shadow-sm">
-              <span className="text-sm text-slate-500 font-medium">{filteredProducts.length} products</span>
+            <div className="bg-white px-4 py-2.5 border-b border-slate-200 sticky top-[60px] md:top-[70px] z-20 shadow-sm shop-page-multifilter-row">
+              <div className="shop-page-multifilter-zone1">
+                <span className="text-sm font-medium shop-page-multifilter-count">{filteredProducts.length} products</span>
 
-              <div className="flex items-center gap-2">
                 {selectedCategory && (
-                  <div className="flex items-center gap-1.5 bg-primary/10 border border-primary/20 rounded-full px-3 py-1">
-                    <span className="text-xs text-primary font-bold">{activeCategory?.name}</span>
-                    <button onClick={() => { setSelectedCategory(''); clearSpecFilters(); navigate(selectedBrand ? `/shop?brandq=${encodeURIComponent(brands.find(b => b.id === selectedBrand)?.name || '')}` : '/shop'); }} className="bg-transparent border-none cursor-pointer flex items-center p-0">
-                      <X className="w-3 h-3 text-primary" />
+                  <div className="rounded-full shop-page-multifilter-chip category-chip">
+                    <span className="text-xs font-bold chip-inner-text">{activeCategory?.name}</span>
+                    <button onClick={() => { setSelectedCategory(''); clearSpecFilters(); navigate(selectedBrand ? `/shop?brandq=${encodeURIComponent(brands.find(b => b.id === selectedBrand)?.name || '')}` : '/shop'); }} className="bg-transparent cursor-pointer flex items-center p-0 chip-close-btn">
+                      <X className="w-3 h-3 chip-close-icon" />
                     </button>
                   </div>
                 )}
+                
                 {/* Active spec filter pills */}
                 {activeSpecEntries.map(([label, value]) => (
-                  <div key={label} className="flex items-center gap-1.5 bg-secondary/10 border border-secondary/20 rounded-full px-3 py-1">
-                    <Tag className="w-3 h-3 text-secondary" />
-                    <span className="text-xs text-secondary font-bold">{label}: {value}</span>
-                    <button onClick={() => setSpecFilters(p => ({ ...p, [label]: '' }))} className="bg-transparent border-none cursor-pointer flex items-center p-0">
-                      <X className="w-3 h-3 text-secondary" />
+                  <div key={label} className="rounded-full shop-page-multifilter-chip other-chip">
+                    <Tag className="w-3 h-3" />
+                    <span className="text-xs font-bold chip-inner-text">{label}: {value}</span>
+                    <button onClick={() => setSpecFilters(p => ({ ...p, [label]: '' }))} className="bg-transparent cursor-pointer flex items-center p-0 chip-close-btn">
+                      <X className="w-3 h-3 chip-close-icon" />
                     </button>
                   </div>
                 ))}
                 
                 {selectedBrand && (
-                  <div className="flex items-center gap-1.5 bg-secondary/10 border border-secondary/20 rounded-full px-3 py-1">
-                    <span className="text-xs text-secondary font-bold">
+                  <div className="rounded-full shop-page-multifilter-chip brand-chip">
+                    <span className="text-xs font-bold chip-inner-text">
                       {brands.find(b => b.id === selectedBrand)?.name}
                     </span>
                     <button
                       onClick={() => { setSelectedBrand(''); navigate(selectedCategory ? `/shop?category=${selectedCategory}` : '/shop'); }}
-                      className="bg-transparent border-none cursor-pointer flex items-center p-0"
+                      className="bg-transparent cursor-pointer flex items-center p-0 chip-close-btn"
                     >
-                      <X className="w-3 h-3 text-secondary" />
+                      <X className="w-3 h-3 chip-close-icon" />
                     </button>
                   </div>
                 )}
+              </div>
 
+              <div className="shop-page-multifilter-zone2">
                 {/* Mobile Filter Trigger */}
                 <button 
                   onClick={() => setFilterOpen(true)}
-                  className="md:hidden flex items-center gap-2 bg-primary text-white rounded-xl px-4 py-1.5 text-xs font-black shadow-lg shadow-primary/20"
+                  className="md:hidden flex items-center rounded-xl text-xs font-black shop-page-multifilter-btn-filters"
                 >
-                  <Filter className="w-3.5 h-3.5" />
+                  <Filter className="w-3.5 h-3.5 filters-icon" />
                   Filters
                 </button>
 
@@ -752,15 +755,13 @@ const ShopPage = () => {
                 <button
                   id="sort-btn-desktop"
                   onClick={() => setShowSort(!showSort)}
-                  className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-sm font-bold text-slate-900 cursor-pointer hover:bg-slate-100"
+                  className="flex items-center rounded-xl text-sm font-bold cursor-pointer shop-page-multifilter-btn-sort"
                 >
-                  <SlidersHorizontal className="w-3.5 h-3.5 text-primary" />
+                  <SlidersHorizontal className="w-3.5 h-3.5 sort-icon" />
                   <span className="hidden md:inline">{activeSortLabel.split(':')[0] || 'Sort'}</span>
                   <span className="md:hidden">Sort</span>
-                  <ChevronDown className="w-3 h-3" />
+                  <ChevronDown className="w-3 h-3 sort-icon" />
                 </button>
-
-
               </div>
             </div>
 
