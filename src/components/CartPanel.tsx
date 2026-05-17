@@ -131,13 +131,13 @@ const CartPanel = () => {
     top: 0, right: 0, bottom: 0,
     width: '100%',
     maxWidth: '420px',
-    background: '#050d1f',
-    borderLeft: '1px solid rgba(0,123,255,0.2)',
+    background: '#FFFFFF',
+    borderLeft: '1px solid #DDD6FE',
     zIndex: 210,
     overflowY: 'auto' as const,
     scrollbarWidth: 'thin' as const,
-    boxShadow: '-10px 0 40px rgba(0,0,0,0.8)',
-    color: 'white',
+    boxShadow: '-10px 0 40px rgba(124,58,237,0.1)',
+    color: '#1E1B4B',
     display: 'flex',
     flexDirection: 'column' as const,
   };
@@ -158,36 +158,36 @@ const CartPanel = () => {
             style={panelStyle}
           >
             {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 20px 16px', borderBottom: '1px solid rgba(0,123,255,0.12)', flexShrink: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 20px 16px', borderBottom: '1px solid #DDD6FE', flexShrink: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(0,123,255,0.15)', border: '1px solid rgba(0,123,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <ShoppingBag style={{ width: '18px', height: '18px', color: '#007bff' }} />
+                <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(124, 58, 237, 0.1)', border: '1px solid rgba(124, 58, 237, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <ShoppingBag style={{ width: '18px', height: '18px', color: '#7C3AED' }} />
                 </div>
                 <div>
-                  <h2 style={{ fontSize: '16px', fontWeight: 800, color: 'white', fontFamily: 'Montserrat, sans-serif' }}>Shopping Cart</h2>
-                  {cart.length > 0 && <p style={{ fontSize: '11px', color: '#64748b' }}>{cartItemCount} item{cartItemCount !== 1 ? 's' : ''}</p>}
+                  <h2 style={{ fontSize: '16px', fontWeight: 800, color: '#1E1B4B', fontFamily: 'Space Grotesk, sans-serif' }}>Shopping Cart</h2>
+                  {cart.length > 0 && <p style={{ fontSize: '11px', color: '#6B7280', fontWeight: 600 }}>{cartItemCount} item{cartItemCount !== 1 ? 's' : ''}</p>}
                 </div>
               </div>
               <button id="cart-close-btn" onClick={() => setCartOpen(false)}
-                style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.15)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}>
-                <X style={{ width: '18px', height: '18px', color: '#94a3b8' }} />
+                style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(124,58,237,0.05)', border: '1px solid rgba(124,58,237,0.1)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.1)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(124,58,237,0.05)')}>
+                <X style={{ width: '18px', height: '18px', color: '#1E1B4B' }} />
               </button>
             </div>
 
             {cart.length === 0 ? (
               /* Empty State */
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 24px', textAlign: 'center' }}>
-                <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'rgba(0,123,255,0.08)', border: '2px dashed rgba(0,123,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                  <ShoppingBag style={{ width: '40px', height: '40px', color: '#007bff', opacity: 0.7 }} />
+                <div style={{ width: '90px', height: '90px', borderRadius: '50%', background: 'rgba(124, 58, 237, 0.05)', border: '2px dashed rgba(124, 58, 237, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                  <ShoppingBag style={{ width: '40px', height: '40px', color: '#7C3AED', opacity: 0.7 }} />
                 </div>
-                <h3 style={{ fontSize: '18px', fontWeight: 800, color: 'white', marginBottom: '8px', fontFamily: 'Montserrat, sans-serif' }}>Your cart is empty</h3>
-                <p style={{ fontSize: '14px', color: '#64748b', marginBottom: '28px' }}>Explore products and add them here</p>
+                <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#1E1B4B', marginBottom: '8px', fontFamily: 'Space Grotesk, sans-serif' }}>Your cart is empty</h3>
+                <p style={{ fontSize: '14px', color: '#6B7280', marginBottom: '28px', fontWeight: 500 }}>Explore products and add them here</p>
                 <button id="cart-start-shopping-btn" onClick={() => { setCartOpen(false); navigate('/shop'); }}
-                  style={{ background: '#ffc107', color: '#000', border: 'none', borderRadius: '8px', padding: '12px 28px', fontSize: '14px', fontWeight: 800, cursor: 'pointer', fontFamily: 'Montserrat, sans-serif', transition: 'all 0.3s', display: 'flex', alignItems: 'center', gap: '8px' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = '#e0a800')}
-                  onMouseLeave={e => (e.currentTarget.style.background = '#ffc107')}>
+                  style={{ background: 'linear-gradient(90deg, #F59E0B, #FBBF24)', color: '#1E1B4B', border: 'none', borderRadius: '8px', padding: '12px 28px', fontSize: '14px', fontWeight: 800, cursor: 'pointer', fontFamily: 'Space Grotesk, sans-serif', transition: 'all 0.3s', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(245, 158, 11, 0.4)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(245, 158, 11, 0.3)'; }}>
                   Start Shopping <ArrowRight style={{ width: '16px', height: '16px' }} />
                 </button>
               </div>
@@ -196,38 +196,38 @@ const CartPanel = () => {
                 {/* Cart Items */}
                 <div style={{ flex: 1, overflowY: 'auto', padding: '0 20px', scrollbarWidth: 'thin' }}>
                   {cart.map(item => (
-                    <div key={item.product.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 0', borderBottom: '1px solid rgba(0,123,255,0.08)' }}>
+                    <div key={item.product.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '16px 0', borderBottom: '1px solid #F3F4F6' }}>
                       {/* Image */}
-                      <div style={{ width: '70px', height: '70px', flexShrink: 0, background: '#0b1629', border: '1px solid rgba(0,123,255,0.2)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                      <div style={{ width: '75px', height: '75px', flexShrink: 0, background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                         <img src={getProductImage(item.product)} alt={item.product.name}
-                          style={{ width: '56px', height: '56px', objectFit: 'contain' }}
-                          onError={e => { (e.target as HTMLImageElement).src = 'https://placehold.co/60x60/0b1629/007bff?text=Img'; }} />
+                          style={{ width: '60px', height: '60px', objectFit: 'contain' }}
+                          onError={e => { (e.target as HTMLImageElement).src = 'https://placehold.co/60x60/F9FAFB/7C3AED?text=Img'; }} />
                       </div>
 
                       {/* Info */}
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <p className="line-clamp-2" style={{ fontSize: '12px', fontWeight: 600, color: '#e2e8f0', lineHeight: 1.4 }}>{item.product.name}</p>
-                        {item.product.brand_name && <p style={{ fontSize: '10px', color: '#007bff', marginTop: '2px' }}>{item.product.brand_name}</p>}
+                        <p className="line-clamp-2" style={{ fontSize: '13px', fontWeight: 700, color: '#1E1B4B', lineHeight: 1.4, fontFamily: 'Space Grotesk, sans-serif' }}>{item.product.name}</p>
+                        {item.product.brand_name && <p style={{ fontSize: '10px', color: '#7C3AED', marginTop: '2px', fontWeight: 800, textTransform: 'uppercase' }}>{item.product.brand_name}</p>}
 
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
-                          <span style={{ fontSize: '14px', fontWeight: 800, color: '#007bff' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px' }}>
+                          <span style={{ fontSize: '15px', fontWeight: 800, color: '#1E1B4B', fontFamily: 'Space Grotesk, sans-serif' }}>
                             ₹{item.product.sale_price.toLocaleString('en-IN')}
                           </span>
 
                           {/* Qty controls + delete */}
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', background: '#0b1629', border: '1px solid rgba(0,123,255,0.25)', borderRadius: '6px', overflow: 'hidden' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: '6px', overflow: 'hidden' }}>
                               <button onClick={() => updateCartQty(item.product.id, item.quantity - 1)}
-                                style={{ width: '28px', height: '28px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#007bff', fontWeight: 700, fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
-                              <span style={{ fontSize: '13px', fontWeight: 700, width: '24px', textAlign: 'center', color: 'white' }}>{item.quantity}</span>
+                                style={{ width: '28px', height: '28px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#4B5563', fontWeight: 700, fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
+                              <span style={{ fontSize: '13px', fontWeight: 700, width: '24px', textAlign: 'center', color: '#1E1B4B' }}>{item.quantity}</span>
                               <button onClick={() => updateCartQty(item.product.id, item.quantity + 1)}
-                                style={{ width: '28px', height: '28px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#007bff', fontWeight: 700, fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                                style={{ width: '28px', height: '28px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#4B5563', fontWeight: 700, fontSize: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
                             </div>
                             <button onClick={() => removeFromCart(item.product.id)}
-                              style={{ width: '28px', height: '28px', borderRadius: '6px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
-                              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.25)')}
-                              onMouseLeave={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.1)')}>
-                              <Trash2 style={{ width: '12px', height: '12px', color: '#ef4444' }} />
+                              style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#FEF2F2', border: '1px solid #FCA5A5', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                              onMouseEnter={e => (e.currentTarget.style.background = '#FEE2E2')}
+                              onMouseLeave={e => (e.currentTarget.style.background = '#FEF2F2')}>
+                              <Trash2 style={{ width: '14px', height: '14px', color: '#EF4444' }} />
                             </button>
                           </div>
                         </div>
@@ -237,90 +237,92 @@ const CartPanel = () => {
                 </div>
 
                 {/* Footer: summary + checkout */}
-                <div style={{ padding: '16px 20px', borderTop: '1px solid rgba(0,123,255,0.12)', flexShrink: 0 }}>
+                <div style={{ padding: '20px', borderTop: '1px solid #E5E7EB', flexShrink: 0, background: '#F9FAFB' }}>
                   {/* Coupon */}
-                  <div style={{ display: 'flex', background: '#0b1629', border: '1px solid rgba(0,123,255,0.2)', borderRadius: '8px', overflow: 'hidden', marginBottom: '14px' }}>
-                    <Tag style={{ width: '16px', height: '16px', color: '#007bff', margin: 'auto 12px', flexShrink: 0 }} />
+                  <div style={{ display: 'flex', background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: '8px', overflow: 'hidden', marginBottom: '16px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                    <Tag style={{ width: '16px', height: '16px', color: '#7C3AED', margin: 'auto 12px', flexShrink: 0 }} />
                     <input type="text" value={couponInput} onChange={e => setCouponInput(e.target.value)} placeholder="Enter coupon code"
-                      style={{ flex: 1, padding: '11px 0', background: 'transparent', border: 'none', outline: 'none', fontSize: '13px', color: '#e2e8f0', fontFamily: 'Montserrat, sans-serif' }} />
+                      style={{ flex: 1, padding: '12px 0', background: 'transparent', border: 'none', outline: 'none', fontSize: '13px', color: '#1E1B4B', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }} />
                     <button id="apply-coupon-btn" onClick={handleApplyCoupon}
-                      style={{ padding: '0 14px', background: '#007bff', color: 'white', border: 'none', cursor: 'pointer', fontSize: '12px', fontWeight: 700, fontFamily: 'Montserrat, sans-serif', transition: 'background 0.2s' }}
-                      onMouseEnter={e => (e.currentTarget.style.background = '#0056b3')}
-                      onMouseLeave={e => (e.currentTarget.style.background = '#007bff')}>
+                      style={{ padding: '0 16px', background: '#7C3AED', color: 'white', border: 'none', cursor: 'pointer', fontSize: '12px', fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif', transition: 'background 0.2s' }}
+                      onMouseEnter={e => (e.currentTarget.style.background = '#6D28D9')}
+                      onMouseLeave={e => (e.currentTarget.style.background = '#7C3AED')}>
                       APPLY
                     </button>
                   </div>
                   {appliedCoupon && (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                      <p style={{ fontSize: '12px', color: '#22c55e', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                      <p style={{ fontSize: '12px', color: '#059669', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <CheckCircle2 style={{ width: '14px', height: '14px' }} /> Coupon "{appliedCoupon.code}" applied!
                       </p>
-                      <button onClick={() => setAppliedCoupon(null)} style={{ background: 'transparent', border: 'none', color: '#ef4444', fontSize: '10px', fontWeight: 700, cursor: 'pointer', padding: '2px 8px' }}>REMOVE</button>
+                      <button onClick={() => setAppliedCoupon(null)} style={{ background: 'transparent', border: 'none', color: '#EF4444', fontSize: '10px', fontWeight: 800, cursor: 'pointer', padding: '4px 8px', borderRadius: '4px' }}>REMOVE</button>
                     </div>
                   )}
 
                   {/* GST Input */}
-                  <div style={{ marginBottom: '14px' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 600, color: '#e2e8f0', cursor: 'pointer', marginBottom: useGst ? '8px' : '0' }}>
-                      <input type="checkbox" checked={useGst} onChange={e => setUseGst(e.target.checked)} style={{ accentColor: '#007bff' }} />
+                  <div style={{ marginBottom: '16px', background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: '8px', padding: '12px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: 700, color: '#1E1B4B', cursor: 'pointer', marginBottom: useGst ? '12px' : '0' }}>
+                      <input type="checkbox" checked={useGst} onChange={e => setUseGst(e.target.checked)} style={{ accentColor: '#7C3AED', width: '16px', height: '16px' }} />
                       Apply B2B GST Category Discount
                     </label>
                     {useGst && (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <input type="text" value={gstDetails.number} onChange={e => setGstDetails({...gstDetails, number: e.target.value.toUpperCase()})} placeholder="Enter 15-digit GSTIN" maxLength={15}
-                          style={{ width: '100%', padding: '10px 12px', background: '#0b1629', border: '1px solid rgba(0,123,255,0.2)', borderRadius: '6px', outline: 'none', fontSize: '12px', color: '#e2e8f0', fontFamily: 'Montserrat, sans-serif' }} />
+                          style={{ width: '100%', padding: '12px', background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: '6px', outline: 'none', fontSize: '13px', color: '#1E1B4B', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }} />
+                        <input type="text" value={gstDetails.businessName} onChange={e => setGstDetails({...gstDetails, businessName: e.target.value})} placeholder="Enter Business Name"
+                          style={{ width: '100%', padding: '12px', background: '#F9FAFB', border: '1px solid #E5E7EB', borderRadius: '6px', outline: 'none', fontSize: '13px', color: '#1E1B4B', fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600 }} />
                       </div>
                     )}
                   </div>
 
                   {/* Summary */}
-                  <div style={{ background: '#0b1629', border: '1px solid rgba(0,123,255,0.12)', borderRadius: '8px', padding: '14px', marginBottom: '14px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '13px', color: '#64748b' }}>Subtotal</span>
-                      <span style={{ fontSize: '13px', fontWeight: 600, color: '#e2e8f0' }}>₹{subtotal.toLocaleString('en-IN')}</span>
+                  <div style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: '12px', padding: '16px', marginBottom: '16px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                      <span style={{ fontSize: '14px', color: '#4B5563', fontWeight: 500 }}>Subtotal</span>
+                      <span style={{ fontSize: '14px', fontWeight: 700, color: '#1E1B4B' }}>₹{subtotal.toLocaleString('en-IN')}</span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: quantityDiscountTotal > 0 ? '8px' : '0' }}>
-                      <span style={{ fontSize: '13px', color: '#64748b' }}>Shipping</span>
-                      <span style={{ fontSize: '13px', fontWeight: 700, color: '#22c55e' }}>FREE</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: quantityDiscountTotal > 0 ? '10px' : '0' }}>
+                      <span style={{ fontSize: '14px', color: '#4B5563', fontWeight: 500 }}>Shipping</span>
+                      <span style={{ fontSize: '14px', fontWeight: 800, color: '#059669' }}>FREE</span>
                     </div>
                     {quantityDiscountTotal > 0 && (
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '13px', color: '#22c55e' }}>Quantity Discount</span>
-                        <span style={{ fontSize: '13px', fontWeight: 700, color: '#22c55e' }}>-₹{quantityDiscountTotal.toLocaleString('en-IN')}</span>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                        <span style={{ fontSize: '14px', color: '#059669', fontWeight: 600 }}>Quantity Discount</span>
+                        <span style={{ fontSize: '14px', fontWeight: 800, color: '#059669' }}>-₹{quantityDiscountTotal.toLocaleString('en-IN')}</span>
                       </div>
                     )}
                     {hasGstDiscount && categoryDiscountTotal > 0 && (
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '13px', color: '#22c55e' }}>GST Category Discount</span>
-                        <span style={{ fontSize: '13px', fontWeight: 700, color: '#22c55e' }}>-₹{categoryDiscountTotal.toLocaleString('en-IN')}</span>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                        <span style={{ fontSize: '14px', color: '#059669', fontWeight: 600 }}>GST Category Discount</span>
+                        <span style={{ fontSize: '14px', fontWeight: 800, color: '#059669' }}>-₹{categoryDiscountTotal.toLocaleString('en-IN')}</span>
                       </div>
                     )}
                     {appliedCoupon && (
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0' }}>
-                        <span style={{ fontSize: '13px', color: '#22c55e' }}>Coupon: {appliedCoupon.code}</span>
-                        <span style={{ fontSize: '13px', fontWeight: 700, color: '#22c55e' }}>-₹{couponDiscountValue.toLocaleString('en-IN')}</span>
+                        <span style={{ fontSize: '14px', color: '#059669', fontWeight: 600 }}>Coupon: {appliedCoupon.code}</span>
+                        <span style={{ fontSize: '14px', fontWeight: 800, color: '#059669' }}>-₹{couponDiscountValue.toLocaleString('en-IN')}</span>
                       </div>
                     )}
-                    <div style={{ height: '1px', background: 'rgba(0,123,255,0.12)', margin: '12px 0' }} />
+                    <div style={{ height: '1px', background: '#E5E7EB', margin: '14px 0' }} />
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '15px', fontWeight: 700, color: 'white' }}>Total</span>
-                      <span style={{ fontSize: '20px', fontWeight: 900, color: '#007bff', textShadow: '0 0 12px rgba(0,123,255,0.4)' }}>₹{afterDiscount.toLocaleString('en-IN')}</span>
+                      <span style={{ fontSize: '16px', fontWeight: 800, color: '#1E1B4B' }}>Total</span>
+                      <span style={{ fontSize: '22px', fontWeight: 900, color: '#7C3AED', fontFamily: 'Space Grotesk, sans-serif' }}>₹{afterDiscount.toLocaleString('en-IN')}</span>
                     </div>
                   </div>
 
-                  <p style={{ textAlign: 'center', fontSize: '11px', color: '#475569', marginBottom: '12px' }}>🔒 100% Secure & Encrypted Checkout</p>
+                  <p style={{ textAlign: 'center', fontSize: '11px', color: '#6B7280', marginBottom: '14px', fontWeight: 600 }}>🔒 100% Secure & Encrypted Checkout</p>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     <button id="checkout-btn" onClick={() => { setCartOpen(false); navigate('/checkout'); }}
-                      style={{ width: '100%', height: '48px', background: '#ffc107', color: '#000', border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: 800, cursor: 'pointer', fontFamily: 'Montserrat, sans-serif', transition: 'all 0.3s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
-                      onMouseEnter={e => { e.currentTarget.style.background = '#e0a800'; e.currentTarget.style.boxShadow = '0 0 20px rgba(255,193,7,0.4)'; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = '#ffc107'; e.currentTarget.style.boxShadow = 'none'; }}>
-                      Proceed to Checkout <ArrowRight style={{ width: '16px', height: '16px' }} />
+                      style={{ width: '100%', height: '52px', background: 'linear-gradient(90deg, #F59E0B, #FBBF24)', color: '#1E1B4B', border: 'none', borderRadius: '10px', fontSize: '15px', fontWeight: 900, cursor: 'pointer', fontFamily: 'Space Grotesk, sans-serif', transition: 'all 0.3s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)' }}
+                      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(245, 158, 11, 0.4)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(245, 158, 11, 0.3)'; }}>
+                      Proceed to Checkout <ArrowRight style={{ width: '18px', height: '18px' }} />
                     </button>
                     <button id="continue-shopping-btn" onClick={() => { setCartOpen(false); navigate('/shop'); }}
-                      style={{ width: '100%', height: '42px', background: 'transparent', color: '#94a3b8', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', fontFamily: 'Montserrat, sans-serif', transition: 'all 0.3s' }}
-                      onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(0,123,255,0.4)')}
-                      onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}>
+                      style={{ width: '100%', height: '46px', background: '#FFFFFF', color: '#4B5563', border: '1px solid #E5E7EB', borderRadius: '10px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: 'Space Grotesk, sans-serif', transition: 'all 0.3s' }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = '#7C3AED'; e.currentTarget.style.color = '#7C3AED'; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#E5E7EB'; e.currentTarget.style.color = '#4B5563'; }}>
                       ← Continue Shopping
                     </button>
                   </div>

@@ -415,33 +415,40 @@ const CheckoutPage = () => {
                           <p className="text-[10px] font-bold uppercase tracking-wider gst-subtext">Get extra {bulkDiscountPercent}% discount with GST</p>
                         </div>
                       </div>
-                      <button 
-                        onClick={() => setUseGst(!useGst)}
-                        className={`w-12 h-6 rounded-full transition-all relative ${useGst ? 'bg-[#3B82F6]' : 'bg-white/10'}`}
-                      >
-                        <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${useGst ? 'left-7' : 'left-1'}`} />
-                      </button>
                     </div>
+                    
+                    <div className="flex flex-col gap-4 mt-4">
+                      <label className="flex items-center gap-3 cursor-pointer group">
+                        <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${useGst ? 'bg-[#3B82F6] border-[#3B82F6]' : 'border-slate-300 bg-white group-hover:border-[#3B82F6]'}`}>
+                          {useGst && <Check className="w-3.5 h-3.5 text-white font-black" />}
+                        </div>
+                        <input type="checkbox" checked={useGst} onChange={e => setUseGst(e.target.checked)} className="hidden" />
+                        <span className="text-sm font-bold text-slate-700 select-none group-hover:text-[#3B82F6] transition-colors">Apply B2B GST Category Discount</span>
+                      </label>
 
-                    {useGst && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        className="space-y-4 pt-2"
-                      >
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-extrabold text-slate-400 ml-1 uppercase tracking-wider">GST Number</label>
-                          <input placeholder="Enter 15-digit GSTIN" value={gstDetails.number} onChange={e => setGstDetails({...gstDetails, number: e.target.value.toUpperCase()})}
-                            maxLength={15}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-[#3B82F6] transition-all outline-none placeholder:text-slate-500" />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[10px] font-extrabold text-slate-400 ml-1 uppercase tracking-wider">Business Name</label>
-                          <input placeholder="Enter registered business name" value={gstDetails.businessName} onChange={e => setGstDetails({...gstDetails, businessName: e.target.value})}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-[#3B82F6] transition-all outline-none placeholder:text-slate-500" />
-                        </div>
-                      </motion.div>
-                    )}
+                      <AnimatePresence>
+                        {useGst && (
+                          <motion.div 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="space-y-4 overflow-hidden"
+                          >
+                            <div className="space-y-1.5">
+                              <label className="text-[10px] font-extrabold text-slate-500 ml-1 uppercase tracking-wider">GST Number</label>
+                              <input placeholder="Enter 15-digit GSTIN" value={gstDetails.number} onChange={e => setGstDetails({...gstDetails, number: e.target.value.toUpperCase()})}
+                                maxLength={15}
+                                className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:border-[#3B82F6] focus:ring-1 focus:ring-[#3B82F6]/50 transition-all outline-none placeholder:text-slate-400 shadow-sm" />
+                            </div>
+                            <div className="space-y-1.5">
+                              <label className="text-[10px] font-extrabold text-slate-500 ml-1 uppercase tracking-wider">Business Name</label>
+                              <input placeholder="Enter registered business name" value={gstDetails.businessName} onChange={e => setGstDetails({...gstDetails, businessName: e.target.value})}
+                                className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:border-[#3B82F6] focus:ring-1 focus:ring-[#3B82F6]/50 transition-all outline-none placeholder:text-slate-400 shadow-sm" />
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </div>
                   <button onClick={handlePlaceOrder}
                     className="w-full btn-primary btn-shipping h-14 flex items-center justify-center gap-2 text-[15px] tracking-wide mt-6">
