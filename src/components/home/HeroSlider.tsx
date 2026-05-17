@@ -91,19 +91,19 @@ const HeroSlider = () => {
   }, [banners.length]);
 
   if (loading) return (
-    <div style={{ margin: '0', height: 'clamp(240px,42vw,480px)', background: 'rgba(124, 58, 237, 0.04)', animation: 'shimmer 1.5s infinite', backgroundSize: '200% 100%', backgroundImage: 'linear-gradient(90deg, rgba(124, 58, 237, 0.03) 25%, rgba(124, 58, 237, 0.08) 50%, rgba(124, 58, 237, 0.03) 75%)' }} />
+    <div style={{ width: '100%', maxWidth: '1312px', margin: '0 auto', aspectRatio: '1312 / 670', background: 'rgba(124, 58, 237, 0.04)', animation: 'shimmer 1.5s infinite', backgroundSize: '200% 100%', backgroundImage: 'linear-gradient(90deg, rgba(124, 58, 237, 0.03) 25%, rgba(124, 58, 237, 0.08) 50%, rgba(124, 58, 237, 0.03) 75%)' }} />
   );
 
   const b = banners[current];
 
   return (
-    <div id="hero-slider" style={{ position: 'relative', overflow: 'hidden', background: '#FFFFFF', width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
+    <div id="hero-slider" style={{ position: 'relative', overflow: 'hidden', background: '#FFFFFF', width: '100%', maxWidth: '1312px', margin: '0 auto' }}>
       {/* Main Slide */}
       <div
         key={current}
         style={{
           width: '100%',
-          aspectRatio: '1920 / 600',
+          aspectRatio: '1312 / 670',
           background: b.bg || b.gradient || `linear-gradient(135deg, #7C3AED 0%, #9333EA 100%)`,
           position: 'relative',
           display: 'flex',
@@ -121,7 +121,7 @@ const HeroSlider = () => {
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               if (!target.src.includes('placehold.co')) {
-                target.src = 'https://placehold.co/1920x600/7C3AED/white?text=Special+Offers';
+                target.src = 'https://placehold.co/1312x670/7C3AED/white?text=Special+Offers';
               }
             }}
           />
