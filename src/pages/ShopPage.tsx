@@ -140,6 +140,95 @@ const extractVariants = (products: Product[], keys: string[]): string[] => {
   });
 };
 
+// ── Robust Filter Matching Helper ──────────────────────────────────────────
+const normalizeText = (str: string): string => {
+  if (!str) return '';
+  return str.toLowerCase()
+    // Normalize sizes: "16 GB" -> "16gb", "512 GB" -> "512gb", "1 TB" -> "1tb"
+    .replace(/\b(\d+(?:\.\d+)?)\s*(gb|tb|mb|ghz|mhz|rpm|w|v)\b/gi, '$1$2')
+    // Normalize display size: "15.6 inch", "15.6\"", "15.6-inch" -> "15.6inch"
+    .replace(/\b(\d+(?:\.\d+)?)\s*(?:inch|"|''|-inch)\b/gi, '$1inch')
+    // Remove extra whitespace
+    .replace(/\s+/g, ' ')
+    .trim();
+};
+
+const checkFilterMatch = (product: Product, label: string, value: string): boolean => {
+  if (!value) return true;
+
+  const productTextParts: string[] = [
+    product.name,
+    product.brand_name || '',
+    product.category_name || '',
+    product.description || '',
+  ];
+
+  if (product.specifications && typeof product.specifications === 'object') {
+    Object.values(product.specifications).forEach(val => {
+      if (val !== null && val !== undefined) {
+        productTextParts.push(String(val));
+      }
+    });
+  }
+
+  const fullProductText = productTextParts.join(' ');
+  const normProduct = normalizeText(fullProductText);
+
+  // 1. Specific Resolution aliases
+  if (value === 'Full HD (1080p)') {
+    return normProduct.includes('fhd') || normProduct.includes('1080p') || normProduct.includes('1920x1080') || normProduct.includes('full hd');
+  }
+  if (value === 'Quad HD (1440p)') {
+    return normProduct.includes('qhd') || normProduct.includes('1440p') || normProduct.includes('2560x1440') || normProduct.includes('2k') || normProduct.includes('quad hd');
+  }
+  if (value === '4K UHD') {
+    return normProduct.includes('4k') || normProduct.includes('uhd') || normProduct.includes('3840x2160');
+  }
+
+  // 2. Specific Core Count aliases
+  if (value === '4 Cores') {
+    return normProduct.includes('4 core') || normProduct.includes('4core') || normProduct.includes('quad core') || normProduct.includes('4-core');
+  }
+  if (value === '6 Cores') {
+    return normProduct.includes('6 core') || normProduct.includes('6core') || normProduct.includes('hexa core') || normProduct.includes('6-core');
+  }
+  if (value === '8 Cores') {
+    return normProduct.includes('8 core') || normProduct.includes('8core') || normProduct.includes('octa core') || normProduct.includes('8-core');
+  }
+
+  // 3. Direct exact or normalized check
+  const normValue = normalizeText(value);
+  if (normProduct.includes(normValue)) {
+    return true;
+  }
+
+  // 4. If value contains parentheses (e.g. "Asus (ROG / TUF / Dual)", "MI (Xiaomi)", "3.5 Inch (Desktop)")
+  if (value.includes('(')) {
+    const baseVal = normalizeText(value.split('(')[0]);
+    if (baseVal && normProduct.includes(baseVal)) {
+      return true;
+    }
+    const insideMatch = value.match(/\(([^)]+)\)/);
+    if (insideMatch) {
+      const insideText = insideMatch[1];
+      const subTerms = insideText.split('/').map(v => normalizeText(v)).filter(Boolean);
+      if (subTerms.some(term => normProduct.includes(term))) {
+        return true;
+      }
+    }
+  }
+
+  // 5. If value contains '/' (e.g. "RTX 3050 / 3060 / 3070 / 3080")
+  if (value.includes('/')) {
+    const subTerms = value.split('/').map(v => normalizeText(v)).filter(Boolean);
+    if (subTerms.some(term => normProduct.includes(term))) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 // ── Ordered category groups for the "All Products" view ──────────────────────
 // Products are shown section-by-section: Laptops first, then Gaming Accessories,
 // then remaining categories in sort_order.
@@ -284,21 +373,7 @@ const ShopPage = () => {
     ? priceFiltered
     : priceFiltered.filter(p => {
         return activeSpecEntries.every(([label, value]) => {
-          // Normalize matching: check product name or specifications
-          const nameMatch = p.name.toLowerCase().includes(value.toLowerCase());
-          
-          const keys = FILTER_KEY_MAP[label] || [label];
-          const specMatch = p.specifications && keys.some(k => {
-            const specVal = p.specifications![k];
-            if (!specVal || typeof specVal !== 'string') return false;
-            
-            // Exact match or partial match for robustness
-            const lowerSpec = specVal.toLowerCase();
-            const lowerVal = value.toLowerCase();
-            return lowerSpec === lowerVal || lowerSpec.includes(lowerVal) || lowerVal.includes(lowerSpec);
-          });
-
-          return nameMatch || specMatch;
+          return checkFilterMatch(p, label, value);
         });
       });
 
@@ -798,7 +873,7 @@ const ShopPage = () => {
                   </div>
                 ))}
               </div>
-            ) : (selectedCategory || selectedBrand) ? (
+            ) : (selectedCategory || selectedBrand || activeSpecEntries.length > 0) ? (
               /* ── FILTERED VIEW ── */
               sortedProducts.length === 0 ? (
                 <div className="text-center py-16 px-5">
@@ -806,7 +881,7 @@ const ShopPage = () => {
                   <h3 className="text-base font-bold text-slate-900 mb-2 font-heading">No products found</h3>
                   <p className="text-sm text-slate-400">Try a different category or clear filters</p>
                   <button
-                    onClick={() => { setSelectedCategory(''); setSelectedBrand(''); navigate('/shop'); }}
+                    onClick={() => { setSelectedCategory(''); setSelectedBrand(''); clearSpecFilters(); navigate('/shop'); }}
                     className="mt-4 bg-primary text-white border-none rounded-xl px-6 py-2.5 text-sm font-black cursor-pointer shadow-lg shadow-primary/20"
                   >
                     Clear Filters
